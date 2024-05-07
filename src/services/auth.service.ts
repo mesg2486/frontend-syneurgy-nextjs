@@ -4,6 +4,7 @@ import {
   TForgotPasswordSchema,
   TLoginSchema,
   TRegisterSchema,
+  TResetPasswordSchema,
 } from "@/components/forms/auth.schema";
 
 const authEndPoints = {
@@ -31,4 +32,6 @@ class AuthService {
   }
 }
 
-export default new AuthService();
+const authService = new AuthService();
+
+export default authService;
