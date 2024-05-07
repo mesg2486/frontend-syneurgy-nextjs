@@ -10,9 +10,13 @@ declare module "next-auth" {
       avatar: string;
       username: string;
       sub: string;
+      onboarded: boolean;
+      firstName: string;
+      lastName: string;
+      status: string;
+      createdAt: string;
       group: string;
       email: string;
-      name: string;
       accessToken: string;
       refreshToken: string;
       stripeCustomerId: string;

@@ -4,7 +4,6 @@ import {
   Drawer,
   DrawerClose,
   DrawerContent,
-  DrawerFooter,
   DrawerHeader,
   DrawerTrigger,
 } from "@/components/ui/drawer";
@@ -13,7 +12,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import { FaLinkedin, FaTwitter } from "react-icons/fa";
 import { HiOutlineMenuAlt3 } from "react-icons/hi";
 
 export default function Menu() {

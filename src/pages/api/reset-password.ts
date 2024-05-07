@@ -19,7 +19,7 @@ interface IResponse {
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<IResponse>
+  res: NextApiResponse<IResponse>,
 ) {
   const response: any = { data: "", error: null, status: null };
 

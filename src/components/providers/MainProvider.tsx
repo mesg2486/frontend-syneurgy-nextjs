@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import { SessionProvider } from "next-auth/react";
 
 export default function MainProvider({
   children,
@@ -26,10 +27,12 @@ export default function MainProvider({
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Toaster />
-      <Navbar />
-      {children}
-      <Footer />
+      <SessionProvider>
+        <Toaster />
+        <Navbar />
+        {children}
+        <Footer />
+      </SessionProvider>
     </QueryClientProvider>
   );
 }

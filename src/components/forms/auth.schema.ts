@@ -4,8 +4,11 @@ export const registerSchema = z.object({
   username: z.string().min(2, {
     message: "Username must be at least 2 characters.",
   }),
-  name: z.string().min(2, {
-    message: "Name must be at least 2 characters.",
+  // name: z.string().min(2, {
+  //   message: "Name must be at least 2 characters.",
+  // }),
+  terms: z.boolean().refine((val) => val === true, {
+    message: "You must agree to the terms and conditions.",
   }),
   email: z.string().email(),
   password: z.string().min(2, {

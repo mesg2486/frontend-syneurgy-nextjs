@@ -177,12 +177,15 @@ export const authOptions = {
           },
           body: JSON.stringify({
             query: `
-              query getUser($sub: String!){
+              query getUser($sub: ID!){
                 user: getUser(sub: $sub) {
                   avatar
+                  onboarded
+                  firstName
+                  lastName
+                  status
                   createdAt
                   email
-                  name
                 }
               }`,
             variables: {
@@ -192,15 +195,24 @@ export const authOptions = {
         });
 
         const response = await res.json();
-        const { data } = response;
+        const { data, errors } = response;
+        console.log({ data, errors });
 
         // console.log({ response: response.errors, data, jwtInfo });
         // set session
         session.user.accessToken = accessToken;
         session.user.refreshToken = refreshToken;
         session.user.sub = sub;
-        session.user.name = name;
-        session.user.email = email;
+        session.user.email = data.email;
+        session.user.firstName = data.firstName;
+        session.user.lastName = data.lastName;
+        session.user.username = data.username;
+        session.user.onboarded =
+          data?.user?.onboarded === false
+            ? false
+            : data?.user?.onboarded === true
+              ? true
+              : "failed";
         session.user.group = (jwtInfo as any)?.["cognito:groups"]?.[0];
         session.user.avatar = data?.user?.avatar || "";
         // // session.user.username = jwtInfo?.username;

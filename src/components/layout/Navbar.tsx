@@ -1,8 +1,13 @@
+"use client";
+
 import Link from "next/link";
 import React from "react";
 import Menu from "./Menu";
+import { useSession } from "next-auth/react";
 
 export default function Navbar() {
+  const { data: session } = useSession();
+
   return (
     <div className="bg-secondary py-4 md:py-5 w-full fixed top-0 left-0 right-0 border-b border-black/20">
       <div className="c-container w-full">
@@ -44,15 +49,26 @@ export default function Navbar() {
             >
               Contact
             </Link>
-            <button className="h-7 px-6 text-sm rounded-full font-semibold bg-primary text-[#1B212F]">
-              Request Demo
-            </button>
-            <Link
-              href={`/auth/login`}
-              className="h-7 px-6 text-sm rounded-full font-semibold flex justify-center items-center bg-primary text-[#1B212F]"
-            >
-              Login
-            </Link>
+            {session?.user.accessToken ? (
+              <Link
+                href={`/dashboard`}
+                className="h-7 px-6 text-sm rounded-full font-semibold flex justify-center items-center bg-background text-[#1B212F]"
+              >
+                Dashboard
+              </Link>
+            ) : (
+              <>
+                <button className="h-7 px-6 text-sm rounded-full font-semibold bg-primary text-[#1B212F]">
+                  Request Demo
+                </button>
+                <Link
+                  href={`/auth/login`}
+                  className="h-7 px-6 text-sm rounded-full font-semibold flex justify-center items-center bg-primary text-[#1B212F]"
+                >
+                  Login
+                </Link>
+              </>
+            )}
           </div>
           <div className="md:hidden">
             <Menu />

@@ -1,3 +1,10 @@
+import Dashnav from "@/components/layout/Dashnav";
+
 export default function Home() {
-  return <>syneurgy</>;
+  return (
+    <>
+      <Dashnav />
+      syneurgy
+    </>
+  );
 }

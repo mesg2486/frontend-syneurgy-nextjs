@@ -20,11 +20,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { TLoginSchema, loginSchema } from "@/components/forms/auth.schema";
 import { AiOutlineReload } from "react-icons/ai";
 import Link from "next/link";
+import { HiOutlineEye } from "react-icons/hi";
+import { HiOutlineEyeSlash } from "react-icons/hi2";
 
 interface LoginFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export default function LoginForm({ className, ...props }: LoginFormProps) {
   const [isPending, setIsPending] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const { toast } = useToast();
 
   const search = useSearchParams();
@@ -89,13 +92,23 @@ export default function LoginForm({ className, ...props }: LoginFormProps) {
             control={form.control}
             name="password"
             render={({ field }) => (
-              <FormItem>
+              <FormItem className="relative">
                 <FormLabel>Password</FormLabel>
                 <FormControl>
-                  <Input
-                    className="border-0 border-b border-b-white/60 rounded-none"
-                    {...field}
-                  />
+                  <>
+                    <Input
+                      type={showPassword ? "text" : "password"}
+                      className="border-0 border-b border-b-white/60 rounded-none"
+                      {...field}
+                    />
+                    <button
+                      onClick={() => setShowPassword((v) => !v)}
+                      type="button"
+                      className="absolute right-2 top-9"
+                    >
+                      {showPassword ? <HiOutlineEye /> : <HiOutlineEyeSlash />}
+                    </button>
+                  </>
                 </FormControl>
                 {/* <FormDescription>
                   This is your public display name.
@@ -111,7 +124,10 @@ export default function LoginForm({ className, ...props }: LoginFormProps) {
             >
               Forgot Password
             </Link>
-            <Button type="submit" className="!rounded-full hover:bg-white">
+            <Button
+              type="submit"
+              className="rounded-full bg-white hover:bg-white/90"
+            >
               {isPending ? (
                 <span className="flex gap-2 items-center">
                   <span>Pending</span>

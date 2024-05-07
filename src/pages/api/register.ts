@@ -19,12 +19,18 @@ interface IResponse {
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<IResponse>
+  res: NextApiResponse<IResponse>,
 ) {
   const response: any = { data: "", error: null, status: null };
 
   if (req.method === "POST") {
-    const { name, email, password, type } = req.body;
+    const {
+      name = "User",
+      username,
+      email,
+      password,
+      group = "user",
+    } = req.body;
 
     const cognitoClient = new CognitoIdentityServiceProvider({
       region: awsConfig.region,
@@ -32,7 +38,7 @@ export default async function handler(
 
     const params = {
       ClientId: awsConfig.cognito.ClientId,
-      Username: email,
+      Username: username,
       Password: password,
       UserAttributes: [
         { Name: "name", Value: name },
@@ -40,10 +46,12 @@ export default async function handler(
       ],
     };
 
+    console.log({ params });
+
     const groupParams = {
       UserPoolId: awsConfig.cognito.UserPoolId,
-      Username: email,
-      GroupName: type,
+      Username: username,
+      GroupName: group,
     };
 
     try {
@@ -53,7 +61,7 @@ export default async function handler(
       response.status = 200;
       response.data = { message: "User signed up successfully" };
     } catch (error: any) {
-      console.log({ error });
+      console.log({ error, type: error.__type });
       response.status = 500;
       response.error = { message: error?.message };
     }

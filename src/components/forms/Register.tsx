@@ -23,6 +23,10 @@ import {
 } from "@/components/forms/auth.schema";
 import { AiOutlineReload } from "react-icons/ai";
 import authService from "@/services/auth.service";
+import Link from "next/link";
+import { useState } from "react";
+import { HiOutlineEye } from "react-icons/hi";
+import { HiOutlineEyeSlash } from "react-icons/hi2";
 
 interface RegisterFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -32,13 +36,13 @@ export default function RegisterForm({
 }: RegisterFormProps) {
   const { toast } = useToast();
   const router = useRouter();
+  const [showPassword, setShowPassword] = useState(false);
 
   const form = useForm<TRegisterSchema>({
     resolver: zodResolver(registerSchema),
     mode: "onChange",
     defaultValues: {
       email: "",
-      name: "",
       password: "",
       username: "",
     },
@@ -81,25 +85,6 @@ export default function RegisterForm({
         >
           <FormField
             control={form.control}
-            name="name"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Full Name</FormLabel>
-                <FormControl>
-                  <Input
-                    className="border-0 border-b border-b-white/60 rounded-none"
-                    {...field}
-                  />
-                </FormControl>
-                {/* <FormDescription>
-                  This is your public display name.
-                </FormDescription> */}
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
             name="username"
             render={({ field }) => (
               <FormItem>
@@ -140,13 +125,23 @@ export default function RegisterForm({
             control={form.control}
             name="password"
             render={({ field }) => (
-              <FormItem>
+              <FormItem className="relative">
                 <FormLabel>Password</FormLabel>
                 <FormControl>
-                  <Input
-                    className="border-0 border-b border-b-white/60 rounded-none"
-                    {...field}
-                  />
+                  <>
+                    <Input
+                      type={showPassword ? "text" : "password"}
+                      className="border-0 border-b border-b-white/60 rounded-none"
+                      {...field}
+                    />
+                    <button
+                      onClick={() => setShowPassword((v) => !v)}
+                      type="button"
+                      className="absolute right-2 top-9"
+                    >
+                      {showPassword ? <HiOutlineEye /> : <HiOutlineEyeSlash />}
+                    </button>
+                  </>
                 </FormControl>
                 {/* <FormDescription>
                   This is your public display name.
@@ -155,20 +150,58 @@ export default function RegisterForm({
               </FormItem>
             )}
           />
-          <Button
-            type="submit"
-            size="lg"
-            className="w-full !rounded-full hover:bg-white"
-          >
-            {isPending ? (
-              <span className="flex gap-2 items-center">
-                <span>Pending</span>
-                <AiOutlineReload className="animate-spin" />
-              </span>
-            ) : (
-              <span>Sign Up</span>
+          <FormField
+            control={form.control}
+            name="terms"
+            render={({ field }) => (
+              <FormItem>
+                <div className="flex items-center gap-4">
+                  <FormControl>
+                    <Input
+                      type="checkbox"
+                      className="border-0 h-6 w-6 border-b border-b-white/60 rounded-none"
+                      {...field}
+                      value={String(field.value)}
+                    />
+                  </FormControl>
+                  <FormLabel className="text-primary-content">
+                    <p className="text-xs">
+                      By clicking Create account, I agree that I have read and
+                      accepted the{" "}
+                      <Link href={"#"} className="text-primary">
+                        Terms of Use
+                      </Link>{" "}
+                      and{" "}
+                      <Link href={"#"} className="text-primary">
+                        Privacy Policy
+                      </Link>
+                      .
+                    </p>
+                  </FormLabel>
+                </div>
+                {/* <FormDescription>
+                  This is your public display name.
+                </FormDescription> */}
+                <FormMessage />
+              </FormItem>
             )}
-          </Button>
+          />
+          <div className="pt-4">
+            <Button
+              type="submit"
+              size="lg"
+              className="w-full rounded-full bg-white hover:bg-white/90"
+            >
+              {isPending ? (
+                <span className="flex gap-2 items-center">
+                  <span>Pending</span>
+                  <AiOutlineReload className="animate-spin" />
+                </span>
+              ) : (
+                <span>Sign Up</span>
+              )}
+            </Button>
+          </div>
         </form>
       </Form>
     </div>

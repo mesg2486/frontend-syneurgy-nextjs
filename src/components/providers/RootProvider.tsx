@@ -23,11 +23,12 @@ export default function RootProvider({
     <>
       <QueryClientProvider client={queryClient}>
         <SessionProvider>
-          <Navbar />
-          <div className="flex gap-6 pr-6">
+          <div className="flex bg-secondary text-secondary-foreground">
             {pathname?.includes("lessons") ? <LessonSidebar /> : <Sidebar />}
             <Toaster />
-            <main className="flex-1 max-w-6xl">{children}</main>
+            <main className="flex-1 bg-secondary text-secondary-foreground">
+              {children}
+            </main>
           </div>
           {/* <Footer /> */}
         </SessionProvider>

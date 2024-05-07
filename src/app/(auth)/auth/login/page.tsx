@@ -13,10 +13,10 @@ export default function Login({ params }: any) {
             alt="syneurgy-login"
           />
         </div>
-        <div className="md:flex-1 md:h-screen md:py-32">
-          <div className="flex w-full flex-col h-full p-8 md:p-12 justify-between rounded-3xl text-white bg-[rgba(38,46,64)]">
+        <div className="md:flex-1 flex justify-center items-center md:h-screen md:py-32">
+          <div className="flex w-full flex-col h-full p-8 md:p-12 lg:p-16 justify-between rounded-3xl text-white bg-[rgba(38,46,64)]">
             <div>
-              <div className="flex flex-col mb-3">
+              <div className="flex flex-col items-start mb-3">
                 <Link
                   href={"/"}
                   className="flex flex-row items-center pb-3 cursor-pointer"
@@ -44,7 +44,7 @@ export default function Login({ params }: any) {
                   </svg>
                   <p className="font-bold text-lg">Syneurgy</p>
                 </Link>
-                <h1 className="font-regular pt-8 text-2xl pb-3">Sign in</h1>
+                <h1 className="font-semibold pt-4 text-3xl pb-3">Sign in</h1>
                 <div className="mb-12 font-medium text-sm flex flex-row">
                   <p className="pr-1 text-md">New user?</p>
                   <Link href="/auth/register">
@@ -53,13 +53,6 @@ export default function Login({ params }: any) {
                 </div>
               </div>
               <LoginForm />
-            </div>
-            <div>
-              <p className="text-xs pt-8">
-                Protected by reCAPTCHA and subject to the{" "}
-                <span className="text-primary">Google Privacy Policy</span> and{" "}
-                <span className="text-primary">Terms of Service</span>.
-              </p>
             </div>
           </div>
         </div>

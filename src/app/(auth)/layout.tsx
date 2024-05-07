@@ -1,7 +1,6 @@
 import React from "react";
-import { Inter, Plus_Jakarta_Sans } from "next/font/google";
+import { Plus_Jakarta_Sans } from "next/font/google";
 import "@/styles/globals.css";
-const inter = Inter({ subsets: ["latin"] });
 import type { Metadata } from "next";
 import AuthProvider from "@/components/providers/AuthProvider";
 
