@@ -5,7 +5,7 @@ type AuthHeaderProps = {
 };
 
 export const gql = new GraphQLClient(
-  "https://6mdp4qo2uvgr7mj4rteiysnfru.appsync-api.us-east-1.amazonaws.com/graphql",
+  "https://7zflynclavcbzipgs6zirmskfu.appsync-api.us-east-2.amazonaws.com/graphql",
   {
     headers: () => {
       //   const authHeaders = {} as AuthHeaderProps;
@@ -14,7 +14,7 @@ export const gql = new GraphQLClient(
 
       return {
         "Content-Type": "application/json",
-        "x-api-key": "da2-vvjwiegjhfgptczgojzjb5lcxe",
+        "x-api-key": "da2-lgztuiuikje4phabqmindvci5i",
         // ..authHeaders
       };
     },

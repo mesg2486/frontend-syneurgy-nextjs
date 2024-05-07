@@ -13,16 +13,16 @@ export const aboutFormSchema = z.object({
   lastName: z.string().min(2, {
     message: "Name must be at least 2 characters.",
   }),
-  country: z.string().min(2, {
-    message: "Name must be at least 2 characters.",
-  }),
+  // country: z.string().min(2, {
+  //   message: "Name must be at least 2 characters.",
+  // }),
   company: z.string().min(2, {
     message: "Name must be at least 2 characters.",
   }),
   position: z.string().min(2, {
     message: "Name must be at least 2 characters.",
   }),
-  privacy: z.boolean(),
+  // privacy: z.boolean(),
 });
 
 export type TAboutFormSchema = z.infer<typeof aboutFormSchema>;

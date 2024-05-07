@@ -1,7 +1,8 @@
 "use client";
-import React, { useEffect } from "react";
+import React from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
+import { SessionProvider } from "next-auth/react";
 
 export default function AuthProvider({
   children,
@@ -12,8 +13,10 @@ export default function AuthProvider({
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Toaster />
-      {children}
+      <SessionProvider>
+        <Toaster />
+        {children}
+      </SessionProvider>
     </QueryClientProvider>
   );
 }

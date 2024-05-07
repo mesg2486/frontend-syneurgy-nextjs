@@ -180,6 +180,7 @@ export const authOptions = {
               query getUser($sub: ID!){
                 user: getUser(sub: $sub) {
                   avatar
+                  sub
                   onboarded
                   firstName
                   lastName
@@ -202,11 +203,17 @@ export const authOptions = {
         // set session
         session.user.accessToken = accessToken;
         session.user.refreshToken = refreshToken;
-        session.user.sub = sub;
-        session.user.email = data.email;
+        session.user.sub = data.user.sub;
+        session.user.email = data.user.email;
         session.user.firstName = data.firstName;
         session.user.lastName = data.lastName;
         session.user.username = data.username;
+        session.user.onboarding = data.user.onboarding;
+
+        // session.user.onboarding_about = data.onboarding.about;
+        // session.user.onboarding_createTeam = data.onboarding.createTeam;
+        // session.user.onboarding_aboutTeam = data.onboarding.createTeam;
+        // session.user.onboarding_inviteTeam = data.onboarding.inviteTeam;
         session.user.onboarded =
           data?.user?.onboarded === false
             ? false

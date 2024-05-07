@@ -1,143 +1,25 @@
-type Chapter {
-  moduleId: ID!
-  module: Module!
-  id: ID!
-  title: String!
-  order: Int!
-  type: String
-  content: String!
-  createdAt: String!
-  updatedAt: String!
-}
-
-type ChapterConnection {
-  items: [Chapter]
-  nextToken: String
-}
-
-type Course {
-  id: ID!
-  title: String!
-  thumbnail: String!
-  content: String!
-  description: String!
-  feedback: [Feedback!]
-  modules: [Module!]
-  instructorId: ID!
-  instructor: User!
-  wysbtc: [String!]
-  about: String!
-  price: Int
-  rating: Float
-  isUserEnrolled(userId: ID!): Boolean!
-  moreFromInstructor: [Course]
-}
-
-type CourseConnection {
-  items: [Course]
-  nextToken: String
-}
-
-input CreateChapterInput {
-  moduleId: ID!
-  title: String!
-  order: Int!
-  type: String
-  content: String!
-}
-
-input CreateCourseInput {
-  title: String!
-  thumbnail: String!
-  content: String!
-  instructorId: ID!
-  wysbtc: [String!]
-  description: String!
-  about: String!
-  price: Int
-  rating: Float
-}
-
-input CreateEnrollmentInput {
-  courseId: ID!
-  userId: ID!
-}
-
-input CreateFeedbackInput {
-  id: ID!
-  authorId: ID!
-  note: String
-  rating: Int!
-  courseId: ID!
-}
-
-input CreateModuleInput {
-  order: Int!
-  courseId: ID!
-  title: String!
-  content: String!
-}
-
 input CreateUserInput {
-  createdAt: String!
-  sub: String!
-  about: String
-  name: String
-  gender: String
+  sub: ID!
+  username: String!
   email: String!
+  status: String!
+  onboarded: Boolean!
+  resultPrivacy: Boolean!
+  lastLogin: String
   avatar: String
-  cover: String
-}
-
-input DeleteChapterInput {
-  moduleId: ID!
-  order: Int!
-}
-
-input DeleteCourseInput {
-  id: ID!
-}
-
-input DeleteEnrollmentInput {
-  courseId: ID!
-}
-
-input DeleteFeedbackInput {
-  id: ID!
-  courseId: ID!
-}
-
-input DeleteModuleInput {
-  courseId: ID!
+  gender: String
+  step: String
+  dob: String
+  phone: String
+  firstName: String
+  lastName: String
+  country: String
+  company: String
+  position: String
 }
 
 input DeleteUserInput {
-  createdAt: String!
-}
-
-type Enrollment {
-  courseId: ID!
-  userId: ID!
-  createdAt: String!
-  course: Course!
-}
-
-type EnrollmentConnection {
-  items: [Enrollment]
-  nextToken: String
-}
-
-type Feedback {
-  id: ID!
-  authorId: ID!
-  note: String
-  rating: Int!
-  courseId: ID!
-}
-
-type FeedbackConnection {
-  items: [Feedback]
-  nextToken: String
+  sub: ID!
 }
 
 input ModelSizeInput {
@@ -150,60 +32,10 @@ input ModelSizeInput {
   between: [Int]
 }
 
-type Module {
-  courseId: ID!
-  id: ID!
-  title: String!
-  content: String!
-  createdAt: String!
-  updatedAt: String!
-  chapters: [Chapter!]
-}
-
-type ModuleConnection {
-  items: [Module]
-  nextToken: String
-}
-
 input TableBooleanFilterInput {
   ne: Boolean
   eq: Boolean
   attributeExists: Boolean
-}
-
-input TableChapterFilterInput {
-  moduleId: TableIDFilterInput
-  id: TableIDFilterInput
-  title: TableStringFilterInput
-  order: TableIntFilterInput
-  type: TableStringFilterInput
-  content: TableStringFilterInput
-  createdAt: TableStringFilterInput
-  updatedAt: TableStringFilterInput
-}
-
-input TableCourseFilterInput {
-  id: TableIDFilterInput
-  title: TableStringFilterInput
-  thumbnail: TableStringFilterInput
-  content: TableStringFilterInput
-  description: TableStringFilterInput
-  about: TableStringFilterInput
-  price: TableIntFilterInput
-  rating: TableFloatFilterInput
-}
-
-input TableEnrollmentFilterInput {
-  courseId: TableIDFilterInput
-  userId: TableIDFilterInput
-}
-
-input TableFeedbackFilterInput {
-  id: TableIDFilterInput
-  authorId: TableIDFilterInput
-  note: TableStringFilterInput
-  rating: TableIntFilterInput
-  courseId: TableIDFilterInput
 }
 
 input TableFloatFilterInput {
@@ -243,15 +75,6 @@ input TableIntFilterInput {
   attributeExists: Boolean
 }
 
-input TableModuleFilterInput {
-  courseId: TableIDFilterInput
-  id: TableIDFilterInput
-  title: TableStringFilterInput
-  content: TableStringFilterInput
-  createdAt: TableStringFilterInput
-  updatedAt: TableStringFilterInput
-}
-
 input TableStringFilterInput {
   ne: String
   eq: String
@@ -268,81 +91,66 @@ input TableStringFilterInput {
 }
 
 input TableUserFilterInput {
-  createdAt: TableStringFilterInput
-  sub: TableStringFilterInput
-  about: TableStringFilterInput
-  name: TableStringFilterInput
-  gender: TableStringFilterInput
+  sub: TableIDFilterInput
+  username: TableStringFilterInput
   email: TableStringFilterInput
+  status: TableStringFilterInput
+  lastLogin: TableStringFilterInput
   avatar: TableStringFilterInput
-  cover: TableStringFilterInput
-}
-
-input UpdateChapterInput {
-  moduleId: ID!
-  id: ID
-  title: String
-  order: Int!
-  type: String
-  content: String
-  createdAt: String
-  updatedAt: String
-}
-
-input UpdateCourseInput {
-  id: ID!
-  title: String
-  thumbnail: String
-  content: String
-  wysbtc: [String!]
-  description: String
-  about: String
-  price: Int
-  rating: Float
-}
-
-input UpdateEnrollmentInput {
-  courseId: ID!
-  userId: ID
-}
-
-input UpdateFeedbackInput {
-  id: ID!
-  authorId: ID
-  note: String
-  rating: Int
-  courseId: ID!
-}
-
-input UpdateModuleInput {
-  courseId: ID!
-  id: ID
-  title: String
-  content: String
-  createdAt: String
-  updatedAt: String
+  gender: TableStringFilterInput
+  dob: TableStringFilterInput
+  phone: TableStringFilterInput
+  firstName: TableStringFilterInput
+  lastName: TableStringFilterInput
+  country: TableStringFilterInput
+  company: TableStringFilterInput
+  position: TableStringFilterInput
+  resultPrivacy: TableBooleanFilterInput
+  createdAt: TableStringFilterInput
+  updatedAt: TableStringFilterInput
 }
 
 input UpdateUserInput {
-  sub: String!
-  about: String
-  name: String
-  gender: String
+  sub: ID!
+  username: String
+  email: String
+  status: String
+  lastLogin: String
+  step: String
+  onboarded: Boolean
   avatar: String
-  cover: String
-  twitter: String
+  gender: String
+  dob: String
+  phone: String
+  firstName: String
+  lastName: String
+  country: String
+  company: String
+  position: String
+  resultPrivacy: Boolean
+  updatedAt: String
 }
 
 type User {
-  createdAt: String!
-  sub: String!
-  about: String
-  name: String
-  gender: String
+  sub: ID!
+  username: String!
   email: String!
+  status: String!
+  onboarded: Boolean!
+  step: String!
+  lastLogin: String
   avatar: String
-  cover: String
-  twitter: String
+  gender: String
+  dob: String
+  phone: String
+  firstName: String
+  lastName: String
+  country: String
+  company: String
+  position: String
+  resultPrivacy: Boolean!
+  createdAt: String!
+  updatedAt: String!
 }
 
 type UserConnection {
@@ -354,155 +162,37 @@ type Mutation {
   createUser(input: CreateUserInput!): User
   updateUser(input: UpdateUserInput!): User
   deleteUser(input: DeleteUserInput!): User
-  createModule(input: CreateModuleInput!): Module
-  updateModule(input: UpdateModuleInput!): Module
-  deleteModule(input: DeleteModuleInput!): Module
-  createFeedback(input: CreateFeedbackInput!): Feedback
-  updateFeedback(input: UpdateFeedbackInput!): Feedback
-  deleteFeedback(input: DeleteFeedbackInput!): Feedback
-  createCourse(input: CreateCourseInput!): Course
-  updateCourse(input: UpdateCourseInput!): Course
-  deleteCourse(input: DeleteCourseInput!): Course
-  createChapter(input: CreateChapterInput!): Chapter
-  updateChapter(input: UpdateChapterInput!): Chapter
-  deleteChapter(input: DeleteChapterInput!): Chapter
-  createEnrollment(input: CreateEnrollmentInput!): Enrollment
-  updateEnrollment(input: UpdateEnrollmentInput!): Enrollment
-  deleteEnrollment(input: DeleteEnrollmentInput!): Enrollment
 }
 
 type Query {
-  getUser(sub: String!): User
+  getUser(sub: ID!): User
   listUsers(
     filter: TableUserFilterInput
     limit: Int
     nextToken: String
   ): UserConnection
-  getModule(courseId: ID!): Module
-  getModuleById(moduleId: ID!): Module
-  listModules(
-    filter: TableModuleFilterInput
-    limit: Int
-    nextToken: String
-  ): ModuleConnection
-  getFeedback(courseId: ID!, id: ID!): Feedback
-  listFeedbacks(
-    filter: TableFeedbackFilterInput
-    limit: Int
-    nextToken: String
-  ): FeedbackConnection
-  getCourse(id: ID!): Course
-  listCourses(
-    filter: TableCourseFilterInput
-    limit: Int
-    nextToken: String
-  ): CourseConnection
-  getChapter(moduleId: ID!, order: Int!): Chapter
-  getChapterById(id: ID!): Chapter!
-  listChapters(
-    filter: TableChapterFilterInput
-    limit: Int
-    nextToken: String
-  ): ChapterConnection
-  getEnrollment(courseId: ID!): Enrollment
-  listEnrollments(
-    filter: TableEnrollmentFilterInput
-    limit: Int
-    nextToken: String
-  ): EnrollmentConnection
-  listUserEnrollments(userId: ID!): EnrollmentConnection
-  listCoursesByInstructorId(instructorId: ID!): CourseConnection
 }
 
 type Subscription {
-  onCreateModule(
-    courseId: ID
-    id: ID
-    title: String
-    content: String
-    createdAt: String
-  ): Module @aws_subscribe(mutations: ["createModule"])
-  onUpdateModule(
-    courseId: ID
-    id: ID
-    title: String
-    content: String
-    createdAt: String
-  ): Module @aws_subscribe(mutations: ["updateModule"])
-  onDeleteModule(
-    courseId: ID
-    id: ID
-    title: String
-    content: String
-    createdAt: String
-  ): Module @aws_subscribe(mutations: ["deleteModule"])
-  onCreateFeedback(
-    id: ID
-    authorId: ID
-    note: String
-    rating: Int
-    courseId: ID
-  ): Feedback @aws_subscribe(mutations: ["createFeedback"])
-  onUpdateFeedback(
-    id: ID
-    authorId: ID
-    note: String
-    rating: Int
-    courseId: ID
-  ): Feedback @aws_subscribe(mutations: ["updateFeedback"])
-  onDeleteFeedback(
-    id: ID
-    authorId: ID
-    note: String
-    rating: Int
-    courseId: ID
-  ): Feedback @aws_subscribe(mutations: ["deleteFeedback"])
-  onCreateCourse(
-    id: ID
-    title: String
-    thumbnail: String
-    content: String
-    description: String
-  ): Course @aws_subscribe(mutations: ["createCourse"])
-  onUpdateCourse(
-    id: ID
-    title: String
-    thumbnail: String
-    content: String
-    description: String
-  ): Course @aws_subscribe(mutations: ["updateCourse"])
-  onDeleteCourse(
-    id: ID
-    title: String
-    thumbnail: String
-    content: String
-    description: String
-  ): Course @aws_subscribe(mutations: ["deleteCourse"])
-  onCreateChapter(
-    moduleId: ID
-    id: ID
-    title: String
-    order: Int
-    type: String
-  ): Chapter @aws_subscribe(mutations: ["createChapter"])
-  onUpdateChapter(
-    moduleId: ID
-    id: ID
-    title: String
-    order: Int
-    type: String
-  ): Chapter @aws_subscribe(mutations: ["updateChapter"])
-  onDeleteChapter(
-    moduleId: ID
-    id: ID
-    title: String
-    order: Int
-    type: String
-  ): Chapter @aws_subscribe(mutations: ["deleteChapter"])
-  onCreateEnrollment(courseId: ID, userId: ID): Enrollment
-    @aws_subscribe(mutations: ["createEnrollment"])
-  onUpdateEnrollment(courseId: ID, userId: ID): Enrollment
-    @aws_subscribe(mutations: ["updateEnrollment"])
-  onDeleteEnrollment(courseId: ID, userId: ID): Enrollment
-    @aws_subscribe(mutations: ["deleteEnrollment"])
+  onCreateUser(
+    sub: ID
+    username: String
+    email: String
+    status: String
+    lastLogin: String
+  ): User @aws_subscribe(mutations: ["createUser"])
+  onUpdateUser(
+    sub: ID
+    username: String
+    email: String
+    status: String
+    lastLogin: String
+  ): User @aws_subscribe(mutations: ["updateUser"])
+  onDeleteUser(
+    sub: ID
+    username: String
+    email: String
+    status: String
+    lastLogin: String
+  ): User @aws_subscribe(mutations: ["deleteUser"])
 }

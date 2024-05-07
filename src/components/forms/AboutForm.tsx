@@ -21,23 +21,71 @@ import {
 } from "@/components/ui/form";
 import { Button } from "../ui/button";
 import { AiOutlineReload } from "react-icons/ai";
+import { gql } from "@/services/clients/graphql.client";
+import { graphql } from "@/services/gql";
+import { useSession } from "next-auth/react";
+
+const UPDATE_USER_ABOUT = graphql(`
+  mutation updateUser(
+    $step: String
+    $onboarded: Boolean
+    $sub: ID!
+    $username: String
+    $email: String
+    $status: String
+    $lastName: String
+    $firstName: String
+    $country: String
+    $company: String
+    $dob: String
+    $avatar: String
+    $phone: String
+    $position: String
+    $resultPrivacy: Boolean
+  ) {
+    user: updateUser(
+      input: {
+        step: $step
+        onboarded: $onboarded
+        lastName: $lastName
+        firstName: $firstName
+        country: $country
+        company: $company
+        dob: $dob
+        avatar: $avatar
+        phone: $phone
+        position: $position
+        resultPrivacy: $resultPrivacy
+        status: $status
+        sub: $sub
+        username: $username
+        email: $email
+      }
+    ) {
+      sub
+    }
+  }
+`);
 
 export default function AboutForm() {
   const { toast } = useToast();
   const router = useRouter();
+
+  const { data: session } = useSession();
 
   const { mutate, isPending, isError, error } = useMutation<
     any,
     any,
     TAboutFormSchema
   >({
-    mutationFn: async () => {},
+    mutationFn: async (variables: any) =>
+      gql.request(UPDATE_USER_ABOUT, variables),
     onSuccess: (response) => {
       toast({
-        title: "Account Created",
-        description: "Your account was created successfully.",
+        title: "Details updated",
+        description: "Details updated successfully.",
       });
-      return router.push("/auth/verification");
+      // return router.push("/auth/verification");
     },
     onError: (error) => {
       return toast({
@@ -50,8 +98,12 @@ export default function AboutForm() {
   });
 
   async function onSubmit(data: TAboutFormSchema) {
-    // console.log({ data });
-    mutate({ ...data });
+    console.log({ data });
+    mutate({
+      ...data,
+      sub: session?.user.sub,
+      step: "2",
+    } as any);
   }
 
   const form = useForm<TAboutFormSchema>({
@@ -59,11 +111,11 @@ export default function AboutForm() {
     mode: "onChange",
     defaultValues: {
       company: "",
-      country: "",
+      // country: "",
       firstName: "",
       lastName: "",
       position: "",
-      privacy: true,
+      // privacy: true,
     },
   });
 
