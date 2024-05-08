@@ -67,7 +67,7 @@ export const UPDATE_USER_ABOUT = graphql(`
   }
 `);
 
-export default function AboutForm() {
+export default function UploadMeeting() {
   const { toast } = useToast();
   const router = useRouter();
 

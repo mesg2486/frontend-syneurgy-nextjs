@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  TAboutFormSchema,
   TOnboardingHomeSchema,
   onboardingHomeSchema,
 } from "@/components/forms/onboarding.schema";
@@ -21,23 +22,59 @@ import {
 } from "@/components/ui/form";
 import { Button } from "../ui/button";
 import { AiOutlineReload } from "react-icons/ai";
+import { graphql } from "@/services/gql";
+import { gql } from "@/services/clients/graphql.client";
+import { useSession } from "next-auth/react";
+import { UPDATE_USER_ABOUT } from "./AboutForm";
+
+const CREATE_TEAM = graphql(`
+  mutation createTeam($createdBy: ID!, $name: String!) {
+    team: createTeam(input: { createdBy: $createdBy, name: $name }) {
+      id
+    }
+  }
+`);
 
 export default function GetStarted() {
   const { toast } = useToast();
   const router = useRouter();
+  const { data: session } = useSession();
+
+  const { mutate: updateUser, isPending: isUpdateUserPending } = useMutation<
+    any,
+    any,
+    TAboutFormSchema
+  >({
+    mutationFn: async (variables: any) =>
+      gql.request(UPDATE_USER_ABOUT, variables),
+    onSuccess: (response) => {
+      toast({
+        title: "Team Created",
+        description: "",
+      });
+      // return router.push("/auth/verification");
+    },
+    onError: (error) => {
+      return toast({
+        title: "Error",
+        description:
+          error?.response?.data?.error?.message ||
+          "An error occurred while creating account.",
+      });
+    },
+  });
 
   const { mutate, isPending, isError, error } = useMutation<
     any,
     any,
     TOnboardingHomeSchema
   >({
-    mutationFn: async () => {},
+    mutationFn: async (variables: any) => gql.request(CREATE_TEAM, variables),
     onSuccess: (response) => {
-      toast({
-        title: "Account Created",
-        description: "Your account was created successfully.",
-      });
-      return router.push("/auth/verification");
+      updateUser({
+        sub: session?.user.sub,
+        step: "3",
+      } as any);
     },
     onError: (error) => {
       return toast({
@@ -51,14 +88,14 @@ export default function GetStarted() {
 
   async function onSubmit(data: TOnboardingHomeSchema) {
     // console.log({ data });
-    mutate({ ...data });
+    mutate({ ...data, createdBy: session?.user.sub } as any);
   }
 
   const form = useForm<TOnboardingHomeSchema>({
     resolver: zodResolver(onboardingHomeSchema),
     mode: "onChange",
     defaultValues: {
-      title: "",
+      name: "",
     },
   });
 
@@ -72,7 +109,7 @@ export default function GetStarted() {
           <div>
             <FormField
               control={form.control}
-              name="title"
+              name="name"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Team Name</FormLabel>

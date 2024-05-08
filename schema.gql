@@ -1,3 +1,23 @@
+input CreateInvitationsInput {
+  email: String!
+  message: String
+  invited: Boolean!
+}
+
+input CreateTeamInput {
+  name: String!
+  createdBy: ID!
+  goals: String
+  invitations: CreateInvitationsInput
+  engagementLevel: String
+  teamInSync: String
+  syncHistory: String
+  members: [String]
+  synchrony: Float
+  performance: String
+  sentiment: String
+}
+
 input CreateUserInput {
   sub: ID!
   username: String!
@@ -18,8 +38,18 @@ input CreateUserInput {
   position: String
 }
 
+input DeleteTeamInput {
+  id: ID!
+}
+
 input DeleteUserInput {
   sub: ID!
+}
+
+type Invitations {
+  email: String!
+  message: String
+  invited: Boolean!
 }
 
 input ModelSizeInput {
@@ -90,6 +120,21 @@ input TableStringFilterInput {
   size: ModelSizeInput
 }
 
+input TableTeamFilterInput {
+  id: TableIDFilterInput
+  name: TableStringFilterInput
+  createdBy: TableIDFilterInput
+  goals: TableStringFilterInput
+  invitations: TableStringFilterInput
+  engagementLevel: TableStringFilterInput
+  teamInSync: TableStringFilterInput
+  syncHistory: TableStringFilterInput
+  members: TableStringFilterInput
+  synchrony: TableFloatFilterInput
+  performance: TableStringFilterInput
+  sentiment: TableStringFilterInput
+}
+
 input TableUserFilterInput {
   sub: TableIDFilterInput
   username: TableStringFilterInput
@@ -108,6 +153,47 @@ input TableUserFilterInput {
   resultPrivacy: TableBooleanFilterInput
   createdAt: TableStringFilterInput
   updatedAt: TableStringFilterInput
+}
+
+type Team {
+  id: ID!
+  name: String!
+  createdBy: ID!
+  goals: String
+  invitations: Invitations
+  engagementLevel: String
+  teamInSync: String
+  syncHistory: String
+  members: [String]
+  synchrony: Float
+  performance: String
+  sentiment: String
+}
+
+type TeamConnection {
+  items: [Team]
+  nextToken: String
+}
+
+input UpdateInvitationsInput {
+  email: String
+  message: String
+  invited: Boolean
+}
+
+input UpdateTeamInput {
+  id: ID!
+  name: String
+  createdBy: ID
+  goals: String
+  invitations: UpdateInvitationsInput
+  engagementLevel: String
+  teamInSync: String
+  syncHistory: String
+  members: [String]
+  synchrony: Float
+  performance: String
+  sentiment: String
 }
 
 input UpdateUserInput {
@@ -162,6 +248,9 @@ type Mutation {
   createUser(input: CreateUserInput!): User
   updateUser(input: UpdateUserInput!): User
   deleteUser(input: DeleteUserInput!): User
+  createTeam(input: CreateTeamInput!): Team
+  updateTeam(input: UpdateTeamInput!): Team
+  deleteTeam(input: DeleteTeamInput!): Team
 }
 
 type Query {
@@ -171,6 +260,12 @@ type Query {
     limit: Int
     nextToken: String
   ): UserConnection
+  getTeam(id: ID!): Team
+  listTeams(
+    filter: TableTeamFilterInput
+    limit: Int
+    nextToken: String
+  ): TeamConnection
 }
 
 type Subscription {
@@ -195,4 +290,25 @@ type Subscription {
     status: String
     lastLogin: String
   ): User @aws_subscribe(mutations: ["deleteUser"])
+  onCreateTeam(
+    id: ID
+    name: String
+    createdBy: ID
+    goals: String
+    invitations: String
+  ): Team @aws_subscribe(mutations: ["createTeam"])
+  onUpdateTeam(
+    id: ID
+    name: String
+    createdBy: ID
+    goals: String
+    invitations: String
+  ): Team @aws_subscribe(mutations: ["updateTeam"])
+  onDeleteTeam(
+    id: ID
+    name: String
+    createdBy: ID
+    goals: String
+    invitations: String
+  ): Team @aws_subscribe(mutations: ["deleteTeam"])
 }
