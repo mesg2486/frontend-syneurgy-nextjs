@@ -7,7 +7,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { ChangeEvent } from "react";
 import { useForm } from "react-hook-form";
 import { useToast } from "@/components/ui/use-toast";
 import { useMutation } from "@tanstack/react-query";
@@ -24,6 +24,7 @@ import { AiOutlineReload } from "react-icons/ai";
 import { gql } from "@/services/clients/graphql.client";
 import { graphql } from "@/services/gql";
 import { useSession } from "next-auth/react";
+import usePublicUpload from "@/hooks/usePublicUpload";
 
 export const UPDATE_USER_ABOUT = graphql(`
   mutation updateUser(

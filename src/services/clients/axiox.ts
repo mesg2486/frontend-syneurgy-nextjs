@@ -6,4 +6,5 @@ export const authServer = axios.create({
     "Content-Type": "application/json",
   },
 });
+
 export const s3Upload = axios.create();

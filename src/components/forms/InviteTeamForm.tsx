@@ -128,10 +128,10 @@ export default function InviteTeam() {
         >
           {fields.map((i: any, index) => (
             <FormField
-              control={form.control}
+              control={undefined}
               key={i.id}
               // defaultValue={i.value}
-              //   name={`objectives.${index}.value`}
+              name={`objectives.${index}.value`}
               render={({ field }) => (
                 <FormItem className="max-w-xl flex gap-2 items-center">
                   <FormControl>

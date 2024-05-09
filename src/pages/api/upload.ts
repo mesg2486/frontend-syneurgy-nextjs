@@ -24,10 +24,14 @@ export default async function getPresignedUrl(
   try {
     const { filename, type, sub, articleId } = req.body;
     console.log(type);
-    let url = `temp/${filename}`;
+    let url = `prod/temp/${filename}`;
 
     if (type === "profile") {
-      url = `profile/${sub}/${filename}`;
+      url = `prod/profile/${sub}/${filename}`;
+    }
+
+    if (type === "meeting") {
+      url = `prod/meeting/${sub}/${filename}`;
     }
 
     const s3Params = {

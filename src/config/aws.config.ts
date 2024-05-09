@@ -13,7 +13,7 @@ const awsConfig = {
   },
   s3: {
     endpoint: process.env.AWS_S3_BUCKET_ENDPOINT || "",
-    region: process.env.AWS_REGION || "",
+    region: process.env.AWS_S3_BUCKET_REGION || "",
     bucket: process.env.AWS_S3_BUCKET_NAME || "",
     signatureVersion: process.env.AWS_S3_SIGNATURE_VERSION || "",
   },

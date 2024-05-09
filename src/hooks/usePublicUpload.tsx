@@ -1,11 +1,13 @@
 import { s3Upload, uploadServer } from "@/services/clients/axiox";
 import { useMutation } from "@tanstack/react-query";
+import axios, { AxiosProgressEvent } from "axios";
 
 type TUsePublicUploadVariables = {
   sub?: string;
   type: string;
   onSuccess?: (url: any) => any;
   onError?: (error: any) => any;
+  onUploadProgress?: (progressEvent: AxiosProgressEvent) => void;
 };
 
 interface IUploadPayload {
@@ -19,8 +21,10 @@ export default function usePublicUpload({
   type,
   onSuccess = () => null,
   onError = () => null,
+  onUploadProgress,
 }: TUsePublicUploadVariables) {
   //   const { user } = useIsAuthenticated();
+  const source = axios.CancelToken.source();
 
   const upload = async (file: any) => {
     let url = "";
@@ -37,7 +41,10 @@ export default function usePublicUpload({
       },
     });
     // console.log({ url: response.data.data.url, file });
-    await s3Upload.put(response.data.data.url, file);
+    await s3Upload.put(response.data.data.url, file, {
+      onUploadProgress: onUploadProgress,
+      cancelToken: source.token,
+    });
     url = response?.data?.data?.url?.split("?")[0];
     return url;
   };

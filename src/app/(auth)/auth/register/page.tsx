@@ -13,7 +13,7 @@ export default function Register({ params }: any) {
             alt="syneurgy-login"
           />
         </div>
-        <div className="md:flex-1 md:h-screen md:py-32 flex justify-center items-center">
+        <div className="md:flex-1 w-full md:h-screen md:py-32 flex max-w-sm md:max-w-none justify-center items-center">
           <div className="flex w-full flex-col p-8 md:p-12 lg:p-16 justify-between rounded-3xl text-white bg-[rgba(38,46,64)]">
             <div>
               <div className="flex flex-col items-start mb-3">

@@ -6,6 +6,7 @@ import { Toaster } from "@/components/ui/toaster";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { SessionProvider } from "next-auth/react";
+import NextTopLoader from "nextjs-toploader";
 
 export default function MainProvider({
   children,
@@ -28,10 +29,16 @@ export default function MainProvider({
   return (
     <QueryClientProvider client={queryClient}>
       <SessionProvider>
-        <Toaster />
+        <NextTopLoader
+          height={1}
+          color="rgba(255,255,255,0.4)"
+          shadow={false}
+          showSpinner={false}
+        />
         <Navbar />
         {children}
         <Footer />
+        <Toaster />
       </SessionProvider>
     </QueryClientProvider>
   );

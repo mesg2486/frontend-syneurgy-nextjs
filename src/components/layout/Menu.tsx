@@ -13,9 +13,12 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { HiOutlineMenuAlt3 } from "react-icons/hi";
+import { useSession } from "next-auth/react";
 
 export default function Menu() {
   const [isOpen, setIsOpen] = useState(false);
+  const { data: session } = useSession();
+
   // const [isCalOpen, setisCalOpen] = useState(false);
   const pathname = usePathname();
 
@@ -54,9 +57,18 @@ export default function Menu() {
             <button className="h-7 px-6 text-sm rounded-full font-semibold bg-primary text-[#1B212F]">
               Request Demo
             </button>
-            <button className="h-7 px-6 text-sm rounded-full font-semibold bg-primary text-[#1B212F]">
-              Login
-            </button>
+            {session?.user.accessToken ? (
+              <Link
+                href={`/dashboard`}
+                className="h-7 px-6 text-sm rounded-full font-semibold flex justify-center items-center bg-background text-[#1B212F]"
+              >
+                Dashboard
+              </Link>
+            ) : (
+              <button className="h-7 px-6 text-sm rounded-full font-semibold bg-primary text-[#1B212F]">
+                Login
+              </button>
+            )}
             {/* <MenuLink link="/#insights" title="Insights" /> */}
             {/* <DrawerClose>
               <div className="pt-8">

@@ -14,10 +14,10 @@ export default function ForgotPassword() {
             alt="syneurgy-login"
           />
         </div>
-        <div className="md:flex-1 md:h-screen md:py-32">
-          <div className="flex w-full flex-col h-full p-8 md:p-12 justify-between rounded-3xl text-white bg-[rgba(38,46,64)]">
+        <div className="md:flex-1 flex justify-center w-full max-w-sm md:max-w-none items-center md:h-screen md:py-32">
+          <div className="flex w-full flex-col p-8 md:p-12 lg:p-16 justify-between rounded-3xl text-white bg-[rgba(38,46,64)]">
             <div>
-              <div className="flex flex-col mb-3">
+              <div className="flex flex-col items-start mb-3">
                 <Link
                   href={"/"}
                   className="flex flex-row items-center pb-3 cursor-pointer"
@@ -56,13 +56,6 @@ export default function ForgotPassword() {
                 </div>
               </div>
               <ForgotPasswordForm />
-            </div>
-            <div>
-              <p className="text-xs">
-                Protected by reCAPTCHA and subject to the{" "}
-                <span className="text-primary">Google Privacy Policy</span> and{" "}
-                <span className="text-primary">Terms of Service</span>.
-              </p>
             </div>
           </div>
         </div>
