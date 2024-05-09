@@ -6,7 +6,7 @@ export default function Hero() {
     <section className="bg-secondary font-body text-white">
       <div className="grid grid-cols-1 c-container py-20 gap-8 md:grid-cols-2">
         <div className="space-y-6 py-12 md:py-0 flex justify-center flex-col">
-          <h1 className="text-5xl md:text-[65px] font-medium leading-tight tracking-tight">
+          <h1 className="text-5xl md:text-[65px] font-semibold leading-tight tracking-tight">
             Teams In Sync Perform Better
           </h1>
           <p className="text-xl md:text-3xl font-medium">

@@ -2,6 +2,8 @@
 
 import { motion, MotionValue, useScroll, useTransform } from "framer-motion";
 import React, { useRef } from "react";
+import { IconType } from "react-icons";
+import { FaUpload } from "react-icons/fa";
 
 export default function Process() {
   const container = useRef(null);
@@ -22,33 +24,74 @@ export default function Process() {
         </h2>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 pb-20 c-container gap-12">
-        <ProcessCard bg="bg-[#d6fec5]" y={y} />
-        <ProcessCard bg="bg-[#d7d0fe]" y={y2} />
-        <ProcessCard bg="bg-[#fefec6]" y={y3} />
+        <ProcessCard data={progress[0]} bg="bg-[#d6fec5]" y={y} />
+        <ProcessCard data={progress[1]} bg="bg-[#d7d0fe]" y={y2} />
+        <ProcessCard data={progress[2]} bg="bg-[#fefec6]" y={y3} />
       </div>
     </section>
   );
 }
 
-function ProcessCard({ bg, y }: { bg: string; y: MotionValue }) {
+function ProcessCard({
+  bg,
+  y,
+  data,
+}: {
+  bg: string;
+  y: MotionValue;
+  data: IProgress;
+}) {
   return (
     <motion.div style={{ y }} className={"p-8 space-y-6 rounded-2xl " + bg}>
       <div className="flex justify-center items-center">
-        <div className="bg-white rounded-full h-20 w-20"></div>
+        <div className="bg-white rounded-full h-20 w-20 flex justify-center items-center">
+          {data.icon}
+        </div>
       </div>
-      <h3 className="text-xl font-semibold text-center">Upload Your Meeting</h3>
+      <h3 className="text-xl font-semibold text-center">{data.title}</h3>
       <p className="text-center">Upload your team meeting recording.</p>
-      <p className="text-center">
-        Invite-only access ensures only authorized and permissioned team members
-        can see the analysis.
-      </p>
-      <p className="text-center">
-        Privacy defaults and data anonymiztion keep your information secure.
-      </p>
-      <p className="text-center">
-        Users maintain full control of who sees what information on the
-        platform.
-      </p>
+      {data.description.map((i) => (
+        <p className="text-center" key={i}>
+          {i}
+        </p>
+      ))}
     </motion.div>
   );
 }
+
+interface IProgress {
+  title: string;
+  description: string[];
+  icon: any;
+}
+
+const progress: IProgress[] = [
+  {
+    title: "Upload your meeting",
+    description: [
+      "Upload your team meeting recording.",
+      "Invite-only access ensures only authorized and permissioned team members can see the analysis.",
+      "Privacy defaults and data anonymiztion keep your information secure.",
+      "Users maintain full control of who sees what information on the platform.",
+    ],
+    icon: <FaUpload className="text-2xl" />,
+  },
+  {
+    title: "Syneurgy AI Analysis",
+    description: [
+      "Our platform analyzes elements of neurobiological, physiological, and behavioral synchrony.",
+      "Brains + Bodies + Behaviors - are the foundational components of connection, communication, and teamwork.",
+      "Understand these elements at the foundational level of our biology.",
+    ],
+    icon: <FaUpload className="text-2xl" />,
+  },
+  {
+    title: "The Right Next Step",
+    description: [
+      "Receive personalized, individual and team behaviors to incorporate into your daily practice that help to grow ability in an incremental and natural way.",
+      "Receive meaningful data on how team behaviors improve performance.",
+      "Build habits that support the key drivers of your specific team's performance.",
+    ],
+    icon: <FaUpload className="text-2xl" />,
+  },
+];

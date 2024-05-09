@@ -15,7 +15,7 @@ export default function Features() {
       </div>
       <div className="c-container space-y-24">
         <FeatureCard data={features[0]} />
-        <FeatureCard rev data={features[0]} />
+        <FeatureCard rev data={features[1]} />
         <FeatureCard data={features[2]} />
         <FeatureCard rev data={features[3]} />
       </div>
@@ -41,12 +41,18 @@ function FeatureCard({ data, rev }: { rev?: boolean; data: IFeature }) {
       <div className="flex-1 space-y-4 py-6 md:py-20">
         <h2 className="text-2xl md:text-3xl font-semibold">{data.title}</h2>
         <h3 className="text-xl md:text-2xl font-medium">{data.subtitle}</h3>
-        <p className="text-sm sm:text-base md:text-lg">{data.description}</p>
+        <div className="space-y-4">
+          {data.description.map((i) => (
+            <p className="text-sm sm:text-base md:text-lg" key={i}>
+              {i}
+            </p>
+          ))}
+        </div>
       </div>
       <div className="flex-1">
         <motion.div style={{ y }}>
           <Image
-            src="/card.png"
+            src={data.thumbnail}
             height={500}
             width={500}
             className="w-full md:h-[480px] object-cover"
