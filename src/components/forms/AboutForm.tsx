@@ -67,7 +67,12 @@ export const UPDATE_USER_ABOUT = graphql(`
   }
 `);
 
-export default function AboutForm() {
+interface IFormProps {
+  progress: string;
+  setProgress: React.Dispatch<React.SetStateAction<string>>;
+}
+
+export default function AboutForm({ progress, setProgress }: IFormProps) {
   const { toast } = useToast();
   const router = useRouter();
 
@@ -85,7 +90,7 @@ export default function AboutForm() {
         title: "Details updated",
         description: "Details updated successfully.",
       });
-      // return router.push("/auth/verification");
+      return router.push("/");
     },
     onError: (error) => {
       return toast({
@@ -120,7 +125,7 @@ export default function AboutForm() {
   });
 
   return (
-    <div className="pt-20 flex-1">
+    <div className="pt-8 flex-1">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
@@ -205,6 +210,14 @@ export default function AboutForm() {
             />
           </div>
           <div className="flex-1 flex flex-col justify-end">
+            {/* <Button
+              type="submit"
+              size="lg"
+              onClick={() => setProgress((v) => String(Number(v) - 1))}
+              className="rounded-full w-full bg-white hover:bg-white/90"
+            >
+              Back
+            </Button> */}
             <Button
               type="submit"
               size="lg"
@@ -216,7 +229,7 @@ export default function AboutForm() {
                   <AiOutlineReload className="animate-spin" />
                 </span>
               ) : (
-                <span>Continue</span>
+                <span>Finish</span>
               )}
             </Button>
           </div>

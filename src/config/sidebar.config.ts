@@ -1,7 +1,7 @@
 import { IconType } from "react-icons";
 import { BiHome } from "react-icons/bi";
 import { GrGroup } from "react-icons/gr";
-import { MdGridView, MdOutlineLibraryBooks } from "react-icons/md";
+import { MdOutlineLibraryBooks } from "react-icons/md";
 // import { PiVideoConferenceLight } from "react-icons/pi";
 
 interface ISidebarSubItem {

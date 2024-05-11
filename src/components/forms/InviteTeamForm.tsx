@@ -120,7 +120,7 @@ export default function InviteTeam() {
   }, []);
 
   return (
-    <div className="pt-20 flex-1">
+    <div className="pt-8 flex-1">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}

@@ -35,7 +35,12 @@ const CREATE_TEAM = graphql(`
   }
 `);
 
-export default function GetStarted() {
+interface IFormProps {
+  progress: string;
+  setProgress: React.Dispatch<React.SetStateAction<string>>;
+}
+
+export default function GetStarted({ progress, setProgress }: IFormProps) {
   const { toast } = useToast();
   const router = useRouter();
   const { data: session } = useSession();
@@ -52,7 +57,7 @@ export default function GetStarted() {
         title: "Team Created",
         description: "",
       });
-      // return router.push("/auth/verification");
+      setProgress(String(Number(progress) + 1));
     },
     onError: (error) => {
       return toast({
@@ -73,7 +78,7 @@ export default function GetStarted() {
     onSuccess: (response) => {
       updateUser({
         sub: session?.user.sub,
-        step: "3",
+        step: "2",
       } as any);
     },
     onError: (error) => {
@@ -100,7 +105,7 @@ export default function GetStarted() {
   });
 
   return (
-    <div className="pt-20 flex-1">
+    <div className="pt-8 flex-1">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
