@@ -1,13 +1,11 @@
 "use client";
 
 import {
-  TAboutFormSchema,
   TOnboardingHomeSchema,
   onboardingHomeSchema,
 } from "@/components/forms/onboarding.schema";
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { useToast } from "@/components/ui/use-toast";
@@ -24,8 +22,8 @@ import { Button } from "../ui/button";
 import { AiOutlineReload } from "react-icons/ai";
 import { graphql } from "@/services/gql";
 import { gql } from "@/services/clients/graphql.client";
-import { useSession } from "next-auth/react";
-import { UPDATE_USER_ABOUT } from "./AboutForm";
+import useUpdateUser from "@/hooks/useUpdateUserStep";
+import { useOnboardingData } from "@/contexts/onboarding.context";
 
 const CREATE_TEAM = graphql(`
   mutation createTeam($createdBy: ID!, $name: String!) {
@@ -42,58 +40,35 @@ interface IFormProps {
 
 export default function GetStarted({ progress, setProgress }: IFormProps) {
   const { toast } = useToast();
-  const router = useRouter();
-  const { data: session } = useSession();
+  const { user } = useOnboardingData();
 
-  const { mutate: updateUser, isPending: isUpdateUserPending } = useMutation<
-    any,
-    any,
-    TAboutFormSchema
-  >({
-    mutationFn: async (variables: any) =>
-      gql.request(UPDATE_USER_ABOUT, variables),
-    onSuccess: (response) => {
-      toast({
-        title: "Team Created",
-        description: "",
-      });
-      setProgress(String(Number(progress) + 1));
-    },
-    onError: (error) => {
-      return toast({
-        title: "Error",
-        description:
-          error?.response?.data?.error?.message ||
-          "An error occurred while creating account.",
-      });
-    },
+  const { mutate: updateUser } = useUpdateUser({
+    progress,
+    setProgress,
   });
 
-  const { mutate, isPending, isError, error } = useMutation<
-    any,
-    any,
-    TOnboardingHomeSchema
-  >({
+  const { mutate, isPending } = useMutation<any, any, TOnboardingHomeSchema>({
     mutationFn: async (variables: any) => gql.request(CREATE_TEAM, variables),
     onSuccess: (response) => {
+      console.log({ response });
+
       updateUser({
-        sub: session?.user.sub,
+        sub: user.sub,
+        firstTeam: response?.team.id,
         step: "2",
       } as any);
     },
     onError: (error) => {
       return toast({
         title: "Error",
-        description:
-          error?.response?.data?.error?.message ||
-          "An error occurred while creating account.",
+        description: "An error occurred while creating team.",
       });
     },
   });
 
   async function onSubmit(data: TOnboardingHomeSchema) {
     // console.log({ data });
-    mutate({ ...data, createdBy: session?.user.sub } as any);
+    mutate({ ...data, createdBy: user.sub } as any);
   }
 
   const form = useForm<TOnboardingHomeSchema>({

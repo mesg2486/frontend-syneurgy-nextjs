@@ -1,16 +1,16 @@
 "use client";
 
-// import {
-//   TAboutFormSchema,
-//   aboutFormSchema,
-// } from "@/components/forms/onboarding.schema";
+import {
+  TMeetingSchema,
+  meetingSchema,
+} from "@/components/forms/onboarding.schema";
 import { Input } from "@/components/ui/input";
 // import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
 import React, { ChangeEvent, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useToast } from "@/components/ui/use-toast";
 import { useMutation } from "@tanstack/react-query";
+import { format } from "date-fns";
 import {
   Form,
   FormControl,
@@ -23,7 +23,6 @@ import { Button } from "../ui/button";
 import { AiOutlineReload } from "react-icons/ai";
 import { gql } from "@/services/clients/graphql.client";
 import { graphql } from "@/services/gql";
-import { useSession } from "next-auth/react";
 import { FaUpload } from "react-icons/fa6";
 import { HiDocument } from "react-icons/hi";
 import {
@@ -33,47 +32,57 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
-import Uploader from "../modals/Uploader";
 import usePublicUpload from "@/hooks/usePublicUpload";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import { Calendar } from "../ui/calendar";
+import { CalendarIcon } from "@radix-ui/react-icons";
+import { cn } from "@/lib/utils";
+import useUpdateUser from "@/hooks/useUpdateUserStep";
+import { useOnboardingData } from "@/contexts/onboarding.context";
 
-export const UPDATE_USER_ABOUT = graphql(`
-  mutation updateUser(
-    $step: String
-    $onboarded: Boolean
-    $sub: ID!
-    $username: String
-    $email: String
-    $status: String
-    $lastName: String
-    $firstName: String
-    $country: String
-    $company: String
-    $dob: String
-    $avatar: String
-    $phone: String
-    $position: String
-    $resultPrivacy: Boolean
+export const CREATE_MEETING = graphql(`
+  mutation createMeeting(
+    $teamId: String!
+    $userId: String!
+    $name: String!
+    $synchrony: String
+    $dimensions: String
+    $performance: String
+    $sentiment: String
+    $highlights: String
+    $type: String!
+    $url: String!
+    $thumbnail: String
+    $date: String!
   ) {
-    user: updateUser(
+    meeting: createMeeting(
       input: {
-        step: $step
-        onboarded: $onboarded
-        lastName: $lastName
-        firstName: $firstName
-        country: $country
-        company: $company
-        dob: $dob
-        avatar: $avatar
-        phone: $phone
-        position: $position
-        resultPrivacy: $resultPrivacy
-        status: $status
-        sub: $sub
-        username: $username
-        email: $email
+        teamId: $teamId
+        userId: $userId
+        name: $name
+        synchrony: $synchrony
+        dimensions: $dimensions
+        performance: $performance
+        sentiment: $sentiment
+        highlights: $highlights
+        type: $type
+        url: $url
+        thumbnail: $thumbnail
+        date: $date
       }
     ) {
-      sub
+      id
+      name
+      synchrony
+      dimensions
+      performance
+      sentiment
+      highlights
+      type
+      url
+      thumbnail
+      date
     }
   }
 `);
@@ -86,61 +95,70 @@ interface IFormProps {
 export default function UploadMeeting({ progress, setProgress }: IFormProps) {
   const [url, setUrl] = useState("");
   const { toast } = useToast();
-  const router = useRouter();
-  const { data: session } = useSession();
+  const { user, refetchUser } = useOnboardingData();
 
   const { mutate: upload } = usePublicUpload({
-    sub: session?.user.sub,
+    sub: user?.sub,
     setUrl,
     type: "profile",
   });
 
-  // const { mutate, isPending, isError, error } = useMutation<
-  //   any,
-  //   any,
-  //   TAboutFormSchema
-  // >({
-  //   mutationFn: async (variables: any) =>
-  //     gql.request(UPDATE_USER_ABOUT, variables),
-  //   onSuccess: (response) => {
-  //     toast({
-  //       title: "Details updated",
-  //       description: "Details updated successfully.",
-  //     });
-  //     setProgress(String(Number(progress) + 1));
-  //   },
-  //   onError: (error) => {
-  //     return toast({
-  //       title: "Error",
-  //       description:
-  //         error?.response?.data?.error?.message ||
-  //         "An error occurred while creating account.",
-  //     });
-  //   },
-  // });
+  console.log({ user });
 
-  const isPending = false;
+  // update step in user
+  const { mutate: updateUser } = useUpdateUser({
+    progress,
+    setProgress,
+  });
 
-  async function onSubmit(data: TAboutFormSchema) {
-    console.log({ data });
-    setProgress("3");
-    // mutate({
-    //   ...data,
-    //   sub: session?.user.sub,
-    //   step: "3",
-    // } as any);
+  const { mutate, isPending, isError, error } = useMutation<
+    any,
+    any,
+    TMeetingSchema
+  >({
+    mutationFn: async (variables: any) =>
+      gql.request(CREATE_MEETING, variables),
+    onSuccess: (response) => {
+      console.log(response);
+      updateUser({
+        sub: user.sub,
+        step: "3",
+        firstMeeting: response.meeting.id,
+      } as any);
+      refetchUser();
+    },
+    onError: (error) => {
+      return toast({
+        title: "Error",
+        description: "An error occurred while updating meeting details.",
+      });
+    },
+  });
+
+  async function onSubmit(data: TMeetingSchema) {
+    console.log({ data, date: data.date.toISOString() });
+    if (!url)
+      toast({
+        title: "Please upload a file",
+        description: "Upload a file to submit the form",
+      });
+    mutate({
+      ...data,
+      sub: user.sub,
+      url,
+      userId: user.sub,
+      teamId: "team",
+      date: data.date.toISOString(),
+    } as any);
   }
 
-  const form = useForm<TAboutFormSchema>({
-    // resolver: zodResolver(aboutFormSchema),
+  const form = useForm<TMeetingSchema>({
+    resolver: zodResolver(meetingSchema),
     mode: "onChange",
     defaultValues: {
-      company: "",
-      // country: "",
-      firstName: "",
-      lastName: "",
-      position: "",
-      // privacy: true,
+      date: new Date(),
+      name: "",
+      // type: "",
     },
   });
 
@@ -234,19 +252,19 @@ export default function UploadMeeting({ progress, setProgress }: IFormProps) {
             </div>
             <FormField
               control={form.control}
-              name="firstName"
+              name="type"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Meeting Type</FormLabel>
                   <FormControl>
-                    <Select {...field}>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
                       <SelectTrigger className="border-0 border-b border-b-white/60 rounded-none px-0">
                         <SelectValue placeholder="Select a Course" />
                       </SelectTrigger>
                       <SelectContent className="">
-                        <SelectItem value="creative">Creative</SelectItem>
-                        <SelectItem value="creative">Creative</SelectItem>
-                        <SelectItem value="creative">Creative</SelectItem>
                         <SelectItem value="creative">Creative</SelectItem>
                       </SelectContent>
                     </Select>
@@ -260,27 +278,49 @@ export default function UploadMeeting({ progress, setProgress }: IFormProps) {
             />
             <FormField
               control={form.control}
-              name="firstName"
+              name="date"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="flex flex-col">
                   <FormLabel>Date</FormLabel>
-                  <FormControl>
-                    <Input
-                      type="date"
-                      className="border-0 border-b border-b-white/60 rounded-none"
-                      {...field}
-                    />
-                  </FormControl>
-                  {/* <FormDescription>
-        This is your public display name.
-      </FormDescription> */}
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <FormControl>
+                        <Button
+                          variant={"outline"}
+                          className={cn(
+                            "pl-3 text-left font-normal bg-secondary hover:bg-secondary border-white/30 w-full",
+                            !field.value && "",
+                          )}
+                        >
+                          {field.value ? (
+                            format(field.value, "PPP")
+                          ) : (
+                            <span>Pick a date</span>
+                          )}
+                          <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                        </Button>
+                      </FormControl>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0" align="start">
+                      <Calendar
+                        mode="single"
+                        className="bg-tertiary"
+                        selected={field.value as any}
+                        onSelect={field.onChange}
+                        disabled={(date) =>
+                          date > new Date() || date < new Date("1900-01-01")
+                        }
+                        initialFocus
+                      />
+                    </PopoverContent>
+                  </Popover>
                   <FormMessage />
                 </FormItem>
               )}
             />
             <FormField
               control={form.control}
-              name="firstName"
+              name="name"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Meeting Name</FormLabel>
@@ -315,6 +355,11 @@ export default function UploadMeeting({ progress, setProgress }: IFormProps) {
             </Button>
           </div>
         </form>
+        <div className="flex justify-center items-center text-xs pt-4">
+          <button onClick={() => setProgress(String(Number(progress) + 1))}>
+            Remind me later
+          </button>
+        </div>
       </Form>
     </div>
   );

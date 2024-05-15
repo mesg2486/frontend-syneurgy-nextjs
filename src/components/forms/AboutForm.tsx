@@ -6,11 +6,8 @@ import {
 } from "@/components/forms/onboarding.schema";
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { useToast } from "@/components/ui/use-toast";
-import { useMutation } from "@tanstack/react-query";
 import {
   Form,
   FormControl,
@@ -21,9 +18,9 @@ import {
 } from "@/components/ui/form";
 import { Button } from "../ui/button";
 import { AiOutlineReload } from "react-icons/ai";
-import { gql } from "@/services/clients/graphql.client";
 import { graphql } from "@/services/gql";
 import { useSession } from "next-auth/react";
+import useUpdateUser from "@/hooks/useUpdateUserStep";
 
 export const UPDATE_USER_ABOUT = graphql(`
   mutation updateUser(
@@ -42,6 +39,8 @@ export const UPDATE_USER_ABOUT = graphql(`
     $phone: String
     $position: String
     $resultPrivacy: Boolean
+    $firstTeam: String
+    $firstMeeting: String
   ) {
     user: updateUser(
       input: {
@@ -60,6 +59,8 @@ export const UPDATE_USER_ABOUT = graphql(`
         sub: $sub
         username: $username
         email: $email
+        firstTeam: $firstTeam
+        firstMeeting: $firstMeeting
       }
     ) {
       sub
@@ -73,33 +74,11 @@ interface IFormProps {
 }
 
 export default function AboutForm({ progress, setProgress }: IFormProps) {
-  const { toast } = useToast();
-  const router = useRouter();
-
   const { data: session } = useSession();
 
-  const { mutate, isPending, isError, error } = useMutation<
-    any,
-    any,
-    TAboutFormSchema
-  >({
-    mutationFn: async (variables: any) =>
-      gql.request(UPDATE_USER_ABOUT, variables),
-    onSuccess: (response) => {
-      toast({
-        title: "Details updated",
-        description: "Details updated successfully.",
-      });
-      return router.push("/");
-    },
-    onError: (error) => {
-      return toast({
-        title: "Error",
-        description:
-          error?.response?.data?.error?.message ||
-          "An error occurred while creating account.",
-      });
-    },
+  const { mutate, isPending } = useUpdateUser({
+    progress,
+    setProgress,
   });
 
   async function onSubmit(data: TAboutFormSchema) {
@@ -107,7 +86,7 @@ export default function AboutForm({ progress, setProgress }: IFormProps) {
     mutate({
       ...data,
       sub: session?.user.sub,
-      step: "2",
+      step: "4",
     } as any);
   }
 

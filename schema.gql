@@ -4,11 +4,26 @@ input CreateInvitationsInput {
   invited: Boolean!
 }
 
+input CreateMeetingInput {
+  name: String!
+  synchrony: String
+  dimensions: String
+  performance: String
+  sentiment: String
+  highlights: String
+  url: String!
+  thumbnail: String
+  type: String!
+  userId: String!
+  teamId: String!
+  date: String!
+}
+
 input CreateTeamInput {
   name: String!
   createdBy: ID!
   goals: String
-  invitations: CreateInvitationsInput
+  invitations: [CreateInvitationsInput]
   engagementLevel: String
   teamInSync: String
   syncHistory: String
@@ -38,6 +53,10 @@ input CreateUserInput {
   position: String
 }
 
+input DeleteMeetingInput {
+  id: ID!
+}
+
 input DeleteTeamInput {
   id: ID!
 }
@@ -50,6 +69,27 @@ type Invitations {
   email: String!
   message: String
   invited: Boolean!
+}
+
+type Meeting {
+  id: ID!
+  name: String!
+  synchrony: String
+  dimensions: String
+  performance: String
+  sentiment: String
+  highlights: String
+  url: String!
+  thumbnail: String
+  type: String!
+  userId: String!
+  teamId: String!
+  date: String!
+}
+
+type MeetingConnection {
+  items: [Meeting]
+  nextToken: String
 }
 
 input ModelSizeInput {
@@ -103,6 +143,22 @@ input TableIntFilterInput {
   gt: Int
   between: [Int]
   attributeExists: Boolean
+}
+
+input TableMeetingFilterInput {
+  id: TableIDFilterInput
+  name: TableStringFilterInput
+  synchrony: TableStringFilterInput
+  dimensions: TableStringFilterInput
+  performance: TableStringFilterInput
+  sentiment: TableStringFilterInput
+  highlights: TableStringFilterInput
+  url: TableStringFilterInput
+  thumbnail: TableStringFilterInput
+  type: TableStringFilterInput
+  userId: TableStringFilterInput
+  teamId: TableStringFilterInput
+  date: TableIntFilterInput
 }
 
 input TableStringFilterInput {
@@ -160,7 +216,7 @@ type Team {
   name: String!
   createdBy: ID!
   goals: String
-  invitations: Invitations
+  invitations: [Invitations]
   engagementLevel: String
   teamInSync: String
   syncHistory: String
@@ -181,12 +237,28 @@ input UpdateInvitationsInput {
   invited: Boolean
 }
 
+input UpdateMeetingInput {
+  id: ID!
+  name: String
+  synchrony: String
+  dimensions: String
+  performance: String
+  sentiment: String
+  highlights: String
+  url: String
+  thumbnail: String
+  type: String
+  userId: String
+  teamId: String
+  date: String
+}
+
 input UpdateTeamInput {
   id: ID!
   name: String
   createdBy: ID
   goals: String
-  invitations: UpdateInvitationsInput
+  invitations: [UpdateInvitationsInput]
   engagementLevel: String
   teamInSync: String
   syncHistory: String
@@ -213,6 +285,8 @@ input UpdateUserInput {
   country: String
   company: String
   position: String
+  firstMeeting: String
+  firstTeam: String
   resultPrivacy: Boolean
   updatedAt: String
 }
@@ -235,6 +309,8 @@ type User {
   company: String
   position: String
   resultPrivacy: Boolean!
+  firstMeeting: String
+  firstTeam: String
   createdAt: String!
   updatedAt: String!
 }
@@ -251,6 +327,9 @@ type Mutation {
   createTeam(input: CreateTeamInput!): Team
   updateTeam(input: UpdateTeamInput!): Team
   deleteTeam(input: DeleteTeamInput!): Team
+  createMeeting(input: CreateMeetingInput!): Meeting
+  updateMeeting(input: UpdateMeetingInput!): Meeting
+  deleteMeeting(input: DeleteMeetingInput!): Meeting
 }
 
 type Query {
@@ -266,6 +345,12 @@ type Query {
     limit: Int
     nextToken: String
   ): TeamConnection
+  getMeeting(id: ID!): Meeting
+  listMeetings(
+    filter: TableMeetingFilterInput
+    limit: Int
+    nextToken: String
+  ): MeetingConnection
 }
 
 type Subscription {
@@ -311,4 +396,25 @@ type Subscription {
     goals: String
     invitations: String
   ): Team @aws_subscribe(mutations: ["deleteTeam"])
+  onCreateMeeting(
+    id: ID
+    name: String
+    synchrony: String
+    dimensions: String
+    performance: String
+  ): Meeting @aws_subscribe(mutations: ["createMeeting"])
+  onUpdateMeeting(
+    id: ID
+    name: String
+    synchrony: String
+    dimensions: String
+    performance: String
+  ): Meeting @aws_subscribe(mutations: ["updateMeeting"])
+  onDeleteMeeting(
+    id: ID
+    name: String
+    synchrony: String
+    dimensions: String
+    performance: String
+  ): Meeting @aws_subscribe(mutations: ["deleteMeeting"])
 }
