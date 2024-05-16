@@ -39,12 +39,15 @@ interface IFormProps {
 export default function InviteTeam({ progress, setProgress }: IFormProps) {
   const { toast } = useToast();
   const { user } = useOnboardingData();
+  console.log(user, "user");
+
   const { mutate: updateUser } = useUpdateUser({ progress, setProgress });
 
   const { mutate, isPending } = useMutation<any, any>({
     mutationFn: async (variables: any) =>
       gql.request(UPDATE_TEAM_INVITATIONS, variables),
     onSuccess: (response) => {
+      console.log(response?.team?.id, "teamId");
       updateUser({
         sub: user.sub,
         firstTeam: response?.team.id,
@@ -56,13 +59,13 @@ export default function InviteTeam({ progress, setProgress }: IFormProps) {
         title: "Error",
         description:
           error?.response?.data?.error?.message ||
-          "An error occurred while creating account.",
+          "An error occurred while updating the details.",
       });
     },
   });
 
   async function onSubmit(data: any) {
-    console.log({ data });
+    // console.log({ data });
     try {
       mutate({
         id: user.firstTeam,
@@ -88,7 +91,7 @@ export default function InviteTeam({ progress, setProgress }: IFormProps) {
     prepend({ value: "" });
   }, []);
 
-  console.log(fields);
+  // console.log(fields);
 
   return (
     <div className="pt-8 flex-1">

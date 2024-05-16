@@ -2,7 +2,7 @@ import { UPDATE_USER_ABOUT } from "@/components/forms/AboutForm";
 import { TAboutFormSchema } from "@/components/forms/onboarding.schema";
 import { toast } from "@/components/ui/use-toast";
 import { gql } from "@/services/clients/graphql.client";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 interface TUseUpdateUserProps {
   successMsg?: string;
@@ -17,10 +17,15 @@ export default function useUpdateUser({
   progress,
   setProgress,
 }: TUseUpdateUserProps) {
+  const queryClient = useQueryClient();
+
   return useMutation<any, any, TAboutFormSchema>({
     mutationFn: async (variables: any) =>
       gql.request(UPDATE_USER_ABOUT, variables),
     onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["user"],
+      });
       toast({
         title: successMsg || "Details Updated",
       });
