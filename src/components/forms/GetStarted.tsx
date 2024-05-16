@@ -51,6 +51,11 @@ export default function GetStarted({ progress, setProgress }: IFormProps) {
     mutationFn: async (variables: any) => gql.request(CREATE_TEAM, variables),
     onSuccess: (response) => {
       console.log({ response });
+      console.log({
+        sub: user.sub,
+        firstTeam: response?.team.id,
+        step: "2",
+      });
 
       updateUser({
         sub: user.sub,
@@ -67,7 +72,7 @@ export default function GetStarted({ progress, setProgress }: IFormProps) {
   });
 
   async function onSubmit(data: TOnboardingHomeSchema) {
-    // console.log({ data });
+    console.log({ data });
     mutate({ ...data, createdBy: user.sub } as any);
   }
 

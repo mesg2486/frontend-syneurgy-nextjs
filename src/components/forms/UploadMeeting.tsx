@@ -119,7 +119,11 @@ export default function UploadMeeting({ progress, setProgress }: IFormProps) {
     mutationFn: async (variables: any) =>
       gql.request(CREATE_MEETING, variables),
     onSuccess: (response) => {
-      console.log(response);
+      console.log(response, {
+        sub: user.sub,
+        step: "3",
+        firstMeeting: response.meeting.id,
+      });
       updateUser({
         sub: user.sub,
         step: "3",
@@ -194,12 +198,25 @@ export default function UploadMeeting({ progress, setProgress }: IFormProps) {
 
   const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
+
+    const maxSize = 2 * 1024 * 1024 * 1024;
+
     const { files } = e.target;
     if (!files) {
       return;
     }
-    upload(files[0]);
-    setFileName(files[0].name);
+
+    const file = files[0];
+
+    if (file.size > maxSize) {
+      return toast({
+        title: "Exceeds Size Limit",
+        description: "File size exceeds the maximum limit of 2GB.",
+      });
+    }
+
+    upload(file);
+    setFileName(file.name);
   };
 
   return (
@@ -237,6 +254,7 @@ export default function UploadMeeting({ progress, setProgress }: IFormProps) {
                         onChange={handleFileChange}
                         className="opacity-0 cursor-pointer inset-0 absolute"
                         type="file"
+                        accept=".mov,.mp4,.hevc"
                       />
                     </span>{" "}
                     to upload

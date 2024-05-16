@@ -22,7 +22,8 @@ export default function useUpdateUser({
   return useMutation<any, any, TAboutFormSchema>({
     mutationFn: async (variables: any) =>
       gql.request(UPDATE_USER_ABOUT, variables),
-    onSuccess: () => {
+    onSuccess: (data) => {
+      console.log(data, "user updated data");
       queryClient.invalidateQueries({
         queryKey: ["user"],
       });
