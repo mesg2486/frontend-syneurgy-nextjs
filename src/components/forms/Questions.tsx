@@ -22,7 +22,7 @@ import {
 } from "react-icons/hi2";
 import { onboardingQuestions } from "@/config/onboarding.config";
 import { AiOutlineReload } from "react-icons/ai";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { gql } from "@/services/clients/graphql.client";
 import { graphql } from "@/services/gql";
 import useUpdateUser from "@/hooks/useUpdateUserStep";
@@ -77,6 +77,7 @@ export default function OnboardingQuestions({
 }: IFormProps) {
   const [step, setStep] = useState(1);
   const { user } = useOnboardingData();
+  const queryClient = useQueryClient();
 
   const router = useRouter();
   const { mutate: updateUser } = useUpdateUser({
@@ -92,7 +93,7 @@ export default function OnboardingQuestions({
     {
       mutationFn: async (variables: any) =>
         gql.request(UPDATE_TEAM_QUESTIONNAIRE, variables),
-      onSuccess: (response) => {
+      onSuccess: async (response) => {
         console.log({ response });
         updateUser({
           id: user.firstTeam,
@@ -100,6 +101,7 @@ export default function OnboardingQuestions({
           step: "6",
           onboarded: true,
         } as any);
+        await queryClient.invalidateQueries({ queryKey: ["user"] });
         router.push("/");
       },
       onError: (error) => {
@@ -112,7 +114,6 @@ export default function OnboardingQuestions({
   );
 
   async function onSubmit(data: z.infer<typeof QuestionsFormSchema>) {
-    console.log(await form.trigger());
     console.log("sb");
     toast({
       title: "You submitted the following values:",
@@ -128,13 +129,27 @@ export default function OnboardingQuestions({
     } as any);
   }
 
+  const handleNext = async () => {
+    const isValid = await form.trigger(
+      onboardingQuestions.find((i) => i.step === step)?.name,
+    );
+    isValid ? setStep((v) => (step < 4 ? ++v : 4)) : null;
+  };
+
+  const handleSetStep = async (i: number) => {
+    const isValid = await form.trigger(
+      onboardingQuestions.find((i) => i.step === step)?.name,
+    );
+    isValid ? setStep(i) : null;
+  };
+
   return (
     <div className="pt-8 flex-1">
       <div className="absolute right-0 top-0 flex gap-0.5">
         {Array.from(Array(4).keys()).map((i) => (
           <div
             key={i}
-            onClick={() => setStep(i + 1)}
+            onClick={() => handleSetStep(i + 1)}
             className={`h-1.5 w-1.5 rounded-full cursor-pointer ${i + 1 <= step ? (i + 1 == step ? "bg-white/80" : "bg-primary") : "bg-white/20"}`}
           ></div>
         ))}
@@ -155,7 +170,9 @@ export default function OnboardingQuestions({
                   name={i.name}
                   render={({ field }) => (
                     <FormItem className="space-y-6">
-                      <FormLabel>{i.question}</FormLabel>
+                      <FormLabel className="text-white/90">
+                        {i.question}
+                      </FormLabel>
                       <FormControl>
                         <RadioGroup
                           onValueChange={field.onChange}
@@ -168,7 +185,10 @@ export default function OnboardingQuestions({
                               className="flex items-center space-x-3 space-y-0"
                             >
                               <FormControl>
-                                <RadioGroupItem value={i.value} />
+                                <RadioGroupItem
+                                  className="border-white"
+                                  value={i.value}
+                                />
                               </FormControl>
                               <FormLabel className="font-normal text-white/60">
                                 {i.label}
@@ -199,12 +219,7 @@ export default function OnboardingQuestions({
             <Button
               type={step < 4 ? "button" : "submit"}
               size="lg"
-              onClick={async () => {
-                const isValid = await form.trigger(
-                  onboardingQuestions.find((i) => i.step === step)?.name,
-                );
-                isValid ? setStep((v) => (step < 4 ? ++v : 4)) : null;
-              }}
+              onClick={handleNext}
               className="rounded-full w-full felx
                bg-white hover:bg-white/90"
             >

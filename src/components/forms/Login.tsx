@@ -67,7 +67,7 @@ export default function LoginForm({ className, ...props }: LoginFormProps) {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="space-y-4 text-white/60"
+          className="space-y-6 text-white/60"
         >
           <FormField
             control={form.control}
@@ -76,10 +76,7 @@ export default function LoginForm({ className, ...props }: LoginFormProps) {
               <FormItem>
                 <FormLabel>Username or Email</FormLabel>
                 <FormControl>
-                  <Input
-                    className="border-0 border-b border-b-white/60 rounded-none"
-                    {...field}
-                  />
+                  <Input {...field} />
                 </FormControl>
                 {/* <FormDescription>
                   This is your public display name.
@@ -98,13 +95,12 @@ export default function LoginForm({ className, ...props }: LoginFormProps) {
                   <>
                     <Input
                       type={showPassword ? "text" : "password"}
-                      className="border-0 border-b border-b-white/60 rounded-none"
                       {...field}
                     />
                     <button
                       onClick={() => setShowPassword((v) => !v)}
                       type="button"
-                      className="absolute right-2 top-9"
+                      className="absolute right-2 top-5"
                     >
                       {showPassword ? <HiOutlineEye /> : <HiOutlineEyeSlash />}
                     </button>

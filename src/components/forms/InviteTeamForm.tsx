@@ -145,7 +145,7 @@ export default function InviteTeam({ progress, setProgress }: IFormProps) {
                   <AiOutlineReload className="animate-spin" />
                 </span>
               ) : (
-                <span>Create Team</span>
+                <span>Invite Members</span>
               )}
             </Button>
           </div>

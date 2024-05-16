@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { Button } from "../ui/button";
 import { AiOutlinePlus } from "react-icons/ai";
@@ -8,8 +10,11 @@ import {
 } from "../ui/dropdown-menu";
 import { FaBell } from "react-icons/fa6";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { useSession } from "next-auth/react";
 
 export default function Dashnav() {
+  const { data: session } = useSession();
+
   return (
     <div className="border-b px-6 border-white/20 h-16 flex items-center justify-between">
       <div></div>
@@ -39,7 +44,7 @@ export default function Dashnav() {
                 />
                 <AvatarFallback>SG</AvatarFallback>
               </Avatar>
-              Shijia Geng
+              {session?.user.firstName}
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="bg-secondary">

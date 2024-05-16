@@ -641,11 +641,9 @@ export type GetUserQuery = {
     status: string;
     resultPrivacy: boolean;
     position?: string | null;
-    phone?: string | null;
     onboarded: boolean;
     lastName?: string | null;
     lastLogin?: string | null;
-    gender?: string | null;
     firstName?: string | null;
     firstTeam?: string | null;
     firstMeeting?: string | null;
@@ -1556,11 +1554,9 @@ export const GetUserDocument = {
                   name: { kind: "Name", value: "resultPrivacy" },
                 },
                 { kind: "Field", name: { kind: "Name", value: "position" } },
-                { kind: "Field", name: { kind: "Name", value: "phone" } },
                 { kind: "Field", name: { kind: "Name", value: "onboarded" } },
                 { kind: "Field", name: { kind: "Name", value: "lastName" } },
                 { kind: "Field", name: { kind: "Name", value: "lastLogin" } },
-                { kind: "Field", name: { kind: "Name", value: "gender" } },
                 { kind: "Field", name: { kind: "Name", value: "firstName" } },
                 { kind: "Field", name: { kind: "Name", value: "firstTeam" } },
                 {

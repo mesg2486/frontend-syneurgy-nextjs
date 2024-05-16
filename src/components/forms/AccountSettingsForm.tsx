@@ -21,7 +21,6 @@ import { Button } from "../ui/button";
 import { AiOutlineReload } from "react-icons/ai";
 import { graphql } from "@/services/gql";
 import { useSession } from "next-auth/react";
-import useUpdateUser from "@/hooks/useUpdateUserStep";
 import { countries } from "@/config/countries.config";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { LuChevronsUpDown } from "react-icons/lu";
@@ -34,6 +33,10 @@ import {
   CommandList,
 } from "../ui/command";
 import { cn } from "@/lib/utils";
+import { User } from "@/services/gql/graphql";
+import { useMutation } from "@tanstack/react-query";
+import { useToast } from "../ui/use-toast";
+import { gql } from "@/services/clients/graphql.client";
 
 export const UPDATE_USER_ABOUT = graphql(`
   mutation updateUser(
@@ -82,24 +85,35 @@ export const UPDATE_USER_ABOUT = graphql(`
 `);
 
 interface IFormProps {
-  progress: string;
-  setProgress: React.Dispatch<React.SetStateAction<string>>;
+  data?: User;
 }
 
-export default function AboutForm({ progress, setProgress }: IFormProps) {
+export default function AccountSettingsForm(props: IFormProps) {
   const { data: session } = useSession();
+  const { toast } = useToast();
 
-  const { mutate, isPending } = useUpdateUser({
-    progress,
-    setProgress,
+  const { mutate, isPending } = useMutation<any, any, TAboutFormSchema>({
+    mutationFn: async (variables: any) =>
+      gql.request(UPDATE_USER_ABOUT, variables),
+    onSuccess: () => {
+      toast({
+        title: "Details Updated",
+      });
+    },
+    onError: () => {
+      toast({
+        title: "Error",
+        description: "An error occurred while updating the details.",
+      });
+    },
   });
 
   async function onSubmit(data: TAboutFormSchema) {
     console.log({ data });
+
     mutate({
       ...data,
       sub: session?.user.sub,
-      step: "4",
     } as any);
   }
 
@@ -119,7 +133,7 @@ export default function AboutForm({ progress, setProgress }: IFormProps) {
   console.log({ countries });
 
   return (
-    <div className="pt-8 flex-1">
+    <div className="flex-1 max-w-lg bg-popover p-6 rounded-lg">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}

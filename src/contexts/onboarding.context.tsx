@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import React, { createContext, useContext, ReactNode } from "react";
 
-const GET_USER = graphql(`
+export const GET_USER = graphql(`
   query getUser($sub: ID!) {
     user: getUser(sub: $sub) {
       username
@@ -15,11 +15,9 @@ const GET_USER = graphql(`
       status
       resultPrivacy
       position
-      phone
       onboarded
       lastName
       lastLogin
-      gender
       firstName
       firstTeam
       firstMeeting

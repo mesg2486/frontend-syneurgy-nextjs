@@ -205,9 +205,9 @@ export const authOptions = {
         session.user.refreshToken = refreshToken;
         session.user.sub = data.user.sub;
         session.user.email = data.user.email;
-        session.user.firstName = data.firstName;
-        session.user.lastName = data.lastName;
-        session.user.username = data.username;
+        session.user.firstName = data.user.firstName;
+        session.user.lastName = data.user.lastName;
+        session.user.username = data.user.username;
         session.user.onboarding = data.user.onboarding;
 
         // session.user.onboarding_about = data.onboarding.about;

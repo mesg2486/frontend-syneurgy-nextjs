@@ -23,7 +23,7 @@ const documents = {
     types.UpdateTeamQuestionairreDocument,
   "\n  mutation createMeeting(\n    $teamId: String!\n    $userId: String!\n    $name: String!\n    $synchrony: String\n    $dimensions: String\n    $performance: String\n    $sentiment: String\n    $highlights: String\n    $type: String!\n    $url: String!\n    $thumbnail: String\n    $date: String!\n  ) {\n    meeting: createMeeting(\n      input: {\n        teamId: $teamId\n        userId: $userId\n        name: $name\n        synchrony: $synchrony\n        dimensions: $dimensions\n        performance: $performance\n        sentiment: $sentiment\n        highlights: $highlights\n        type: $type\n        url: $url\n        thumbnail: $thumbnail\n        date: $date\n      }\n    ) {\n      id\n      name\n      synchrony\n      dimensions\n      performance\n      sentiment\n      highlights\n      type\n      url\n      thumbnail\n      date\n    }\n  }\n":
     types.CreateMeetingDocument,
-  "\n  query getUser($sub: ID!) {\n    user: getUser(sub: $sub) {\n      username\n      updatedAt\n      sub\n      step\n      status\n      resultPrivacy\n      position\n      phone\n      onboarded\n      lastName\n      lastLogin\n      gender\n      firstName\n      firstTeam\n      firstMeeting\n      email\n      createdAt\n      country\n      company\n      avatar\n    }\n  }\n":
+  "\n  query getUser($sub: ID!) {\n    user: getUser(sub: $sub) {\n      username\n      updatedAt\n      sub\n      step\n      status\n      resultPrivacy\n      position\n      onboarded\n      lastName\n      lastLogin\n      firstName\n      firstTeam\n      firstMeeting\n      email\n      createdAt\n      country\n      company\n      avatar\n    }\n  }\n":
     types.GetUserDocument,
 };
 
@@ -75,8 +75,8 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: "\n  query getUser($sub: ID!) {\n    user: getUser(sub: $sub) {\n      username\n      updatedAt\n      sub\n      step\n      status\n      resultPrivacy\n      position\n      phone\n      onboarded\n      lastName\n      lastLogin\n      gender\n      firstName\n      firstTeam\n      firstMeeting\n      email\n      createdAt\n      country\n      company\n      avatar\n    }\n  }\n",
-): (typeof documents)["\n  query getUser($sub: ID!) {\n    user: getUser(sub: $sub) {\n      username\n      updatedAt\n      sub\n      step\n      status\n      resultPrivacy\n      position\n      phone\n      onboarded\n      lastName\n      lastLogin\n      gender\n      firstName\n      firstTeam\n      firstMeeting\n      email\n      createdAt\n      country\n      company\n      avatar\n    }\n  }\n"];
+  source: "\n  query getUser($sub: ID!) {\n    user: getUser(sub: $sub) {\n      username\n      updatedAt\n      sub\n      step\n      status\n      resultPrivacy\n      position\n      onboarded\n      lastName\n      lastLogin\n      firstName\n      firstTeam\n      firstMeeting\n      email\n      createdAt\n      country\n      company\n      avatar\n    }\n  }\n",
+): (typeof documents)["\n  query getUser($sub: ID!) {\n    user: getUser(sub: $sub) {\n      username\n      updatedAt\n      sub\n      step\n      status\n      resultPrivacy\n      position\n      onboarded\n      lastName\n      lastLogin\n      firstName\n      firstTeam\n      firstMeeting\n      email\n      createdAt\n      country\n      company\n      avatar\n    }\n  }\n"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

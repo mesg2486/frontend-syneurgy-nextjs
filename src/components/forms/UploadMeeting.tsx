@@ -209,7 +209,7 @@ export default function UploadMeeting({ progress, setProgress }: IFormProps) {
           onSubmit={form.handleSubmit(onSubmit)}
           className="gap-4 text-white/60 flex h-full flex-col"
         >
-          <div className="space-y-4">
+          <div className="space-y-6">
             <div
               onDragEnter={handleDragEnter}
               onDragOver={handleDragOver}
@@ -229,7 +229,7 @@ export default function UploadMeeting({ progress, setProgress }: IFormProps) {
               ) : (
                 <>
                   <FaUpload className="text-2xl mx-auto text-white" />
-                  <p className="pt-4">
+                  <p className="pt-4 text-xs">
                     Drag & Drop or{" "}
                     <span className="text-primary">
                       Choose file
@@ -241,7 +241,7 @@ export default function UploadMeeting({ progress, setProgress }: IFormProps) {
                     </span>{" "}
                     to upload
                   </p>
-                  <p>Mov., MP4, HEVC (Maximum 2gb)</p>
+                  <p className="text-xs">Mov., MP4, HEVC (Maximum 2gb)</p>
                 </>
               )}
             </div>
@@ -250,6 +250,22 @@ export default function UploadMeeting({ progress, setProgress }: IFormProps) {
               <span className="px-5 block">or</span>
               <span className="border-b border-white/30 block flex-1"></span>
             </div>
+            <FormField
+              control={form.control}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Meeting Name</FormLabel>
+                  <FormControl>
+                    <Input {...field} />
+                  </FormControl>
+                  {/* <FormDescription>
+        This is your public display name.
+      </FormDescription> */}
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             <FormField
               control={form.control}
               name="type"
@@ -261,7 +277,7 @@ export default function UploadMeeting({ progress, setProgress }: IFormProps) {
                       onValueChange={field.onChange}
                       defaultValue={field.value}
                     >
-                      <SelectTrigger className="border-0 border-b border-b-white/60 rounded-none px-0">
+                      <SelectTrigger className="">
                         <SelectValue placeholder="Select a Course" />
                       </SelectTrigger>
                       <SelectContent className="">
@@ -288,7 +304,7 @@ export default function UploadMeeting({ progress, setProgress }: IFormProps) {
                         <Button
                           variant={"outline"}
                           className={cn(
-                            "pl-3 text-left font-normal bg-secondary hover:bg-secondary border-white/30 w-full",
+                            "text-left border-0 border-b border-input rounded-none px-0 bg-secondary w-full",
                             !field.value && "",
                           )}
                         >
@@ -304,7 +320,6 @@ export default function UploadMeeting({ progress, setProgress }: IFormProps) {
                     <PopoverContent className="w-auto p-0" align="start">
                       <Calendar
                         mode="single"
-                        className="bg-tertiary"
                         selected={field.value as any}
                         onSelect={field.onChange}
                         disabled={(date) =>
@@ -314,25 +329,6 @@ export default function UploadMeeting({ progress, setProgress }: IFormProps) {
                       />
                     </PopoverContent>
                   </Popover>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="name"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Meeting Name</FormLabel>
-                  <FormControl>
-                    <Input
-                      className="border-0 border-b border-b-white/60 rounded-none"
-                      {...field}
-                    />
-                  </FormControl>
-                  {/* <FormDescription>
-        This is your public display name.
-      </FormDescription> */}
                   <FormMessage />
                 </FormItem>
               )}

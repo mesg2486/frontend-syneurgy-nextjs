@@ -8,6 +8,7 @@ import { QueryClient } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Toaster } from "@/components/ui/toaster";
 import NextTopLoader from "nextjs-toploader";
+import Dashnav from "../layout/Dashnav";
 
 export default function RootProvider({
   children,
@@ -29,7 +30,8 @@ export default function RootProvider({
           <div className="flex bg-secondary text-secondary-foreground">
             <Sidebar />
             <main className="flex-1 bg-secondary text-secondary-foreground">
-              {children}
+              <Dashnav />
+              <div className="px-8">{children}</div>
             </main>
             <Toaster />
           </div>

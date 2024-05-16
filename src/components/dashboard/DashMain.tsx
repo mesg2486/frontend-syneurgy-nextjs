@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { FaHand } from "react-icons/fa6";
 import {

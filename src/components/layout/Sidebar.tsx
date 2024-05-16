@@ -68,7 +68,7 @@ export default function Sidebar() {
           <button onClick={() => signOut()}>
             <FiLogOut />
           </button>
-          <Link href={"/settings"}>
+          <Link href={"/settings/account"}>
             <FaCog />
           </Link>
         </div>
