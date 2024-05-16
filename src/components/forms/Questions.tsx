@@ -35,11 +35,11 @@ const QuestionsFormSchema = z.object(
       obj.name,
       z.enum(
         onboardingQuestions
-          .find((q) => q.name === obj.name)
-          .answers.map((a) => a.value)
+          ?.find((q) => q.name === obj.name)
+          ?.answers.map((a) => a.value) as any,
       ),
-    ])
-  )
+    ]),
+  ),
 );
 
 const UPDATE_TEAM_QUESTIONNAIRE = graphql(`
@@ -109,7 +109,7 @@ export default function OnboardingQuestions({
           description: "An error occurred while creating team.",
         });
       },
-    }
+    },
   );
 
   async function onSubmit(data: z.infer<typeof QuestionsFormSchema>) {
@@ -121,14 +121,14 @@ export default function OnboardingQuestions({
 
   const handleNext = async () => {
     const isValid = await form.trigger(
-      onboardingQuestions.find((i) => i.step === step)?.name
+      onboardingQuestions.find((i) => i.step === step)?.name,
     );
     isValid ? setStep((v) => (step < 4 ? ++v : 4)) : null;
   };
 
   const handleSetStep = async (i: number) => {
     const isValid = await form.trigger(
-      onboardingQuestions.find((i) => i.step === step)?.name
+      onboardingQuestions.find((i) => i.step === step)?.name,
     );
     isValid ? setStep(i) : null;
   };

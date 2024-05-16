@@ -13,7 +13,7 @@ export default async function OnboardingPage() {
       step
     }
   }`,
-    { sub: session?.user.sub }
+    { sub: session?.user.sub },
   );
 
   return <Onboarding step={data?.user.step} />;
