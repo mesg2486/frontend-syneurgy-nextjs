@@ -20,6 +20,7 @@ import {
 } from "../ui/pagination";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
+import Link from "next/link";
 
 export default function Meetings() {
   return (
@@ -72,7 +73,9 @@ export default function Meetings() {
               {meetings?.map((meeting, index) => (
                 <div key={index} className="bg-slate-800 rounded-lg">
                   <div className="h-32 overflow-hidden rounded-t-lg">
-                    <img className="object-cover" src={meeting.thumbnail} />
+                    <Link href={"/meeting"}>
+                      <img className="object-cover" src={meeting.thumbnail} />
+                    </Link>
                   </div>
                   <div className="p-4">
                     <p className="opacity-80 font-extralight">{meeting.date}</p>
