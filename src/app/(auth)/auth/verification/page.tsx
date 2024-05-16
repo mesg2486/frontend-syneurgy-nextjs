@@ -6,7 +6,7 @@ import { MdMarkunreadMailbox } from "react-icons/md";
 
 export default function Verification() {
   return (
-    <div className="h-screen relative flex justify-center items-center bg-secondary text-secondary-foreground">
+    <div className="min-h-dvh h-full relative flex justify-center items-center bg-secondary text-secondary-foreground">
       <div className="lg:p-8 max-w-sm mx-auto pt-16 md:pt-0 flex justify-center flex-col gap-6 items-center">
         <Link
           href={"/"}

@@ -49,11 +49,11 @@ export default function Menu() {
           </DrawerHeader>
           <div className="flex-1 px-5 pt-16 items-end flex flex-col gap-4 font-medium">
             <MenuLink link="/" title="Home" />
-            <MenuLink link="/" title="The Science" />
-            <MenuLink link="/" title="About Us" />
-            <MenuLink link="/" title="Pricing" />
-            <MenuLink link="/" title="Blog" />
-            <MenuLink link="/" title="Contact" />
+            <MenuLink link="/science" title="The Science" />
+            <MenuLink link="/about" title="About Us" />
+            <MenuLink link="/pricing" title="Pricing" />
+            <MenuLink link="/blog" title="Blog" />
+            <MenuLink link="/contact" title="Contact" />
             <button className="h-7 px-6 text-sm rounded-full font-semibold bg-primary text-[#1B212F]">
               Request Demo
             </button>
@@ -65,9 +65,11 @@ export default function Menu() {
                 Dashboard
               </Link>
             ) : (
-              <button className="h-7 px-6 text-sm rounded-full font-semibold bg-primary text-[#1B212F]">
-                Login
-              </button>
+              <Link href={`/auth/login`}>
+                <button className="h-7 px-6 text-sm rounded-full font-semibold bg-primary text-[#1B212F]">
+                  Login
+                </button>
+              </Link>
             )}
             {/* <MenuLink link="/#insights" title="Insights" /> */}
             {/* <DrawerClose>

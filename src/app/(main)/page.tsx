@@ -14,7 +14,7 @@ import { useEffect } from "react";
 export default function Home() {
   const { data: session, status } = useSession();
 
-  const { data, isLoading, refetch } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ["user", session?.user.sub],
     queryFn: async () => {
       return await gql.request(GET_USER, {
@@ -26,13 +26,15 @@ export default function Home() {
 
   const router = useRouter();
 
+  console.log({ data });
+
   useEffect(() => {
     if (status === "loading") return;
     if (isLoading) return;
     if (!data?.user) return;
     if (data.user.onboarded) return;
     router.push("/auth/onboarding");
-  }, [session, router, status]);
+  }, [session, router, status, data?.user, isLoading]);
 
   return (
     <>

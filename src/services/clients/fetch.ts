@@ -6,6 +6,7 @@ export async function fetchql<Q, V>(query: Q, variables: V) {
       "Content-Type": "application/json",
       "x-api-key": process.env.AWS_APPSYNC_API_KEY,
     },
+    cache: "no-store",
     body: JSON.stringify({
       query,
       variables,

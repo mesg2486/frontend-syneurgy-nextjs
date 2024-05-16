@@ -130,7 +130,7 @@ export default function RegisterForm({
                     <button
                       onClick={() => setShowPassword((v) => !v)}
                       type="button"
-                      className="absolute right-2 top-9"
+                      className="absolute right-2 top-5"
                     >
                       {showPassword ? <HiOutlineEye /> : <HiOutlineEyeSlash />}
                     </button>

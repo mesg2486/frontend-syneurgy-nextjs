@@ -10,15 +10,32 @@ import { onboarding } from "@/config/onboarding.config";
 import InviteTeam from "../forms/InviteTeamForm";
 import { OnboardingProvider } from "@/contexts/onboarding.context";
 import OnboardingQuestions from "../forms/Questions";
+import { HiArrowLongRight } from "react-icons/hi2";
 
 export default function Onboarding({ step }: { step: string }) {
   const [progress, setProgress] = useState<string>(step);
 
   const content = onboarding.find((item) => item.step === progress);
 
+  if (step === "6")
+    return (
+      <div className="bg-secondary min-h-dvh h-full flex justify-center items-center text-secondary-foreground relative">
+        <div className="flex justify-center items-center flex-col gap-4">
+          You&apos;re completed this step.
+          <Link
+            href={`/dashboard`}
+            className="flex justify-center items-center gap-2 text-primary"
+          >
+            Dashboard
+            <HiArrowLongRight />
+          </Link>
+        </div>
+      </div>
+    );
+
   return (
     <OnboardingProvider>
-      <div className="bg-secondary h-screen flex justify-between items-center text-secondary-foreground relative">
+      <div className="bg-secondary min-h-dvh h-full flex justify-between items-center text-secondary-foreground relative">
         <Link
           href={"/"}
           className="flex flex-row gap-3 items-center pb-3 cursor-pointer absolute top-6 left-6"
@@ -32,11 +49,11 @@ export default function Onboarding({ step }: { step: string }) {
           />
           <p className="font-bold text-xl">Syneurgy</p>
         </Link>
-        <div className="h-full flex-1 my-auto py-32 flex justify-end">
+        <div className="h-full flex-1 md:py-32 px-6 py-20 flex justify-center md:justify-end">
           <div className="space-y-4 h-full flex flex-col w-full max-w-sm relative">
-            <div className="text-xs pb-4">
-              <span>{progress}</span>
-              {"/"}
+            <div className="text-xs pb-4 font-semibold text-white/60">
+              <span className="text-white">{progress}</span>
+              {" / "}
               <span>5</span>
             </div>
             <h2 className="text-4xl font-medium max-w-sm">{content?.title}</h2>
@@ -61,8 +78,8 @@ export default function Onboarding({ step }: { step: string }) {
             )}
           </div>
         </div>
-        <div className="flex-1 flex justify-end pl-20 h-full">
-          <div className="bg-[#262E40] text-secondary-foreground h-full flex-1 max-w-lg flex flex-col justify-center p-16 gap-6 items-center">
+        <div className="h-full min-h-dvh flex-1 hidden md:flex md:justify-end pl-20">
+          <div className="bg-[#262E40] text-secondary-foreground h-full min-h-dvh flex-1 max-w-lg flex flex-col justify-center p-16 gap-6 items-center">
             <img
               src={content?.thumbnail}
               alt="marc-benioff"

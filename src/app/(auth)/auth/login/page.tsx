@@ -3,8 +3,8 @@ import LoginForm from "@/components/forms/Login";
 
 export default function Login({ params }: any) {
   return (
-    <div className="h-screen bg-secondary">
-      <div className="h-screen flex flex-col md:flex-row items-center justify-center gap-x-6 lg:gap-x-20 container">
+    <div className="min-h-dvh h-full bg-secondary">
+      <div className="min-h-dvh h-full flex flex-col md:flex-row items-center justify-center gap-x-6 lg:gap-x-20 container">
         <div className="md:flex-1"></div>
         <div className="md:flex justify-center hidden items-center absolute left-0 top-0 bottom-0 right-1/2">
           <img
@@ -13,7 +13,7 @@ export default function Login({ params }: any) {
             alt="syneurgy-login"
           />
         </div>
-        <div className="md:flex-1 flex justify-center w-full max-w-sm md:max-w-none items-center md:h-screen md:py-32">
+        <div className="md:flex-1 flex justify-center w-full max-w-sm md:max-w-none items-center md:min-h-dvh h-full md:py-32">
           <div className="flex w-full flex-col p-8 md:p-12 lg:p-16 justify-between rounded-3xl text-white bg-[rgba(38,46,64)]">
             <div>
               <div className="flex flex-col items-start">

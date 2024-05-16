@@ -36,10 +36,10 @@ const QuestionsFormSchema = z.object(
       z.enum(
         onboardingQuestions
           .find((q) => q.name === obj.name)
-          .answers.map((a) => a.value),
+          .answers.map((a) => a.value)
       ),
-    ]),
-  ),
+    ])
+  )
 );
 
 const UPDATE_TEAM_QUESTIONNAIRE = graphql(`
@@ -94,7 +94,6 @@ export default function OnboardingQuestions({
       mutationFn: async (variables: any) =>
         gql.request(UPDATE_TEAM_QUESTIONNAIRE, variables),
       onSuccess: async (response) => {
-        console.log({ response });
         updateUser({
           id: user.firstTeam,
           sub: user.sub,
@@ -110,19 +109,10 @@ export default function OnboardingQuestions({
           description: "An error occurred while creating team.",
         });
       },
-    },
+    }
   );
 
   async function onSubmit(data: z.infer<typeof QuestionsFormSchema>) {
-    console.log("sb");
-    toast({
-      title: "You submitted the following values:",
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    });
     mutate({
       id: user.firstTeam,
       ...data,
@@ -131,14 +121,14 @@ export default function OnboardingQuestions({
 
   const handleNext = async () => {
     const isValid = await form.trigger(
-      onboardingQuestions.find((i) => i.step === step)?.name,
+      onboardingQuestions.find((i) => i.step === step)?.name
     );
     isValid ? setStep((v) => (step < 4 ? ++v : 4)) : null;
   };
 
   const handleSetStep = async (i: number) => {
     const isValid = await form.trigger(
-      onboardingQuestions.find((i) => i.step === step)?.name,
+      onboardingQuestions.find((i) => i.step === step)?.name
     );
     isValid ? setStep(i) : null;
   };
