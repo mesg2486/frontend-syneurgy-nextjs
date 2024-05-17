@@ -72,7 +72,7 @@ export default function AddMembers({
   async function onSubmit(data: any) {
     const invitationList = [
       ...data.invitations
-        .filter((i: any) => !!i)
+        .filter((i: any) => !!i.value)
         .map((i: any) => ({
           email: i.value,
           invited: false,

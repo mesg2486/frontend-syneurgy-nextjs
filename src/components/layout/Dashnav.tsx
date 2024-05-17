@@ -28,7 +28,22 @@ export default function Dashnav() {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="bg-secondary">
-            sasdf
+            <Button
+              className="hover:bg-secondary justify-between w-full"
+              size="sm"
+              variant="ghost"
+              type="button"
+            >
+              Meeting
+            </Button>
+            <Button
+              className="hover:bg-secondary justify-between w-full"
+              size="sm"
+              variant="ghost"
+              type="button"
+            >
+              Meeting
+            </Button>
           </DropdownMenuContent>
         </DropdownMenu>
         <FaBell />
