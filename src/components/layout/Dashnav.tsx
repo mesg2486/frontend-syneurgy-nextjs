@@ -21,7 +21,7 @@ export default function Dashnav() {
       <div className="flex items-center gap-4">
         <DropdownMenu>
           <DropdownMenuTrigger>
-            <Button className="rounded-full bg-white hover:bg-white gap-2">
+            <Button variant="outline">
               <AiOutlinePlus />
               Add
             </Button>
@@ -32,20 +32,12 @@ export default function Dashnav() {
         </DropdownMenu>
         <FaBell />
         <DropdownMenu>
-          <DropdownMenuTrigger>
-            <Button
-              variant="outline"
-              className="bg-transparent hover:bg-transparent border-white/20 gap-2"
-            >
-              <Avatar className="h-6 w-6">
-                <AvatarImage
-                  src="https://github.com/shadcn.png"
-                  alt="@shadcn"
-                />
-                <AvatarFallback>SG</AvatarFallback>
-              </Avatar>
-              {session?.user.firstName}
-            </Button>
+          <DropdownMenuTrigger className="focus:ring-0 flex gap-2 focus:border-0">
+            <Avatar className="h-6 w-6">
+              <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+              <AvatarFallback>SG</AvatarFallback>
+            </Avatar>
+            <div className="capitalize">{session?.user.firstName}</div>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="bg-secondary">
             sasdf

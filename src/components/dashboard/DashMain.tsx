@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { FaHand } from "react-icons/fa6";
 import {
   Select,
   SelectContent,
@@ -27,19 +26,23 @@ import {
   Legend,
 } from "recharts";
 
-import { Circle } from "rc-progress";
+import { BsChatRightTextFill } from "react-icons/bs";
+import { HiHand } from "react-icons/hi";
+import { useSession } from "next-auth/react";
+import CircleProgress from "../fragments/CircleProgressWithIcon";
 
 export default function DashMain() {
+  const { data: session } = useSession();
   return (
     <div className="p-6 bg-secondary ">
       <div className="flex justify-between">
-        <h2 className="text-xl font-extralight tracking-tight">
-          Welcome <FaHand className="inline-block rotate-12" />
-          <span className="font-semibold"> Username</span>
+        <h2 className="text-xl font-light tracking-tight">
+          Welcome <HiHand className="inline-block text-yellow-500 rotate-12" />
+          <span className="font-semibold"> {session?.user.username}</span>
         </h2>
         <div className="flex flex-row gap-x-3">
           <Select>
-            <SelectTrigger className="rounded-2xl p-2">
+            <SelectTrigger className="rounded-2xl bg-tertiary px-5 gap-1 border-0">
               <SelectValue placeholder="All Dates" />
             </SelectTrigger>
             <SelectContent>
@@ -52,7 +55,7 @@ export default function DashMain() {
             </SelectContent>
           </Select>
           <Select>
-            <SelectTrigger className="rounded-2xl p-2">
+            <SelectTrigger className="rounded-2xl bg-tertiary px-5 gap-1 border-0">
               <SelectValue placeholder="All Teams" />
             </SelectTrigger>
             <SelectContent>
@@ -64,26 +67,34 @@ export default function DashMain() {
               </SelectGroup>
             </SelectContent>
           </Select>
-          <Button className="bg-background">Ask Syneurgy</Button>
+          <Button>
+            <BsChatRightTextFill />
+            Ask Syneurgy
+          </Button>
         </div>
       </div>
       <Separator className="my-4" />
       <div className="flex flex-col space-y-6 ">
-        <div className="flex justify-between bg-slate-800 p-4 rounded-md">
+        <div className="flex justify-between bg-tertiary p-4 rounded-md">
           <p className="leading-8 ">
             You have 35 minutes of 240 available in your plan
           </p>
-          <Button>Upgrade</Button>
+          <Button
+            className="border-primary text-primary hover:bg-primary hover:text-primary-foreground"
+            variant="outline"
+          >
+            Upgrade
+          </Button>
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-4 justify-around p-3 rounded-md bg-slate-800 divide-x-2 divide-slate-700">
+        <div className="grid grid-cols-2 md:grid-cols-4 justify-around p-8 rounded-md bg-tertiary divide-x-2 divide-white/10">
           <div className="">
-            <h2 className="text-lg font-medium pl-10">Global Synchrony</h2>
-            <div className="flex flex-row  items-center justify-center py-6 divide-x-[1px] divide-slate-700">
-              <div className="mr-4">
-                <h4 className="text-3xl font-semibold -mb-2">56%</h4>
-                <span className="text-red-500"> &#8599;5%</span>
+            <h2 className="text-lg font-medium">Global Synchrony</h2>
+            <div className="flex flex-row  items-center py-6 divide-x-[1px] divide-white/10">
+              <div className="mr-4 flex-1">
+                <h4 className="text-6xl font-semibold">56</h4>
+                <span className="text-primary text-xl"> &#8599;5%</span>
               </div>
-              <div className="">
+              <div className="flex-1">
                 <ul className="flex flex-col space-y-2 ml-4">
                   <li className="text-xs">
                     Engagement: <span className="text-red-500"> &#8599;5%</span>
@@ -105,8 +116,8 @@ export default function DashMain() {
             </div>
           </div>
           <div>
-            <h2 className="text-lg font-medium pl-10">Dimension</h2>
-            <div className="w-full h-48 p-5">
+            <h2 className="text-lg font-medium pl-10">Dimensions</h2>
+            <div className="w-full h-48 p-5 text-xs">
               <ResponsiveContainer width="100%" height="100%">
                 <RadarChart cx="50%" cy="50%" outerRadius="80%" data={data1}>
                   <PolarGrid />
@@ -133,44 +144,24 @@ export default function DashMain() {
             <h2 className="text-lg font-medium pl-10">Global Performance</h2>
             <div className="w-full overflow-hidden flex flex-row justify-around  p-5 gap-4">
               <div className="w-10 h-10">
-                <Circle percent={60} strokeWidth={6} strokeColor="yellow" />
                 <p>Brain</p>
               </div>
               <div className="w-10 h-10">
-                {" "}
-                <Circle percent={30} strokeWidth={6} strokeColor="green" />
                 <p>Body</p>
               </div>
               <div className="w-10 h-10">
-                {" "}
-                <Circle percent={90} strokeWidth={6} strokeColor="red" />
                 <p>Behavior</p>
               </div>
             </div>
           </div>
           <div>
             <h2 className="text-lg font-medium pl-10">Global Sentiment</h2>
-            <div className="flex flex-row justify-around  p-5 gap-4 content-center">
-              <div className="w-10 h-10">
-                <Circle percent={60} strokeWidth={6} strokeColor="yellow" />
-                <p>Brain</p>
-              </div>
-              <div className="w-10 h-10">
-                {" "}
-                <Circle percent={30} strokeWidth={6} strokeColor="green" />
-                <p>Body</p>
-              </div>
-              <div className="w-10 h-10">
-                {" "}
-                <Circle percent={90} strokeWidth={6} strokeColor="red" />
-                <p>Behavior</p>
-              </div>
-            </div>
+            <CircleProgress />
           </div>
         </div>
         {/* Line Chart  */}
         <div className="max-w-full ">
-          <div className="bg-slate-800 p-6 rounded-md max-w-full mx-auto">
+          <div className="bg-tertiary p-6 rounded-md max-w-full mx-auto">
             <h2 className="text-lg font-medium pl-10 mb-5">Global Progress</h2>
             <div className="w-full h-80">
               <ResponsiveContainer width="100%" height="100%">

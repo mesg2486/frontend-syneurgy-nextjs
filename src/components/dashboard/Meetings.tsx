@@ -1,6 +1,6 @@
 import React from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Separator } from "../ui/separator";
+import { Separator } from "@/components/ui/separator";
 import {
   Select,
   SelectContent,
@@ -8,7 +8,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../ui/select";
+} from "@/components/ui/select";
 import {
   Pagination,
   PaginationContent,
@@ -17,27 +17,38 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from "../ui/pagination";
-import { Button } from "../ui/button";
-import { Input } from "../ui/input";
+} from "@/components/ui/pagination";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { HiOutlineSearch, HiPlay } from "react-icons/hi";
+import { AiOutlinePlus } from "react-icons/ai";
+import CircleProgress from "@/components/fragments/CircleProgress";
+import { GoGoal } from "react-icons/go";
 
 export default function Meetings() {
   return (
     <div className="p-6 bg-secondary w-full">
-      <Tabs defaultValue="meetings" className="w-full">
-        <TabsList className="bg-transparent ">
+      <Tabs defaultValue="meetings" className="w-full min-h-[600px]">
+        <TabsList className="bg-transparent">
           <TabsTrigger value="meetings">Meetings</TabsTrigger>
           <TabsTrigger value="members">Members</TabsTrigger>
         </TabsList>
         <Separator className="mb-4" />
-        <TabsContent value="meetings">
+        <TabsContent value="meetings" className="py-5">
           <div className="flex justify-between">
-            <h2 className="text-xl font-light">Total Metting</h2>
-
+            <h2 className="text-xl font-light">Total Meetings (20)</h2>
             <div className="flex flex-row gap-x-3">
-              <Input placeholder="Search" type="search" />
+              <div className="relative">
+                <Input
+                  placeholder="Search"
+                  className="h-full border w-40 px-6 rounded-full"
+                />
+                <div className="absolute right-6 top-1/2 -translate-y-1/2">
+                  <HiOutlineSearch />
+                </div>
+              </div>
               <Select>
-                <SelectTrigger className="rounded-2xl p-2">
+                <SelectTrigger className="rounded-2xl bg-tertiary px-5 gap-1 border-0">
                   <SelectValue placeholder="Meeting Type" />
                 </SelectTrigger>
                 <SelectContent>
@@ -47,7 +58,7 @@ export default function Meetings() {
                 </SelectContent>
               </Select>
               <Select>
-                <SelectTrigger className="rounded-2xl p-2">
+                <SelectTrigger className="rounded-2xl bg-tertiary px-5 gap-1 border-0">
                   <SelectValue placeholder="All Dates" />
                 </SelectTrigger>
                 <SelectContent>
@@ -59,56 +70,69 @@ export default function Meetings() {
                   </SelectGroup>
                 </SelectContent>
               </Select>
-              <Button
-                variant={"ghost"}
-                className="border-[1px] border-slate-50"
-              >
+              <Button variant="outline" className="">
+                <AiOutlinePlus />
                 Add Meeting
               </Button>
             </div>
           </div>
           <div className="pt-10 space-y-6">
-            <div className="grid grid-cols-4 gap-5">
+            <div className="grid grid-cols-5 gap-5">
               {meetings?.map((meeting, index) => (
-                <div key={index} className="bg-slate-800 rounded-lg">
-                  <div className="h-32 overflow-hidden rounded-t-lg">
+                <div key={index} className="bg-tertiary rounded-lg">
+                  <div className="h-48 overflow-hidden group rounded-t-lg relative">
                     <img className="object-cover" src={meeting.thumbnail} />
+                    <div className="absolute flex cursor-pointer justify-center items-center inset-0 bg-black/20">
+                      <HiPlay className="text-5xl transition-all group-hover:scale-105" />
+                    </div>
                   </div>
-                  <div className="p-4">
-                    <p className="opacity-80 font-extralight">{meeting.date}</p>
-                    <h2 className="text-md font-medium">{meeting.title}</h2>
-                    <Separator className="my-3" />
+                  <div className="p-4 space-y-2">
+                    <p className="opacity-70 font-light text-xs">
+                      {meeting.date}
+                    </p>
+                    <h2 className="text-md font-medium pb-3">
+                      {meeting.title}
+                    </h2>
+                    <Separator className="my-3 bg-white/5" />
                     <div className="flex flex-row gap-x-3">
-                      <p>12% </p>
-
-                      <p>Creative</p>
+                      <div className="flex gap-2 items-center">
+                        <CircleProgress className="size-6" />
+                        <p className="text-xs opacity-60">20%</p>
+                      </div>
+                      <div className="flex gap-2 items-center">
+                        <GoGoal className="size-5" />
+                        <p className="text-xs opacity-60">Creative</p>
+                      </div>
                     </div>
                   </div>
                 </div>
               ))}
             </div>
-            <Pagination>
-              <PaginationContent>
-                <PaginationItem>
-                  <PaginationPrevious href="#" />
-                </PaginationItem>
-                <PaginationItem>
-                  <PaginationLink href="#">1</PaginationLink>
-                </PaginationItem>
-                <PaginationItem>
-                  <PaginationLink href="#">2</PaginationLink>
-                </PaginationItem>
-                <PaginationItem>
-                  <PaginationLink href="#">3</PaginationLink>
-                </PaginationItem>
-                <PaginationItem>
-                  <PaginationEllipsis />
-                </PaginationItem>
-                <PaginationItem>
-                  <PaginationNext href="#" />
-                </PaginationItem>
-              </PaginationContent>
-            </Pagination>
+            <div className="justify-between flex items-center pt-6">
+              <p className="opacity-70">Show 8 from 120 products</p>
+              <Pagination>
+                <PaginationContent>
+                  <PaginationItem>
+                    <PaginationPrevious href="#" />
+                  </PaginationItem>
+                  <PaginationItem>
+                    <PaginationLink href="#">1</PaginationLink>
+                  </PaginationItem>
+                  <PaginationItem>
+                    <PaginationLink href="#">2</PaginationLink>
+                  </PaginationItem>
+                  <PaginationItem>
+                    <PaginationLink href="#">3</PaginationLink>
+                  </PaginationItem>
+                  <PaginationItem>
+                    <PaginationEllipsis />
+                  </PaginationItem>
+                  <PaginationItem>
+                    <PaginationNext href="#" />
+                  </PaginationItem>
+                </PaginationContent>
+              </Pagination>
+            </div>
           </div>
         </TabsContent>
         <TabsContent value="members"></TabsContent>
@@ -120,42 +144,42 @@ export default function Meetings() {
 const meetings = [
   {
     thumbnail: "https://images.unsplash.com/photo-1553877522-43269d4ea984",
-    date: "2024-05-13",
+    date: "2024-05-13 · 08:20 PM",
     title: "Team Standup Meeting",
   },
   {
     thumbnail: "https://images.unsplash.com/photo-1553877522-43269d4ea984",
-    date: "2024-05-14",
+    date: "2024-05-14 · 08:20 PM",
     title: "Project Kickoff Meeting",
   },
   {
     thumbnail: "https://images.unsplash.com/photo-1553877522-43269d4ea984",
-    date: "2024-05-15",
+    date: "2024-05-15 · 08:20 PM",
     title: "Client Presentation",
   },
   {
     thumbnail: "https://images.unsplash.com/photo-1553877522-43269d4ea984",
-    date: "2024-05-16",
+    date: "2024-05-16 · 08:20 PM",
     title: "Weekly Progress Review",
   },
   {
     thumbnail: "https://images.unsplash.com/photo-1553877522-43269d4ea984",
-    date: "2024-05-17",
+    date: "2024-05-17 · 08:20 PM",
     title: "Budget Planning Meeting",
   },
   {
     thumbnail: "https://images.unsplash.com/photo-1553877522-43269d4ea984",
-    date: "2024-05-18",
+    date: "2024-05-18 · 08:20 PM",
     title: "Marketing Strategy Discussion",
   },
   {
     thumbnail: "https://images.unsplash.com/photo-1553877522-43269d4ea984",
-    date: "2024-05-19",
+    date: "2024-05-19 · 08:20 PM",
     title: "Product Development Meeting",
   },
   {
     thumbnail: "https://images.unsplash.com/photo-1553877522-43269d4ea984",
-    date: "2024-05-20",
+    date: "2024-05-20 · 08:20 PM",
     title: "HR Recruitment Meeting",
   },
 ];

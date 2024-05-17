@@ -183,6 +183,7 @@ export const authOptions = {
                   sub
                   onboarded
                   firstName
+                  username
                   lastName
                   status
                   createdAt

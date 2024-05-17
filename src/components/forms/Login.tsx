@@ -7,7 +7,6 @@ import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { useToast } from "@/components/ui/use-toast";
 import {
   Form,
   FormControl,
@@ -22,6 +21,7 @@ import { AiOutlineReload } from "react-icons/ai";
 import Link from "next/link";
 import { HiOutlineEye } from "react-icons/hi";
 import { HiOutlineEyeSlash } from "react-icons/hi2";
+import { useToast } from "../ui/use-toast";
 
 interface LoginFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -31,17 +31,24 @@ export default function LoginForm({ className, ...props }: LoginFormProps) {
   const { toast } = useToast();
 
   const search = useSearchParams();
-  const error = search?.get("error");
 
   useEffect(() => {
+    toast({ title: "Error" });
+  }, [toast]);
+
+  useEffect(() => {
+    const error = search?.get("error");
+
     if (!error) return;
-    toast({
-      title: "Error",
-      description:
-        error === "CredentialsSignin" ? "Invalid Credentials" : error,
+    setTimeout(() => {
+      toast({
+        title: "Error",
+        description:
+          error === "CredentialsSignin" ? "Invalid Credentials" : error,
+      });
     });
-    return () => {};
-  }, [error]);
+    console.log(error === "CredentialsSignin" ? "Invalid Credentials" : error);
+  }, [toast, search]);
 
   const form = useForm<TLoginSchema>({
     resolver: zodResolver(loginSchema),
