@@ -41,7 +41,7 @@ export default function TeamPage({ params }: { params: { id: string } }) {
   const { data: session, status } = useSession();
 
   const { data, isLoading, refetch } = useQuery({
-    queryKey: ["meetings", params.id],
+    queryKey: ["team", params.id],
     queryFn: async () => {
       return await gql.request(GET_TEAM, {
         id: String(params.id),

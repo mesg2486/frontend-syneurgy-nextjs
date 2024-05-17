@@ -68,10 +68,12 @@ export default function InviteTeam({ progress, setProgress }: IFormProps) {
     try {
       mutate({
         id: user.firstTeam,
-        invitations: data.invitations.map((i: any) => ({
-          email: i.value,
-          invited: false,
-        })),
+        invitations: data.invitations
+          .filter((i: any) => !!i)
+          .map((i: any) => ({
+            email: i.value,
+            invited: false,
+          })),
       } as any);
     } catch (e) {
       console.log(e);

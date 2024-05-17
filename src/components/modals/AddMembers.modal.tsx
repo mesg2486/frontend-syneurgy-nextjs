@@ -44,12 +44,20 @@ export default function AddMembers({
   invitations,
 }: IAddMembersProps) {
   const { toast } = useToast();
+  const queryClient = useQueryClient();
 
   const { mutate, isPending } = useMutation<any, any>({
     mutationFn: async (variables: any) =>
       gql.request(UPDATE_TEAM_INVITATIONS, variables),
     onSuccess: (response) => {
-      console.log(response?.team?.id, "teamId");
+      queryClient.invalidateQueries({
+        queryKey: ["team"],
+      });
+      toast({
+        title: "Invitations Pending",
+        description: "We don't have an implementation for this yet.",
+      });
+      setIsOpen(false);
     },
     onError: (error) => {
       return toast({
