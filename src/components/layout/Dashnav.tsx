@@ -10,7 +10,8 @@ import {
 } from "../ui/dropdown-menu";
 import { FaBell } from "react-icons/fa6";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
+import Link from "next/link";
 
 export default function Dashnav() {
   const { data: session } = useSession();
@@ -39,8 +40,26 @@ export default function Dashnav() {
             </Avatar>
             <div className="capitalize">{session?.user.firstName}</div>
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="bg-secondary">
-            sasdf
+          <DropdownMenuContent className="bg-tertiary">
+            <Link href={"/settings/account"}>
+              <Button
+                className="hover:bg-secondary justify-between text-left block w-full"
+                size="sm"
+                variant="ghost"
+                type="button"
+              >
+                Settings
+              </Button>
+            </Link>
+            <Button
+              className="hover:bg-secondary justify-between w-full"
+              size="sm"
+              variant="ghost"
+              type="button"
+              onClick={() => signOut()}
+            >
+              Logout
+            </Button>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
