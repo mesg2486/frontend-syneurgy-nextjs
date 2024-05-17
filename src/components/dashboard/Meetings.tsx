@@ -24,6 +24,7 @@ import { HiOutlineSearch, HiPlay } from "react-icons/hi";
 import { AiOutlinePlus } from "react-icons/ai";
 import CircleProgress from "@/components/fragments/CircleProgress";
 import { GoGoal } from "react-icons/go";
+import Link from "next/link";
 
 export default function Meetings() {
   return (
@@ -79,12 +80,9 @@ export default function Meetings() {
           <div className="pt-10 space-y-6">
             <div className="grid grid-cols-5 gap-5">
               {meetings?.map((meeting, index) => (
-                <div key={index} className="bg-tertiary rounded-lg">
-                  <div className="h-48 overflow-hidden group rounded-t-lg relative">
+                <div key={index} className="bg-slate-800 rounded-lg">
+                  <div className="h-32 overflow-hidden rounded-t-lg">
                     <img className="object-cover" src={meeting.thumbnail} />
-                    <div className="absolute flex cursor-pointer justify-center items-center inset-0 bg-black/20">
-                      <HiPlay className="text-5xl transition-all group-hover:scale-105" />
-                    </div>
                   </div>
                   <div className="p-4 space-y-2">
                     <p className="opacity-70 font-light text-xs">
