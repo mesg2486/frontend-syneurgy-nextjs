@@ -1,6 +1,5 @@
 "use client";
 
-import { TAboutFormSchema } from "@/components/forms/onboarding.schema";
 import { Input } from "@/components/ui/input";
 import React, { useEffect } from "react";
 import { useFieldArray, useForm } from "react-hook-form";
@@ -20,7 +19,7 @@ import { useMutation } from "@tanstack/react-query";
 import { gql } from "@/services/clients/graphql.client";
 import useUpdateUser from "@/hooks/useUpdateUserStep";
 
-const UPDATE_TEAM_INVITATIONS = graphql(`
+export const UPDATE_TEAM_INVITATIONS = graphql(`
   mutation updateMeetingInvitations(
     $id: ID!
     $invitations: [UpdateInvitationsInput]

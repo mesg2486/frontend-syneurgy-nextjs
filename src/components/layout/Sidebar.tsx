@@ -1,32 +1,16 @@
 "use client";
 import { sidebarItems } from "@/config/sidebar.config";
 import React, { useState } from "react";
-import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
 import { usePathname } from "next/navigation";
-import { signOut, useSession } from "next-auth/react";
-import { AiOutlineArrowRight, AiOutlineExpand } from "react-icons/ai";
-import { BiExpand } from "react-icons/bi";
-import { FaCircleRight } from "react-icons/fa6";
-import {
-  HiArrowCircleRight,
-  HiChevronRight,
-  HiCog,
-  HiLogout,
-} from "react-icons/hi";
+import { signOut } from "next-auth/react";
+import { HiChevronRight } from "react-icons/hi";
 import { FaCog } from "react-icons/fa";
 import { FiLogOut } from "react-icons/fi";
 
 export default function Sidebar() {
   const [expanded, setExpanded] = useState(false);
   const pathname = usePathname();
-  const { data: session } = useSession();
 
   return (
     <>
@@ -38,7 +22,7 @@ export default function Sidebar() {
       >
         <button
           onClick={() => setExpanded((v) => !v)}
-          className="absolute top-6 right-0 z-20 flex justify-center indeterminate: text-white bg-black/80 backdrop-blur-sm rounded-full translate-x-1/2 h-4 w-4"
+          className="absolute top-6 right-0 z-20 flex justify-center indeterminate: text-white bg-tertiary border border-white/20 backdrop-blur-sm rounded-full translate-x-1/2 h-4 w-4 items-center"
         >
           <HiChevronRight
             className={`transition-all duration-500 ${expanded ? "rotate-180" : "rotate-0"}`}

@@ -1,7 +1,8 @@
 import { IconType } from "react-icons";
 import { BiHome } from "react-icons/bi";
+import { FaUserGroup } from "react-icons/fa6";
 import { GrGroup } from "react-icons/gr";
-import { MdOutlineLibraryBooks } from "react-icons/md";
+import { MdAnalytics, MdOutlineLibraryBooks } from "react-icons/md";
 // import { PiVideoConferenceLight } from "react-icons/pi";
 
 interface ISidebarSubItem {
@@ -33,7 +34,7 @@ export const sidebarItems: ISidebarItem[] = [
   },
   {
     label: "Recent Meetings",
-    link: "/dashboard/meetings",
+    link: "/meetings",
     type: "user",
     icon: GrGroup,
     group: "/dashboard/meetings",
@@ -43,7 +44,7 @@ export const sidebarItems: ISidebarItem[] = [
     label: "Behaviour Engine",
     link: "/dashboard/behaviour",
     type: "user",
-    icon: MdOutlineLibraryBooks,
+    icon: MdAnalytics,
     group: "dashboard/behaviour",
     exact: false,
     subNav: [
@@ -54,7 +55,7 @@ export const sidebarItems: ISidebarItem[] = [
     ],
   },
   {
-    label: "Recent Challenges",
+    label: "Challenges",
     link: "/dashboard/challenges",
     type: "user",
     icon: MdOutlineLibraryBooks,
@@ -68,11 +69,11 @@ export const sidebarItems: ISidebarItem[] = [
     ],
   },
   {
-    label: "Team Management",
-    link: "/dashboard/challenges",
+    label: "Teams",
+    link: "/teams",
     type: "user",
-    icon: MdOutlineLibraryBooks,
-    group: "dashboard/challenges",
+    icon: FaUserGroup,
+    group: "dashboard/teams",
     exact: false,
     subNav: [
       // {

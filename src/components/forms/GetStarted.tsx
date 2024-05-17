@@ -25,7 +25,7 @@ import { gql } from "@/services/clients/graphql.client";
 import useUpdateUser from "@/hooks/useUpdateUserStep";
 import { useOnboardingData } from "@/contexts/onboarding.context";
 
-const CREATE_TEAM = graphql(`
+export const CREATE_TEAM = graphql(`
   mutation createTeam($createdBy: ID!, $name: String!) {
     team: createTeam(input: { createdBy: $createdBy, name: $name }) {
       id

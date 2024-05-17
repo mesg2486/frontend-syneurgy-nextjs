@@ -13,6 +13,12 @@ import { TypedDocumentNode as DocumentNode } from "@graphql-typed-document-node/
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
+  "\n  query getTeam($id: ID!) {\n    team: getTeam(id: $id) {\n      createdAt\n      createdBy\n      engagementLevel\n      goals\n      id\n      invitations {\n        email\n        invited\n        message\n      }\n      members\n      name\n      performance\n      sentiment\n      syncHistory\n      synchrony\n      teamInSync\n      updatedAt\n    }\n  }\n":
+    types.GetTeamDocument,
+  "\n  query listTeamsByUserId($userId: ID!) {\n    teams: listTeamsByUserId(userId: $userId) {\n      items {\n        createdBy\n        engagementLevel\n        goals\n        id\n        members\n        name\n        performance\n        sentiment\n        syncHistory\n        invitations {\n          email\n          invited\n          message\n        }\n        createdAt\n        updatedAt\n        synchrony\n        teamInSync\n      }\n    }\n  }\n":
+    types.ListTeamsByUserIdDocument,
+  "\n  query listMeetingsByUserId($userId: ID!) {\n    meetings: listMeetingsByUserId(userId: $userId) {\n      items {\n        date\n        dimensions\n        highlights\n        id\n        name\n        createdAt\n        updatedAt\n        sentiment\n        performance\n        synchrony\n        teamId\n        thumbnail\n        type\n        url\n        userId\n      }\n    }\n  }\n":
+    types.ListMeetingsByUserIdDocument,
   "\n  mutation updateUser(\n    $step: String\n    $onboarded: Boolean\n    $sub: ID!\n    $username: String\n    $email: String\n    $status: String\n    $lastName: String\n    $firstName: String\n    $country: String\n    $company: String\n    $dob: String\n    $avatar: String\n    $phone: String\n    $position: String\n    $resultPrivacy: Boolean\n    $firstTeam: String\n    $firstMeeting: String\n  ) {\n    user: updateUser(\n      input: {\n        step: $step\n        onboarded: $onboarded\n        lastName: $lastName\n        firstName: $firstName\n        country: $country\n        company: $company\n        dob: $dob\n        avatar: $avatar\n        phone: $phone\n        position: $position\n        resultPrivacy: $resultPrivacy\n        status: $status\n        sub: $sub\n        username: $username\n        email: $email\n        firstTeam: $firstTeam\n        firstMeeting: $firstMeeting\n      }\n    ) {\n      sub\n    }\n  }\n":
     types.UpdateUserDocument,
   "\n  mutation createTeam($createdBy: ID!, $name: String!) {\n    team: createTeam(input: { createdBy: $createdBy, name: $name }) {\n      id\n    }\n  }\n":
@@ -41,6 +47,24 @@ const documents = {
  */
 export function graphql(source: string): unknown;
 
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: "\n  query getTeam($id: ID!) {\n    team: getTeam(id: $id) {\n      createdAt\n      createdBy\n      engagementLevel\n      goals\n      id\n      invitations {\n        email\n        invited\n        message\n      }\n      members\n      name\n      performance\n      sentiment\n      syncHistory\n      synchrony\n      teamInSync\n      updatedAt\n    }\n  }\n",
+): (typeof documents)["\n  query getTeam($id: ID!) {\n    team: getTeam(id: $id) {\n      createdAt\n      createdBy\n      engagementLevel\n      goals\n      id\n      invitations {\n        email\n        invited\n        message\n      }\n      members\n      name\n      performance\n      sentiment\n      syncHistory\n      synchrony\n      teamInSync\n      updatedAt\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: "\n  query listTeamsByUserId($userId: ID!) {\n    teams: listTeamsByUserId(userId: $userId) {\n      items {\n        createdBy\n        engagementLevel\n        goals\n        id\n        members\n        name\n        performance\n        sentiment\n        syncHistory\n        invitations {\n          email\n          invited\n          message\n        }\n        createdAt\n        updatedAt\n        synchrony\n        teamInSync\n      }\n    }\n  }\n",
+): (typeof documents)["\n  query listTeamsByUserId($userId: ID!) {\n    teams: listTeamsByUserId(userId: $userId) {\n      items {\n        createdBy\n        engagementLevel\n        goals\n        id\n        members\n        name\n        performance\n        sentiment\n        syncHistory\n        invitations {\n          email\n          invited\n          message\n        }\n        createdAt\n        updatedAt\n        synchrony\n        teamInSync\n      }\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: "\n  query listMeetingsByUserId($userId: ID!) {\n    meetings: listMeetingsByUserId(userId: $userId) {\n      items {\n        date\n        dimensions\n        highlights\n        id\n        name\n        createdAt\n        updatedAt\n        sentiment\n        performance\n        synchrony\n        teamId\n        thumbnail\n        type\n        url\n        userId\n      }\n    }\n  }\n",
+): (typeof documents)["\n  query listMeetingsByUserId($userId: ID!) {\n    meetings: listMeetingsByUserId(userId: $userId) {\n      items {\n        date\n        dimensions\n        highlights\n        id\n        name\n        createdAt\n        updatedAt\n        sentiment\n        performance\n        synchrony\n        teamId\n        thumbnail\n        type\n        url\n        userId\n      }\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
