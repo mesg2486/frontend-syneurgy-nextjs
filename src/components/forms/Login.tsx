@@ -33,11 +33,8 @@ export default function LoginForm({ className, ...props }: LoginFormProps) {
   const search = useSearchParams();
 
   useEffect(() => {
-    toast({ title: "Error" });
-  }, [toast]);
-
-  useEffect(() => {
     const error = search?.get("error");
+    console.log({ error });
 
     if (!error) return;
     setTimeout(() => {

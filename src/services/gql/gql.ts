@@ -13,6 +13,8 @@ import { TypedDocumentNode as DocumentNode } from "@graphql-typed-document-node/
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
+  "\n  query getMeeting($id: ID!) {\n    meeting: getMeeting(id: $id) {\n      createdAt\n      date\n      dimensions\n      highlights\n      id\n      name\n      performance\n      sentiment\n      synchrony\n      teamId\n      thumbnail\n      type\n      updatedAt\n      url\n      userId\n    }\n  }\n":
+    types.GetMeetingDocument,
   "\n  query getTeam($id: ID!) {\n    team: getTeam(id: $id) {\n      createdAt\n      createdBy\n      engagementLevel\n      goals\n      id\n      invitations {\n        email\n        invited\n        message\n      }\n      members\n      name\n      performance\n      sentiment\n      syncHistory\n      synchrony\n      teamInSync\n      updatedAt\n    }\n  }\n":
     types.GetTeamDocument,
   "\n  query listTeamsByUserId($userId: ID!) {\n    teams: listTeamsByUserId(userId: $userId) {\n      items {\n        createdBy\n        engagementLevel\n        goals\n        id\n        members\n        name\n        performance\n        sentiment\n        syncHistory\n        invitations {\n          email\n          invited\n          message\n        }\n        createdAt\n        updatedAt\n        synchrony\n        teamInSync\n      }\n    }\n  }\n":
@@ -47,6 +49,12 @@ const documents = {
  */
 export function graphql(source: string): unknown;
 
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: "\n  query getMeeting($id: ID!) {\n    meeting: getMeeting(id: $id) {\n      createdAt\n      date\n      dimensions\n      highlights\n      id\n      name\n      performance\n      sentiment\n      synchrony\n      teamId\n      thumbnail\n      type\n      updatedAt\n      url\n      userId\n    }\n  }\n",
+): (typeof documents)["\n  query getMeeting($id: ID!) {\n    meeting: getMeeting(id: $id) {\n      createdAt\n      date\n      dimensions\n      highlights\n      id\n      name\n      performance\n      sentiment\n      synchrony\n      teamId\n      thumbnail\n      type\n      updatedAt\n      url\n      userId\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

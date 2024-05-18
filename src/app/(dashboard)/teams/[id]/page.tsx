@@ -47,7 +47,6 @@ export default function TeamPage({ params }: { params: { id: string } }) {
         id: String(params.id),
       });
     },
-    enabled: !!session?.user,
   });
 
   return (

@@ -552,6 +552,32 @@ export type UserConnection = {
   nextToken?: Maybe<Scalars["String"]["output"]>;
 };
 
+export type GetMeetingQueryVariables = Exact<{
+  id: Scalars["ID"]["input"];
+}>;
+
+export type GetMeetingQuery = {
+  __typename?: "Query";
+  meeting?: {
+    __typename?: "Meeting";
+    createdAt: string;
+    date: string;
+    dimensions?: string | null;
+    highlights?: string | null;
+    id: string;
+    name: string;
+    performance?: string | null;
+    sentiment?: string | null;
+    synchrony?: string | null;
+    teamId: string;
+    thumbnail?: string | null;
+    type: string;
+    updatedAt: string;
+    url: string;
+    userId: string;
+  } | null;
+};
+
 export type GetTeamQueryVariables = Exact<{
   id: Scalars["ID"]["input"];
 }>;
@@ -767,6 +793,66 @@ export type GetUserQuery = {
   } | null;
 };
 
+export const GetMeetingDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "query",
+      name: { kind: "Name", value: "getMeeting" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "id" } },
+          type: {
+            kind: "NonNullType",
+            type: { kind: "NamedType", name: { kind: "Name", value: "ID" } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            alias: { kind: "Name", value: "meeting" },
+            name: { kind: "Name", value: "getMeeting" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "id" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "id" },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "createdAt" } },
+                { kind: "Field", name: { kind: "Name", value: "date" } },
+                { kind: "Field", name: { kind: "Name", value: "dimensions" } },
+                { kind: "Field", name: { kind: "Name", value: "highlights" } },
+                { kind: "Field", name: { kind: "Name", value: "id" } },
+                { kind: "Field", name: { kind: "Name", value: "name" } },
+                { kind: "Field", name: { kind: "Name", value: "performance" } },
+                { kind: "Field", name: { kind: "Name", value: "sentiment" } },
+                { kind: "Field", name: { kind: "Name", value: "synchrony" } },
+                { kind: "Field", name: { kind: "Name", value: "teamId" } },
+                { kind: "Field", name: { kind: "Name", value: "thumbnail" } },
+                { kind: "Field", name: { kind: "Name", value: "type" } },
+                { kind: "Field", name: { kind: "Name", value: "updatedAt" } },
+                { kind: "Field", name: { kind: "Name", value: "url" } },
+                { kind: "Field", name: { kind: "Name", value: "userId" } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<GetMeetingQuery, GetMeetingQueryVariables>;
 export const GetTeamDocument = {
   kind: "Document",
   definitions: [

@@ -1,7 +1,9 @@
 import React from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import ReactPlayer from "react-player";
+import { Meeting } from "@/services/gql/graphql";
 
-export default function MainTab() {
+export default function MainTab({ meeting }: { meeting: Meeting }) {
   return (
     <div className="w-full p-6 rounded-lg bg-slate-800">
       <Tabs defaultValue="meeting">
@@ -39,10 +41,14 @@ export default function MainTab() {
         </TabsList>
         <TabsContent value="meeting">
           {/* This image is just for testing purpose  */}
-          <img
-            className="w-full h-full object-cover rounded-xl"
-            src="https://plus.unsplash.com/premium_photo-1661688963878-4f3282dd1263"
-          />
+          {/* <video width="640" height="360" controls>
+            <source
+              src="https://sync5.s3.us-west-1.amazonaws.com/prod/profile/417b9590-b071-70fd-6a16-2721bd2dcfa4/alegance1.mp4"
+              type="video/mp4"
+            />
+            Your browser does not support the video tag.
+          </video> */}
+          {/* <ReactPlayer url={meeting?.url} /> */}
         </TabsContent>
         <TabsContent value="universe"></TabsContent>
         <TabsContent value="heatmap"></TabsContent>

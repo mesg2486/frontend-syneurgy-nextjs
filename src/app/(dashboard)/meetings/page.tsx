@@ -1,10 +1,7 @@
 "use client";
 
 import MeetingCard from "@/components/cards/MeetingCard";
-import {
-  LIST_MEETINGS_BY_USERID,
-  meetings,
-} from "@/components/dashboard/Meetings";
+import { LIST_MEETINGS_BY_USERID } from "@/components/dashboard/Meetings";
 import AddMeeting from "@/components/modals/AddMeeting.modal";
 import TeamCardSkeleton from "@/components/placeholders/TeamCard.skeleton";
 import { Button } from "@/components/ui/button";

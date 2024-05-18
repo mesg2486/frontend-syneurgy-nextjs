@@ -56,6 +56,8 @@ export default function ResetPasswordForm({
       return router.push("/auth/login");
     },
     onError: (error) => {
+      console.log({ error });
+
       return toast({
         title: "Error",
         description:
