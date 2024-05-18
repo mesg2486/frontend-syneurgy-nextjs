@@ -47,7 +47,7 @@ export default function MeetingPage({ params }: { params: { id: string } }) {
   const [toggleTabs, setToggleTabs] = useState("data");
 
   const { data, isLoading, refetch } = useQuery({
-    queryKey: ["team", params.id],
+    queryKey: ["meeting", params.id],
     queryFn: async () => {
       return await gql.request(GET_MEETING, {
         id: String(params.id),

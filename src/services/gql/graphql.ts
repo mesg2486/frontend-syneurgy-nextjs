@@ -641,6 +641,15 @@ export type ListTeamsByUserIdQuery = {
   } | null;
 };
 
+export type DeleteTeamMutationVariables = Exact<{
+  id: Scalars["ID"]["input"];
+}>;
+
+export type DeleteTeamMutation = {
+  __typename?: "Mutation";
+  team?: { __typename?: "Team"; id: string } | null;
+};
+
 export type ListMeetingsByUserIdQueryVariables = Exact<{
   userId: Scalars["ID"]["input"];
 }>;
@@ -762,6 +771,16 @@ export type CreateMeetingMutation = {
     thumbnail?: string | null;
     date: string;
   } | null;
+};
+
+export type RenameTeamMutationVariables = Exact<{
+  id: Scalars["ID"]["input"];
+  name: Scalars["String"]["input"];
+}>;
+
+export type RenameTeamMutation = {
+  __typename?: "Mutation";
+  team?: { __typename?: "Team"; id: string } | null;
 };
 
 export type GetUserQueryVariables = Exact<{
@@ -1056,6 +1075,61 @@ export const ListTeamsByUserIdDocument = {
   ListTeamsByUserIdQuery,
   ListTeamsByUserIdQueryVariables
 >;
+export const DeleteTeamDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "deleteTeam" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "id" } },
+          type: {
+            kind: "NonNullType",
+            type: { kind: "NamedType", name: { kind: "Name", value: "ID" } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            alias: { kind: "Name", value: "team" },
+            name: { kind: "Name", value: "deleteTeam" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "input" },
+                value: {
+                  kind: "ObjectValue",
+                  fields: [
+                    {
+                      kind: "ObjectField",
+                      name: { kind: "Name", value: "id" },
+                      value: {
+                        kind: "Variable",
+                        name: { kind: "Name", value: "id" },
+                      },
+                    },
+                  ],
+                },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "id" } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<DeleteTeamMutation, DeleteTeamMutationVariables>;
 export const ListMeetingsByUserIdDocument = {
   kind: "Document",
   definitions: [
@@ -2013,6 +2087,80 @@ export const CreateMeetingDocument = {
   CreateMeetingMutation,
   CreateMeetingMutationVariables
 >;
+export const RenameTeamDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "renameTeam" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "id" } },
+          type: {
+            kind: "NonNullType",
+            type: { kind: "NamedType", name: { kind: "Name", value: "ID" } },
+          },
+        },
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "name" } },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "String" },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            alias: { kind: "Name", value: "team" },
+            name: { kind: "Name", value: "updateTeam" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "input" },
+                value: {
+                  kind: "ObjectValue",
+                  fields: [
+                    {
+                      kind: "ObjectField",
+                      name: { kind: "Name", value: "id" },
+                      value: {
+                        kind: "Variable",
+                        name: { kind: "Name", value: "id" },
+                      },
+                    },
+                    {
+                      kind: "ObjectField",
+                      name: { kind: "Name", value: "name" },
+                      value: {
+                        kind: "Variable",
+                        name: { kind: "Name", value: "name" },
+                      },
+                    },
+                  ],
+                },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "id" } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<RenameTeamMutation, RenameTeamMutationVariables>;
 export const GetUserDocument = {
   kind: "Document",
   definitions: [
