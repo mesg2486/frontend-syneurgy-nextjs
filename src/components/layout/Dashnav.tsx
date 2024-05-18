@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "../ui/button";
 import { AiOutlinePlus } from "react-icons/ai";
 import {
@@ -12,9 +12,13 @@ import { FaBell } from "react-icons/fa6";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
+import AddTeam from "../modals/AddTeam.modal";
+import AddMeeting from "../modals/AddMeeting.modal";
 
 export default function Dashnav() {
   const { data: session } = useSession();
+  const [meetingModalOpen, setMeetingModalOpen] = useState(false);
+  const [teamModalOpen, setTeamModalOpen] = useState(false);
 
   return (
     <div className="border-b px-6 border-white/20 h-16 flex items-center justify-between">
@@ -33,14 +37,16 @@ export default function Dashnav() {
               size="sm"
               variant="ghost"
               type="button"
+              onClick={() => setTeamModalOpen(true)}
             >
-              Meeting
+              Team
             </Button>
             <Button
               className="hover:bg-secondary justify-between w-full"
               size="sm"
               variant="ghost"
               type="button"
+              onClick={() => setMeetingModalOpen(true)}
             >
               Meeting
             </Button>
@@ -78,6 +84,8 @@ export default function Dashnav() {
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
+      <AddTeam open={teamModalOpen} setIsOpen={setTeamModalOpen} />
+      <AddMeeting open={meetingModalOpen} setIsOpen={setMeetingModalOpen} />
     </div>
   );
 }
