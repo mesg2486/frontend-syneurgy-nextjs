@@ -44,7 +44,7 @@ export default async function handler(
       UserAttributes: [
         { Name: "name", Value: name },
         { Name: "email", Value: email },
-        { Name: "custom:teamId", Value: teamId },
+        { Name: "custom:teamId", Value: teamId || "any" },
       ],
     };
 
