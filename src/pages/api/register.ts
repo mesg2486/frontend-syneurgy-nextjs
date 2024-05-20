@@ -29,7 +29,8 @@ export default async function handler(
       username,
       email,
       password,
-      group = "user",
+      teamId,
+      group = "user", // passing group from payload can be a disaster
     } = req.body;
 
     const cognitoClient = new CognitoIdentityServiceProvider({
@@ -43,6 +44,7 @@ export default async function handler(
       UserAttributes: [
         { Name: "name", Value: name },
         { Name: "email", Value: email },
+        { Name: "custom:teamId", Value: teamId },
       ],
     };
 
@@ -51,12 +53,13 @@ export default async function handler(
     const groupParams = {
       UserPoolId: awsConfig.cognito.UserPoolId,
       Username: username,
-      GroupName: group,
+      GroupName: "user",
     };
 
     try {
       await cognitoClient.signUp(params).promise();
       await cognitoClient.adminAddUserToGroup(groupParams).promise();
+      console.log({ body: req.body });
 
       response.status = 200;
       response.data = { message: "User signed up successfully" };
