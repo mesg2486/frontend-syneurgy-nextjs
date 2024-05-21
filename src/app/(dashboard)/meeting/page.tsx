@@ -17,12 +17,15 @@ import MainTab from "@/components/meeting/MainTab";
 import Highlights from "@/components/meeting/Highlights";
 import Profile from "@/components/meeting/Profile";
 import Data from "@/components/meeting/Data";
+import Summary from "@/components/meeting/summary/Summary";
+import AskSummary from "@/components/meeting/AskSummary";
 
 export default function MeetingPage() {
   const [toggleTabs, setToggleTabs] = useState("data");
+  const [toggleSyneurgy, setToggleSyneurgy] = useState(false);
 
   return (
-    <div className="p-5 space-y-6">
+    <div className="relative p-5 space-y-6">
       {/* Nav Section */}
       <div>
         <Breadcrumb>
@@ -45,11 +48,11 @@ export default function MeetingPage() {
           <FiArrowLeftCircle className="text-3xl" />
           <h2 className="text-xl font-light">Meeting Intro</h2>
         </div>
-        <div className="flex flex-row space-x-6">
+        <div className="flex flex-row space-x-8">
           <Button variant={"outline"} className="text-black gap-x-2 rounded-xl">
             All Participants
           </Button>
-          <ul className="flex flex-row gap-x-3">
+          <ul className="flex flex-row gap-x-4">
             <li
               className={`${toggleTabs === "data" ? "border-b-[1px] border-slate-50 opacity-100" : "opacity-60"} content-center  cursor-pointer`}
               onClick={() => setToggleTabs("data")}
@@ -69,9 +72,18 @@ export default function MeetingPage() {
               ACTION
             </li>
           </ul>
-          <Button variant={"outline"} className="text-black gap-x-2 rounded-xl">
+          <Button
+            variant={"outline"}
+            className="text-black gap-x-2 rounded-xl"
+            onClick={() => setToggleSyneurgy(true)}
+          >
             <MdChat /> Ask Syneurgy
           </Button>
+        </div>
+        <div
+          className={`${toggleSyneurgy === true ? "block" : "hidden"} max-w-xl h-full min-w-96 bg-slate-800 absolute top-0 right-0 z-50`}
+        >
+          <AskSummary setToggleSyneurgy={setToggleSyneurgy} />
         </div>
       </div>
       <Separator orientation="horizontal" className="bg-slate-50 opacity-30" />
@@ -82,12 +94,22 @@ export default function MeetingPage() {
           <MainTab />
           <Highlights />
         </div>
-        <div className="col-span-2">
-          <Data />
-        </div>
-        <div className="col-span-2">
-          <Profile />
-        </div>
+        {toggleTabs === "data" ? (
+          <>
+            <div className="col-span-2">
+              <Data />
+            </div>
+            <div className="col-span-2">
+              <Profile />
+            </div>
+          </>
+        ) : toggleTabs === "summary" ? (
+          <div className="col-span-4">
+            <Summary />
+          </div>
+        ) : (
+          <p>bye</p>
+        )}
       </div>
     </div>
   );
