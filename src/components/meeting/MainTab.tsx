@@ -43,7 +43,7 @@ export default function MainTab({ meeting }: { meeting: Meeting }) {
           {/* This image is just for testing purpose  */}
           <video width="640" height="360" controls>
             <source
-              src="https://d2n2ldezfv2tlg.cloudfront.net/prod/meeting/417b9590-b071-70fd-6a16-2721bd2dcfa4/clip_speaker_00_519_84_525_92.mp4"
+              src="https://d2n2ldezfv2tlg.cloudfront.net/meetings/asdf/gitlab_demo.mp4"
               type="video/mp4"
             />
             Your browser does not support the video tag.

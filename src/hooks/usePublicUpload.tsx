@@ -6,6 +6,8 @@ import axios, { AxiosProgressEvent } from "axios";
 export type TUsePublicUploadVariables = {
   sub?: string;
   type: string;
+  meetingId?: string;
+  contentType?: string;
   setUrl?: React.Dispatch<React.SetStateAction<string>>;
   onSuccess?: (url: any) => any;
   onError?: (error: any) => any;
@@ -15,14 +17,17 @@ export type TUsePublicUploadVariables = {
 interface IUploadPayload {
   sub?: string;
   type: string;
-  contentType: string;
+  contentType?: string;
   filename: string;
+  meetingId?: string;
 }
 
 // use seturl for async uploads to get the url before the file starts uploading
 
 export default function usePublicUpload({
   sub,
+  meetingId,
+  contentType,
   type,
   setUrl,
   onSuccess = () => null,
@@ -40,8 +45,9 @@ export default function usePublicUpload({
     const payload: IUploadPayload = {
       filename: file.name,
       sub,
-      contentType: file.type,
+      contentType: file.type || "multipart/form-data",
       type,
+      meetingId,
     };
 
     const response = await uploadServer.post(`/api/upload`, payload, {
@@ -52,7 +58,7 @@ export default function usePublicUpload({
     const signedUrl = response.data.data.url;
     url = response?.data?.data?.url?.split("?")[0];
     setUrl && setUrl(url);
-    // console.log({ url: response.data.data.url, file });
+    console.log({ url: response.data.data.url, file, response, payload });
     await s3Upload.put(signedUrl, file, {
       onUploadProgress: (event) => {
         notifyProgress(url, file.name, event);

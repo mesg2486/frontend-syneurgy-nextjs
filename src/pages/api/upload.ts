@@ -23,7 +23,7 @@ export default async function getPresignedUrl(
   const response: any = { data: null, error: null, status: null };
   try {
     const { filename, type, sub, articleId, contentType, meetingId } = req.body;
-    console.log(type);
+    console.log({ body: req.body });
     let url = `temp/${filename}`;
 
     if (type === "profile") {

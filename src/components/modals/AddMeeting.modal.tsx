@@ -45,6 +45,8 @@ import { format } from "date-fns";
 import { CalendarIcon } from "@radix-ui/react-icons";
 import { Calendar } from "../ui/calendar";
 import { cn } from "@/lib/utils";
+import { generateThumbnail } from "@/utils/generate-thumbnail";
+import { convertBlobToFile } from "@/utils/blob-to-file";
 
 interface IAddMeetingProps {
   open: boolean;
@@ -54,14 +56,22 @@ interface IAddMeetingProps {
 export default function AddMeeting({ open, setIsOpen }: IAddMeetingProps) {
   const [url, setUrl] = useState("");
   const { toast } = useToast();
+  const [thumbnail, setThumbnail] = useState("");
   const { data: session } = useSession();
   const user = session?.user;
   const queryClient = useQueryClient();
 
   const { mutate: upload } = usePublicUpload({
-    sub: user?.sub,
     setUrl,
+    meetingId: "asdf",
     type: "meeting",
+    contentType: "video/mp4",
+  });
+
+  const { mutate: uploadThumbnail } = usePublicUpload({
+    sub: user?.sub,
+    setUrl: setThumbnail,
+    type: "profile",
   });
 
   const { mutate, isPending, isError, error } = useMutation<
@@ -172,8 +182,20 @@ export default function AddMeeting({ open, setIsOpen }: IAddMeetingProps) {
     }
 
     upload(file);
+    try {
+      console.log({ file });
+
+      const thumbnail = await generateThumbnail(file, 0.04);
+      uploadThumbnail(convertBlobToFile(thumbnail, "thumbnail.png"));
+
+      console.log({ thumbnail });
+    } catch (e) {
+      console.log(e);
+    }
     setFileName(file.name);
   };
+
+  // console.log({ url, thumbnail });
 
   return (
     <Dialog open={open} onOpenChange={setIsOpen}>

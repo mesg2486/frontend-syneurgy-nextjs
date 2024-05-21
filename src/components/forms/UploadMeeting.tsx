@@ -40,6 +40,8 @@ import { CalendarIcon } from "@radix-ui/react-icons";
 import { cn } from "@/lib/utils";
 import useUpdateUser from "@/hooks/useUpdateUserStep";
 import { useOnboardingData } from "@/contexts/onboarding.context";
+import { generateThumbnail } from "@/utils/generate-thumbnail";
+import { Blob } from "buffer";
 
 export const CREATE_MEETING = graphql(`
   mutation createMeeting(
@@ -94,13 +96,15 @@ interface IFormProps {
 
 export default function UploadMeeting({ progress, setProgress }: IFormProps) {
   const [url, setUrl] = useState("");
+  const [thumbnail, setThumbnail] = useState<Blob | undefined>();
   const { toast } = useToast();
   const { user, refetchUser } = useOnboardingData();
 
   const { mutate: upload } = usePublicUpload({
-    sub: user?.sub,
     setUrl,
+    meetingId: "asdf",
     type: "meeting",
+    contentType: "video/mp4",
   });
 
   console.log({ user });
@@ -224,6 +228,9 @@ export default function UploadMeeting({ progress, setProgress }: IFormProps) {
     }
 
     upload(file);
+    const thumbnail = await generateThumbnail(file, 0.24);
+    console.log({ thumbnail });
+    setThumbnail(thumbnail as Blob);
     setFileName(file.name);
   };
 
