@@ -100,7 +100,7 @@ export default function UploadMeeting({ progress, setProgress }: IFormProps) {
   const { mutate: upload } = usePublicUpload({
     sub: user?.sub,
     setUrl,
-    type: "profile",
+    type: "meeting",
   });
 
   console.log({ user });

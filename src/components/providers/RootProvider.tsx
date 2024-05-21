@@ -9,6 +9,8 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Toaster } from "@/components/ui/toaster";
 import NextTopLoader from "nextjs-toploader";
 import Dashnav from "../layout/Dashnav";
+import Uploader from "../modals/Uploader";
+import { AxiosUploadProvider } from "@/contexts/event.context";
 
 export default function RootProvider({
   children,
@@ -27,16 +29,20 @@ export default function RootProvider({
             shadow={false}
             showSpinner={false}
           />
-          <div className="flex bg-secondary text-secondary-foreground">
-            <Sidebar />
-            <main className="flex-1 bg-secondary text-secondary-foreground">
-              <Dashnav />
-              <div className="px-8">{children}</div>
-            </main>
-            <Toaster />
-          </div>
+          <AxiosUploadProvider>
+            <Uploader />
+            <div className="flex bg-secondary text-secondary-foreground">
+              <Sidebar />
+              <main className="flex-1 bg-secondary text-secondary-foreground">
+                <Dashnav />
+                <div className="px-8">{children}</div>
+              </main>
+              <Toaster />
+            </div>
+          </AxiosUploadProvider>
           {/* <Footer /> */}
         </SessionProvider>
+
         <ReactQueryDevtools position="right" />
       </QueryClientProvider>
     </>

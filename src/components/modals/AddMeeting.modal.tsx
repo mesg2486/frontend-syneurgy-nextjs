@@ -61,7 +61,7 @@ export default function AddMeeting({ open, setIsOpen }: IAddMeetingProps) {
   const { mutate: upload } = usePublicUpload({
     sub: user?.sub,
     setUrl,
-    type: "profile",
+    type: "meeting",
   });
 
   const { mutate, isPending, isError, error } = useMutation<

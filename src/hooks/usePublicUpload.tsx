@@ -15,6 +15,7 @@ export type TUsePublicUploadVariables = {
 interface IUploadPayload {
   sub?: string;
   type: string;
+  contentType: string;
   filename: string;
 }
 
@@ -39,6 +40,7 @@ export default function usePublicUpload({
     const payload: IUploadPayload = {
       filename: file.name,
       sub,
+      contentType: file.type,
       type,
     };
 

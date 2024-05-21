@@ -22,23 +22,23 @@ export default async function getPresignedUrl(
 ) {
   const response: any = { data: null, error: null, status: null };
   try {
-    const { filename, type, sub, articleId } = req.body;
+    const { filename, type, sub, articleId, contentType, meetingId } = req.body;
     console.log(type);
-    let url = `prod/temp/${filename}`;
+    let url = `temp/${filename}`;
 
     if (type === "profile") {
-      url = `prod/profile/${sub}/${filename}`;
+      url = `profiles/${sub}/${filename}`;
     }
 
     if (type === "meeting") {
-      url = `prod/meeting/${sub}/${filename}`;
+      url = `meetings/${meetingId}/${filename}`;
     }
 
     const s3Params = {
       Bucket: awsConfig.s3.bucket,
       Key: url,
       Expires: 3000,
-      ContentType: "multipart/form-data",
+      ContentType: contentType || "multipart/form-data",
     };
 
     console.log({ s3Params });
