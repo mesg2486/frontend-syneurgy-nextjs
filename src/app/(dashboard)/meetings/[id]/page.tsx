@@ -115,7 +115,7 @@ export default function MeetingPage({ params }: { params: { id: string } }) {
       </div>
       <div className="grid grid-cols-10 gap-x-5">
         <div className="col-span-6 space-y-4">
-          <MainTab meeting={data?.meeting as Meeting} />
+          <MainTab />
           <Highlights />
         </div>
         <div className="col-span-2 border-l border-white/10">
