@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import {
   Form,
   FormControl,
@@ -37,6 +37,8 @@ export default function RegisterForm({
   const { toast } = useToast();
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
+  const search = useSearchParams();
+  const teamId = search?.get("teamId");
 
   const form = useForm<TRegisterSchema>({
     resolver: zodResolver(registerSchema),
@@ -73,7 +75,7 @@ export default function RegisterForm({
 
   async function onSubmit(data: TRegisterSchema) {
     // console.log({ data });
-    mutate({ ...data });
+    mutate({ ...data, teamId } as any);
   }
 
   return (

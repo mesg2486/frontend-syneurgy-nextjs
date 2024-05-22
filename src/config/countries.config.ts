@@ -6,6 +6,7 @@ interface Country {
 }
 
 export const countries: Country[] = [
+  { name: "United States", flag: "🇺🇸", code: "US", dial_code: "+1" },
   { name: "Afghanistan", flag: "🇦🇫", code: "AF", dial_code: "+93" },
   { name: "Åland Islands", flag: "🇦🇽", code: "AX", dial_code: "+358" },
   { name: "Albania", flag: "🇦🇱", code: "AL", dial_code: "+355" },
@@ -340,7 +341,6 @@ export const countries: Country[] = [
   { name: "Ukraine", flag: "🇺🇦", code: "UA", dial_code: "+380" },
   { name: "United Arab Emirates", flag: "🇦🇪", code: "AE", dial_code: "+971" },
   { name: "United Kingdom", flag: "🇬🇧", code: "GB", dial_code: "+44" },
-  { name: "United States", flag: "🇺🇸", code: "US", dial_code: "+1" },
   { name: "Uruguay", flag: "🇺🇾", code: "UY", dial_code: "+598" },
   { name: "Uzbekistan", flag: "🇺🇿", code: "UZ", dial_code: "+998" },
   { name: "Vanuatu", flag: "🇻🇺", code: "VU", dial_code: "+678" },

@@ -85,6 +85,8 @@ type Meeting {
   userId: String!
   teamId: String!
   date: String!
+  createdAt: String!
+  updatedAt: String!
 }
 
 type MeetingConnection {
@@ -224,6 +226,8 @@ type Team {
   synchrony: Float
   performance: String
   sentiment: String
+  createdAt: String!
+  updatedAt: String!
 }
 
 type TeamConnection {
@@ -345,8 +349,20 @@ type Query {
     limit: Int
     nextToken: String
   ): TeamConnection
+  listTeamsByUserId(
+    userId: ID!
+    filter: TableTeamFilterInput
+    limit: Int
+    nextToken: String
+  ): TeamConnection
   getMeeting(id: ID!): Meeting
   listMeetings(
+    filter: TableMeetingFilterInput
+    limit: Int
+    nextToken: String
+  ): MeetingConnection
+  listMeetingsByUserId(
+    userId: ID!
     filter: TableMeetingFilterInput
     limit: Int
     nextToken: String

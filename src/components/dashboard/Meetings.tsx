@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Separator } from "@/components/ui/separator";
@@ -20,13 +22,53 @@ import {
 } from "@/components/ui/pagination";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { HiOutlineSearch, HiPlay } from "react-icons/hi";
+import { HiOutlineSearch } from "react-icons/hi";
 import { AiOutlinePlus } from "react-icons/ai";
-import CircleProgress from "@/components/fragments/CircleProgress";
-import { GoGoal } from "react-icons/go";
-import Link from "next/link";
+import MeetingCard from "../cards/MeetingCard";
+import { useSession } from "next-auth/react";
+import { useQuery } from "@tanstack/react-query";
+import { gql } from "@/services/clients/graphql.client";
+import { graphql } from "@/services/gql";
+import TeamCardSkeleton from "../placeholders/TeamCard.skeleton";
+import { Meeting } from "@/services/gql/graphql";
+
+export const LIST_MEETINGS_BY_USERID = graphql(`
+  query listMeetingsByUserId($userId: ID!) {
+    meetings: listMeetingsByUserId(userId: $userId) {
+      items {
+        date
+        dimensions
+        highlights
+        id
+        name
+        createdAt
+        updatedAt
+        sentiment
+        performance
+        synchrony
+        teamId
+        thumbnail
+        type
+        url
+        userId
+      }
+    }
+  }
+`);
 
 export default function Meetings() {
+  const { data: session, status } = useSession();
+
+  const { data, isLoading, refetch } = useQuery({
+    queryKey: ["meetings", session?.user.sub],
+    queryFn: async () => {
+      return await gql.request(LIST_MEETINGS_BY_USERID, {
+        userId: String(session?.user.sub),
+      });
+    },
+    enabled: !!session?.user,
+  });
+
   return (
     <div className="p-6 bg-secondary w-full">
       <Tabs defaultValue="meetings" className="w-full min-h-[600px]">
@@ -78,33 +120,19 @@ export default function Meetings() {
             </div>
           </div>
           <div className="pt-10 space-y-6">
-            <div className="grid grid-cols-5 gap-5">
-              {meetings?.map((meeting, index) => (
-                <div key={index} className="bg-slate-800 rounded-lg">
-                  <div className="h-32 overflow-hidden rounded-t-lg">
-                    <img className="object-cover" src={meeting.thumbnail} />
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 md:grid-cols-4 lg:grid-cols-5">
+              {(isLoading || status === "loading") &&
+                Array.from(Array(10)).map((i) => <TeamCardSkeleton key={i} />)}
+              {Number(data?.meetings?.items?.length) > 0 &&
+                data?.meetings?.items?.map((meeting) => (
+                  <MeetingCard meeting={meeting as Meeting} key={meeting?.id} />
+                ))}
+              {!(isLoading || status === "loading") &&
+                Number(data?.meetings?.items?.length) === 0 && (
+                  <div className="col-span-5 py-40 flex justify-center items-center">
+                    No meetings uploaded!
                   </div>
-                  <div className="p-4 space-y-2">
-                    <p className="opacity-70 font-light text-xs">
-                      {meeting.date}
-                    </p>
-                    <h2 className="text-md font-medium pb-3">
-                      {meeting.title}
-                    </h2>
-                    <Separator className="my-3 bg-white/5" />
-                    <div className="flex flex-row gap-x-3">
-                      <div className="flex gap-2 items-center">
-                        <CircleProgress className="size-6" />
-                        <p className="text-xs opacity-60">20%</p>
-                      </div>
-                      <div className="flex gap-2 items-center">
-                        <GoGoal className="size-5" />
-                        <p className="text-xs opacity-60">Creative</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
+                )}
             </div>
             <div className="justify-between flex items-center pt-6">
               <p className="opacity-70">Show 8 from 120 products</p>
@@ -138,46 +166,3 @@ export default function Meetings() {
     </div>
   );
 }
-
-const meetings = [
-  {
-    thumbnail: "https://images.unsplash.com/photo-1553877522-43269d4ea984",
-    date: "2024-05-13 · 08:20 PM",
-    title: "Team Standup Meeting",
-  },
-  {
-    thumbnail: "https://images.unsplash.com/photo-1553877522-43269d4ea984",
-    date: "2024-05-14 · 08:20 PM",
-    title: "Project Kickoff Meeting",
-  },
-  {
-    thumbnail: "https://images.unsplash.com/photo-1553877522-43269d4ea984",
-    date: "2024-05-15 · 08:20 PM",
-    title: "Client Presentation",
-  },
-  {
-    thumbnail: "https://images.unsplash.com/photo-1553877522-43269d4ea984",
-    date: "2024-05-16 · 08:20 PM",
-    title: "Weekly Progress Review",
-  },
-  {
-    thumbnail: "https://images.unsplash.com/photo-1553877522-43269d4ea984",
-    date: "2024-05-17 · 08:20 PM",
-    title: "Budget Planning Meeting",
-  },
-  {
-    thumbnail: "https://images.unsplash.com/photo-1553877522-43269d4ea984",
-    date: "2024-05-18 · 08:20 PM",
-    title: "Marketing Strategy Discussion",
-  },
-  {
-    thumbnail: "https://images.unsplash.com/photo-1553877522-43269d4ea984",
-    date: "2024-05-19 · 08:20 PM",
-    title: "Product Development Meeting",
-  },
-  {
-    thumbnail: "https://images.unsplash.com/photo-1553877522-43269d4ea984",
-    date: "2024-05-20 · 08:20 PM",
-    title: "HR Recruitment Meeting",
-  },
-];

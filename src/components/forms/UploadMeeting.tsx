@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input";
 import React, { ChangeEvent, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useToast } from "@/components/ui/use-toast";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { format } from "date-fns";
 import {
   Form,
@@ -142,7 +142,7 @@ export default function UploadMeeting({ progress, setProgress }: IFormProps) {
   async function onSubmit(data: TMeetingSchema) {
     console.log({ data, date: data.date.toISOString() });
     if (!url)
-      toast({
+      return toast({
         title: "Please upload a file",
         description: "Upload a file to submit the form",
       });
@@ -188,12 +188,20 @@ export default function UploadMeeting({ progress, setProgress }: IFormProps) {
     e.preventDefault();
     setHighlighted(false);
     setDropped(true);
+    const maxSize = 2 * 1024 * 1024 * 1024;
 
     const file = e.dataTransfer.files[0];
+
+    if (file.size > maxSize) {
+      return toast({
+        title: "Exceeds Size Limit",
+        description: "File size exceeds the maximum limit of 2GB.",
+      });
+    }
+
     console.log(file.name);
     setFileName(file.name);
     upload(file);
-    // You can perform further actions with the dropped file here
   };
 
   const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
@@ -277,9 +285,6 @@ export default function UploadMeeting({ progress, setProgress }: IFormProps) {
                   <FormControl>
                     <Input {...field} />
                   </FormControl>
-                  {/* <FormDescription>
-        This is your public display name.
-      </FormDescription> */}
                   <FormMessage />
                 </FormItem>
               )}
@@ -296,16 +301,19 @@ export default function UploadMeeting({ progress, setProgress }: IFormProps) {
                       defaultValue={field.value}
                     >
                       <SelectTrigger className="">
-                        <SelectValue placeholder="Select a Course" />
+                        <SelectValue placeholder="Select Type" />
                       </SelectTrigger>
                       <SelectContent className="">
                         <SelectItem value="creative">Creative</SelectItem>
+                        <SelectItem value="decision-making">
+                          Decision Making
+                        </SelectItem>
+                        <SelectItem value="brainstorming">
+                          Brainstorming
+                        </SelectItem>
                       </SelectContent>
                     </Select>
                   </FormControl>
-                  {/* <FormDescription>
-        This is your public display name.
-      </FormDescription> */}
                   <FormMessage />
                 </FormItem>
               )}

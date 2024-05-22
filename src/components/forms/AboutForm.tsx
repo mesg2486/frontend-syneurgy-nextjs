@@ -189,7 +189,7 @@ export default function AboutForm({ progress, setProgress }: IFormProps) {
                         <CommandInput placeholder="Search country..." />
                         <CommandEmpty>No country found.</CommandEmpty>
                         <CommandGroup>
-                          <CommandList className="">
+                          <CommandList className="" defaultValue="us">
                             {countries.map((country) => (
                               <CommandItem
                                 value={country.name}
