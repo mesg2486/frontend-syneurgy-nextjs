@@ -1,9 +1,8 @@
 import React from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import ReactPlayer from "react-player";
 import { Meeting } from "@/services/gql/graphql";
 
-export default function MainTab({ meeting }: { meeting: Meeting }) {
+export default function MainTab() {
   return (
     <div className="w-full p-6 rounded-lg bg-slate-800">
       <Tabs defaultValue="meeting">

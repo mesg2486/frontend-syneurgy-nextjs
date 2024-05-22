@@ -14,7 +14,7 @@ export default function Data() {
   return (
     <div className="flex flex-col space-y-6 ml-5">
       <div className="w-full bg-slate-800 rounded-xl p-3">
-        <h2 className="text-lg font-medium flex items-center gap-x-1">
+        <h2 className="text-md font-medium flex items-center gap-x-1">
           Team Synchrony <FaInfoCircle />
         </h2>
         <div>
@@ -26,10 +26,10 @@ export default function Data() {
         </div>
       </div>
       <div className="w-full bg-slate-800 rounded-xl p-3">
-        <h2 className="text-lg font-medium mb-4 flex items-center gap-x-1">
+        <h2 className="text-md font-medium mb-4 flex items-center gap-x-1">
           Dimensions <FaInfoCircle />
         </h2>
-        <div className="w-full h-48 p-5">
+        <div className="w-full h-48 p-5 text-xs">
           <ResponsiveContainer width="100%" height="100%">
             <RadarChart cx="50%" cy="50%" outerRadius="80%" data={data1}>
               <PolarGrid />
@@ -53,7 +53,7 @@ export default function Data() {
         </div>
       </div>
       <div className="w-full bg-slate-800 rounded-xl p-3">
-        <h2 className="text-lg font-medium mb-4 flex items-center gap-x-1">
+        <h2 className="text-md font-medium mb-4 flex items-center gap-x-1">
           Team Performance <FaInfoCircle />
         </h2>
         <div className="grid grid-cols-3 grid-flow-row gap-x-4">
@@ -73,7 +73,7 @@ export default function Data() {
         </div>
       </div>
       <div className="w-full bg-slate-800 rounded-xl p-3">
-        <h2 className="text-lg font-medium mb-4 flex items-center gap-x-1">
+        <h2 className="text-md font-medium mb-4 flex items-center gap-x-1">
           Team Sentiment <FaInfoCircle />
         </h2>
         <div className="grid grid-cols-3 grid-flow-row gap-x-4">
