@@ -30,6 +30,13 @@ import { BsChatRightTextFill } from "react-icons/bs";
 import { HiHand } from "react-icons/hi";
 import { useSession } from "next-auth/react";
 import CircleProgress from "../fragments/CircleProgressWithIcon";
+import {
+  FaFaceFrown,
+  FaFaceMeh,
+  FaFaceSmile,
+  FaRegFaceFrownOpen,
+  FaRegFaceMeh,
+} from "react-icons/fa6";
 
 export default function DashMain() {
   const { data: session } = useSession();
@@ -143,20 +150,54 @@ export default function DashMain() {
           <div>
             <h2 className="text-lg font-medium pl-10">Global Performance</h2>
             <div className="w-full overflow-hidden flex flex-row justify-around  p-5 gap-4">
-              <div className="w-10 h-10">
+              <div className="flex justify-center items-center flex-col gap-3">
+                <CircleProgress color="text-yellow-500">
+                  <span className="text-xs">43</span>
+                </CircleProgress>
                 <p>Brain</p>
               </div>
-              <div className="w-10 h-10">
+              <div className="flex justify-center items-center flex-col gap-3">
+                <CircleProgress color="text-emerald-500">
+                  <span className="text-xs">43</span>
+                </CircleProgress>
                 <p>Body</p>
               </div>
-              <div className="w-10 h-10">
+              <div className="flex justify-center items-center flex-col gap-3">
+                <CircleProgress color="text-blue-500">
+                  <span className="text-xs">43</span>
+                </CircleProgress>
                 <p>Behavior</p>
               </div>
             </div>
           </div>
           <div>
             <h2 className="text-lg font-medium pl-10">Global Sentiment</h2>
-            <CircleProgress />
+            <div className="w-full overflow-hidden flex flex-row justify-around  p-5 gap-4">
+              <div className="flex justify-center items-center flex-col gap-3">
+                <CircleProgress color="text-red-500">
+                  <span className="text-center text-xl">
+                    <FaFaceFrown />
+                  </span>
+                </CircleProgress>
+                <p>Negative</p>
+              </div>
+              <div className="flex justify-center items-center flex-col gap-3">
+                <CircleProgress color="text-gray-300">
+                  <span className="text-center text-xl">
+                    <FaFaceMeh />
+                  </span>
+                </CircleProgress>
+                <p>Neutral</p>
+              </div>
+              <div className="flex justify-center items-center flex-col gap-3">
+                <CircleProgress color="text-green-500">
+                  <span className="text-center text-xl">
+                    <FaFaceSmile />
+                  </span>
+                </CircleProgress>
+                <p>Positive</p>
+              </div>
+            </div>
           </div>
         </div>
         {/* Line Chart  */}

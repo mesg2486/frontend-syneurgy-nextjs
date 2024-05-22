@@ -48,12 +48,34 @@ export default function Sidebar() {
             </Link>
           ))}
         </div>
-        <div className="w-full text-lg flex flex-col justify-center items-center pb-6 gap-6">
-          <button onClick={() => signOut()}>
-            <FiLogOut />
-          </button>
+        <div className="w-full text-lg pb-6 space-y-6">
+          <div onClick={() => signOut()}>
+            <div className="flex justify-between items-center">
+              <div className="w-14 text-lg h-12 flex justify-center items-center">
+                <div className="w-14 flex justify-center items-center">
+                  <FiLogOut />
+                </div>
+              </div>
+              <div
+                className={`${expanded ? "flex-1 opacity-60 text-sm flex whitespace-nowrap items-center h-12" : "hidden"}`}
+              >
+                Sign Out
+              </div>
+            </div>
+          </div>
           <Link href={"/settings/account"}>
-            <FaCog />
+            <div className="flex justify-between items-center">
+              <div className="w-14 text-lg h-12 flex justify-center items-center">
+                <div className="w-14 flex justify-center items-center">
+                  <FaCog />
+                </div>
+              </div>
+              <div
+                className={`${expanded ? "flex-1 opacity-60 text-sm flex whitespace-nowrap items-center h-12" : "hidden"}`}
+              >
+                Settings
+              </div>
+            </div>
           </Link>
         </div>
       </div>

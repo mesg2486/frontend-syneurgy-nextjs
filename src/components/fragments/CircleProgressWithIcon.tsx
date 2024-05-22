@@ -4,13 +4,17 @@ import { FaFaceSmile } from "react-icons/fa6";
 
 interface ICircleProgressProps {
   className?: string;
+  color?: string;
+  children?: React.ReactNode;
 }
 
 export default function CircleProgressWithIcon({
   className,
+  color = "text-primary",
+  children,
 }: ICircleProgressProps) {
   return (
-    <div className={cn("relative size-14", className)}>
+    <div className={cn("relative size-12", className)}>
       <svg
         className="size-full"
         width="36"
@@ -32,7 +36,7 @@ export default function CircleProgressWithIcon({
             cy="18"
             r="16"
             fill="none"
-            className="stroke-current text-primary"
+            className={cn("stroke-current", color)}
             stroke-width="3"
             stroke-dasharray="100"
             stroke-dashoffset="75"
@@ -40,9 +44,11 @@ export default function CircleProgressWithIcon({
         </g>
       </svg>
       <div className="absolute top-1/2 start-1/2 transform -translate-y-1/2 -translate-x-1/2">
-        <span className="text-center text-2xl">
-          <FaFaceSmile />
-        </span>
+        {children || (
+          <span className="text-center text-xl">
+            <FaFaceSmile />
+          </span>
+        )}
       </div>
     </div>
   );

@@ -62,7 +62,6 @@ export default function Data() {
             <p className="text-sm font-thin">Brain</p>
           </div>
           <div className="">
-            {" "}
             <CircleProgressWithIcon />
             <p className="text-sm font-thin">Body</p>
           </div>

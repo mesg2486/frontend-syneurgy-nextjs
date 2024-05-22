@@ -6,7 +6,7 @@ import {
 } from "@/components/forms/onboarding.schema";
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
-import React from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import {
   Form,
@@ -18,7 +18,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Button } from "../ui/button";
-import { AiOutlineReload } from "react-icons/ai";
+import { AiOutlineEdit, AiOutlinePlus, AiOutlineReload } from "react-icons/ai";
 import { graphql } from "@/services/gql";
 import { useSession } from "next-auth/react";
 import { countries } from "@/config/countries.config";
@@ -34,9 +34,12 @@ import {
 } from "../ui/command";
 import { cn } from "@/lib/utils";
 import { User } from "@/services/gql/graphql";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useToast } from "../ui/use-toast";
 import { gql } from "@/services/clients/graphql.client";
+import { GET_USER } from "@/contexts/onboarding.context";
+import usePublicUpload from "@/hooks/usePublicUpload";
+import Image from "next/image";
 
 export const UPDATE_USER_ABOUT = graphql(`
   mutation updateUser(
@@ -89,9 +92,44 @@ interface IFormProps {
 }
 
 export default function AccountSettingsForm(props: IFormProps) {
-  const { data: session } = useSession();
   const { toast } = useToast();
+  const [avatar, setAvatar] = useState("");
+  const { data: session, status } = useSession();
 
+  // get user data
+  const { data, isLoading } = useQuery({
+    queryKey: ["user", session?.user.sub],
+    queryFn: async () => {
+      return await gql.request(GET_USER, {
+        sub: String(session?.user.sub),
+      });
+    },
+    enabled: !!session?.user,
+  });
+
+  // image upload
+  const onUploadSuccess = (url: any) => {
+    toast({
+      title: "Image Uploaded",
+    });
+    setAvatar(url);
+  };
+
+  const onUploadError = (error: any) => {
+    toast({
+      title: "Error",
+      description: "An error occurred while uploading the image.",
+    });
+  };
+
+  const { mutate: uploadImage, isPending: isImageUploading } = usePublicUpload({
+    type: "profile",
+    sub: (session?.user as any)?.sub,
+    onSuccess: onUploadSuccess,
+    onError: onUploadError,
+  });
+
+  // update user details
   const { mutate, isPending } = useMutation<any, any, TAboutFormSchema>({
     mutationFn: async (variables: any) =>
       gql.request(UPDATE_USER_ABOUT, variables),
@@ -109,11 +147,10 @@ export default function AccountSettingsForm(props: IFormProps) {
   });
 
   async function onSubmit(data: TAboutFormSchema) {
-    console.log({ data });
-
     mutate({
       ...data,
       sub: session?.user.sub,
+      avatar,
     } as any);
   }
 
@@ -130,15 +167,64 @@ export default function AccountSettingsForm(props: IFormProps) {
     },
   });
 
-  console.log({ countries });
+  useEffect(() => {
+    if (!data || isLoading) return;
+    form.reset({
+      company: data?.user?.company || "",
+      country: data?.user?.country || "",
+      firstName: data?.user?.firstName || "",
+      lastName: data?.user?.lastName || "",
+      position: data?.user?.position || "",
+      resultPrivacy: data?.user?.resultPrivacy || false,
+    });
+    setAvatar(data?.user?.avatar || "");
+  }, [data]);
+
+  const handleImageChange = async (e: ChangeEvent<HTMLInputElement>) => {
+    const { files } = e.target;
+    if (!files) {
+      return;
+    }
+    console.log({ files });
+
+    uploadImage(files[0]);
+  };
 
   return (
-    <div className="flex-1 max-w-lg bg-popover p-6 rounded-lg">
+    <div className="flex-1 max-w-xl bg-popover p-6 rounded-lg">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
           className="gap-4 text-white/60 flex h-full flex-col"
         >
+          <div className="gap-6 flex">
+            <div className="relative">
+              <Image
+                className="size-40 bg-black/30 rounded-md"
+                src={avatar}
+                alt="profile"
+                quality={80}
+                width={200}
+                height={200}
+              />
+              <input
+                type="file"
+                id="avatar"
+                onChange={handleImageChange}
+                className="absolute inset-0 cursor-pointer opacity-0"
+              />
+              <label
+                htmlFor="avatar"
+                className="absolute right-0 top-0 cursor-pointer rounded-full bg-black/40 backdrop-blur-sm p-1 translate-x-1/2 -translate-y-1/2"
+              >
+                {avatar ? (
+                  <AiOutlineEdit className="text-sm" />
+                ) : (
+                  <AiOutlinePlus className="text-sm" />
+                )}
+              </label>
+            </div>
+          </div>
           <div className="space-y-6">
             <FormField
               control={form.control}
@@ -268,6 +354,7 @@ export default function AccountSettingsForm(props: IFormProps) {
                     <FormControl>
                       <Input
                         type="checkbox"
+                        checked={field.value}
                         className="border-0 h-4 w-4 border-b border-b-white/60"
                         {...field}
                         value={String(field.value)}
@@ -309,7 +396,7 @@ export default function AccountSettingsForm(props: IFormProps) {
                   <AiOutlineReload className="animate-spin" />
                 </span>
               ) : (
-                <span>Next</span>
+                <span>Update</span>
               )}
             </Button>
           </div>
