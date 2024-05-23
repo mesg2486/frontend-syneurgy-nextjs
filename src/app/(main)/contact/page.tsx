@@ -14,7 +14,9 @@ export default function page() {
             Complete this form and we will contact you.{" "}
           </p>
           <div className="mt-8">
-            <h2 className="text-xl font-medium text-sky-500 mb-4">Contact Us</h2>
+            <h2 className="text-xl font-medium text-sky-500 mb-4">
+              Contact Us
+            </h2>
             <p className="font-medium">Syneurgy, Inc.</p>
             <p className="font-medium">9701 Wilshire Blvd.</p>
             <p className="font-medium">Tenth Floor</p>

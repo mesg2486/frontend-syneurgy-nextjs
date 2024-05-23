@@ -68,6 +68,9 @@ export default function usePublicUpload({
         onUploadProgress?.(event);
       },
       cancelToken: source.token,
+      headers: {
+        "Content-Type": file.type || "multipart/form-data",
+      },
     });
     return downloadUrl;
   };

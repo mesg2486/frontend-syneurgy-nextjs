@@ -90,12 +90,13 @@ interface IFormProps {
 export default function AboutForm({ progress, setProgress }: IFormProps) {
   const { data: session } = useSession();
   const router = useRouter();
+  const skipFlow = Number(progress) === 7;
 
   const { mutate, isPending } = useUpdateUser({
     progress,
     setProgress,
     onSuccess(data) {
-      router.push("/dashboard");
+      skipFlow && router.push("/dashboard");
     },
   });
 
@@ -104,8 +105,8 @@ export default function AboutForm({ progress, setProgress }: IFormProps) {
     mutate({
       ...data,
       sub: session?.user.sub,
-      onboarded: Number(progress) === 7 ? true : false,
-      step: Number(progress) === 7 ? "6" : "4",
+      onboarded: skipFlow ? true : false,
+      step: skipFlow ? "6" : "4",
     } as any);
   }
 

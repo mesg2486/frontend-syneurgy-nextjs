@@ -1,6 +1,7 @@
 import React from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { GetMeetingQuery, Meeting } from "@/services/gql/graphql";
+import ReactPlayer from "react-player";
 
 export default function MainTab({ data }: { data: GetMeetingQuery }) {
   return (
@@ -40,11 +41,16 @@ export default function MainTab({ data }: { data: GetMeetingQuery }) {
         </TabsList>
         <TabsContent value="meeting">
           {/* This image is just for testing purpose  */}
-          <video className="w-full" controls>
-            <source src={data.meeting?.url} type="video/mp4" />
-            Your browser does not support the video tag.
-          </video>
-          {/* <ReactPlayer url={meeting?.url} /> */}
+          {data.meeting?.url && (
+            <ReactPlayer
+              loop
+              playing
+              width="100%"
+              controls
+              muted
+              url={data.meeting?.url}
+            />
+          )}
         </TabsContent>
         <TabsContent value="universe"></TabsContent>
         <TabsContent value="heatmap"></TabsContent>

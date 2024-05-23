@@ -211,8 +211,8 @@ export default function AccountSettingsForm(props: IFormProps) {
           <div className="gap-6 flex">
             <div className="relative">
               <Image
-                className="size-40 bg-black/30 rounded-md"
-                src={avatar}
+                className="size-40 object-cover bg-black/30 rounded-md"
+                src={avatar || "/user.png"}
                 alt="profile"
                 quality={80}
                 width={200}

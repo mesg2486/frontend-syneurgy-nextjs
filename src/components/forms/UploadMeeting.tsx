@@ -43,6 +43,7 @@ import { useOnboardingData } from "@/contexts/onboarding.context";
 import { generateThumbnail } from "@/utils/generate-thumbnail";
 import { Blob } from "buffer";
 import { v4 as uuidv4 } from "uuid";
+import { convertBlobToFile } from "@/utils/blob-to-file";
 
 export const CREATE_MEETING = graphql(`
   mutation createMeeting(
@@ -100,7 +101,7 @@ interface IFormProps {
 export default function UploadMeeting({ progress, setProgress }: IFormProps) {
   const [id, setId] = useState(uuidv4());
   const [url, setUrl] = useState("");
-  const [thumbnail, setThumbnail] = useState<Blob | undefined>();
+  const [thumbnail, setThumbnail] = useState("");
   const { toast } = useToast();
   const { user, refetchUser } = useOnboardingData();
 
@@ -111,7 +112,12 @@ export default function UploadMeeting({ progress, setProgress }: IFormProps) {
     contentType: "video/mp4",
   });
 
-  console.log({ user });
+  const { mutate: uploadThumbnail } = usePublicUpload({
+    sub: user?.sub,
+    setUrl: setThumbnail,
+    meetingId: id,
+    type: "thumbnails",
+  });
 
   // update step in user
   const { mutate: updateUser } = useUpdateUser({
@@ -225,6 +231,11 @@ export default function UploadMeeting({ progress, setProgress }: IFormProps) {
     }
 
     const file = files[0];
+    setDropped(true);
+    setFileName(file.name);
+    form.reset({
+      name: file.name,
+    });
 
     if (file.size > maxSize) {
       return toast({
@@ -234,10 +245,8 @@ export default function UploadMeeting({ progress, setProgress }: IFormProps) {
     }
 
     upload(file);
-    const thumbnail = await generateThumbnail(file, 0.24);
-    console.log({ thumbnail });
-    setThumbnail(thumbnail as Blob);
-    setFileName(file.name);
+    const thumbnail = await generateThumbnail(file, 6.2);
+    uploadThumbnail(convertBlobToFile(thumbnail, "thumbnail.png"));
   };
 
   return (

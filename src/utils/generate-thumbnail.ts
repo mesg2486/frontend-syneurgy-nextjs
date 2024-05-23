@@ -1,4 +1,4 @@
-export const generateThumbnail = (file: File, seekTo = 0.0) => {
+export const generateThumbnail = (file: File, seekTo = 3.4) => {
   return new Promise<Blob>((resolve, reject) => {
     // load the file to a video player
     const videoPlayer = document.createElement("video");

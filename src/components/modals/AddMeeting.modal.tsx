@@ -73,7 +73,8 @@ export default function AddMeeting({ open, setIsOpen }: IAddMeetingProps) {
   const { mutate: uploadThumbnail } = usePublicUpload({
     sub: user?.sub,
     setUrl: setThumbnail,
-    type: "profile",
+    meetingId: id,
+    type: "thumbnails",
   });
 
   const { mutate, isPending, isError, error } = useMutation<
@@ -177,7 +178,11 @@ export default function AddMeeting({ open, setIsOpen }: IAddMeetingProps) {
     }
 
     const file = files[0];
-
+    setDropped(true);
+    setFileName(file.name);
+    form.reset({
+      name: file.name,
+    });
     if (file.size > maxSize) {
       return toast({
         title: "Exceeds Size Limit",
@@ -187,9 +192,7 @@ export default function AddMeeting({ open, setIsOpen }: IAddMeetingProps) {
 
     upload(file);
     try {
-      console.log({ file });
-
-      const thumbnail = await generateThumbnail(file, 0.04);
+      const thumbnail = await generateThumbnail(file, 6.2);
       uploadThumbnail(convertBlobToFile(thumbnail, "thumbnail.png"));
 
       console.log({ thumbnail });

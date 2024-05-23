@@ -59,16 +59,18 @@ export default function TeamCard({ team }: { team: Team }) {
     <div className="bg-tertiary space-y-2 rounded-lg p-4">
       <div className="flex justify-between items-center">
         <div className="flex pl-2">
-          {Array.from(Array(team.members?.items?.length || 3).keys()).map(
-            (i) => (
-              <Avatar
-                key={i}
-                className="h-6 w-6 rounded-full border shadow-md overflow-hidden -ml-2"
-              >
-                <AvatarImage src="/user.png" alt="member" />
-              </Avatar>
-            ),
-          )}
+          {team.members?.items?.map((i) => (
+            <Avatar
+              key={i?.userId}
+              className="h-6 w-6 rounded-full border shadow-md overflow-hidden -ml-2"
+            >
+              <AvatarImage
+                className="object-cover"
+                src={i?.user?.avatar || "/user.png"}
+                alt="member"
+              />
+            </Avatar>
+          ))}
         </div>
         <div>
           <DropdownMenu>

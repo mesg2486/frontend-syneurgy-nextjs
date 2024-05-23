@@ -30,6 +30,10 @@ export default async function getPresignedUrl(
       url = `profiles/${sub}/${filename}`;
     }
 
+    if (type === "thumbnails") {
+      url = `thumbnails/${meetingId}/${filename}`;
+    }
+
     if (type === "meeting") {
       url = `meetings/${meetingId}/${filename}`;
     }

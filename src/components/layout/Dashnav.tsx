@@ -59,6 +59,7 @@ export default function Dashnav() {
           <DropdownMenuTrigger className="focus:ring-0 flex gap-2 focus:border-0">
             <Avatar className="h-6 w-6">
               <AvatarImage
+                className="object-cover"
                 src={session?.user.avatar || "/user.png"}
                 alt="avatar"
               />
