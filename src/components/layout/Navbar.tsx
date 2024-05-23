@@ -26,7 +26,7 @@ export default function Navbar() {
               The Science
             </Link>
             <Link
-              href="#"
+              href="about"
               className="text-white/60 hover:text-white/80 transition-all"
             >
               About Us
@@ -44,7 +44,7 @@ export default function Navbar() {
               Blog
             </Link>
             <Link
-              href="#"
+              href="contact"
               className="text-white/60 hover:text-white/80 transition-all"
             >
               Contact
