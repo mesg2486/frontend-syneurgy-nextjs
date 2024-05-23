@@ -16,14 +16,7 @@
     "generate": "graphql-codegen --config codegen.ts"
   },
   "dependencies": {
-    "@fullcalendar/core": "^6.1.11",
-    "@fullcalendar/daygrid": "^6.1.11",
-    "@fullcalendar/multimonth": "^6.1.11",
-    "@fullcalendar/react": "^6.1.11",
     "@hookform/resolvers": "^3.3.4",
-    "@mantine/core": "^7.8.1",
-    "@mantine/hooks": "^7.8.1",
-    "@mantine/rte": "^5.10.5",
     "@radix-ui/react-accordion": "^1.1.2",
     "@radix-ui/react-avatar": "^1.0.4",
     "@radix-ui/react-dialog": "^1.0.5",
