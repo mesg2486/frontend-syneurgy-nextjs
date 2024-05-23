@@ -80,11 +80,6 @@ export default function MeetingPage() {
             <MdChat /> Ask Syneurgy
           </Button>
         </div>
-        <div
-          className={`${toggleSyneurgy === true ? "block" : "hidden"} max-w-xl h-full min-w-96 bg-slate-800 absolute top-0 right-0 z-50`}
-        >
-          <AskSummary setToggleSyneurgy={setToggleSyneurgy} />
-        </div>
       </div>
       <Separator orientation="horizontal" className="bg-slate-50 opacity-30" />
       {/* Components section */}

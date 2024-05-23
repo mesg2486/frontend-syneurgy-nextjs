@@ -20,7 +20,7 @@ interface AskSyneurgyProps {
   setToggleSyneurgy: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function AskSummary({ setToggleSyneurgy }: AskSyneurgyProps) {
+export default function AskSyneurgy({ setToggleSyneurgy }: AskSyneurgyProps) {
   const [screen, setScreen] = useState(1);
 
   return (

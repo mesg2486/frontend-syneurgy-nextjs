@@ -20,6 +20,8 @@ import { graphql } from "@/services/gql";
 import { useQuery } from "@tanstack/react-query";
 import { gql } from "@/services/clients/graphql.client";
 import { Meeting } from "@/services/gql/graphql";
+import AskSyneurgy from "@/components/meeting/AskSyneurgy";
+import Summary from "@/components/meeting/summary/Summary";
 
 const GET_MEETING = graphql(`
   query getMeeting($id: ID!) {
@@ -45,6 +47,7 @@ const GET_MEETING = graphql(`
 
 export default function MeetingPage({ params }: { params: { id: string } }) {
   const [toggleTabs, setToggleTabs] = useState("data");
+  const [toggleSyneurgy, setToggleSyneurgy] = useState(false);
 
   const { data, isLoading, refetch } = useQuery({
     queryKey: ["meeting", params.id],
@@ -108,9 +111,12 @@ export default function MeetingPage({ params }: { params: { id: string } }) {
               ACTION
             </li>
           </ul>
-          <Button>
+          <Button onClick={() => setToggleSyneurgy(true)}>
             <BsChatRightTextFill /> Ask Syneurgy
           </Button>
+          {toggleSyneurgy && (
+            <AskSyneurgy setToggleSyneurgy={setToggleSyneurgy} />
+          )}
         </div>
       </div>
       <div className="grid grid-cols-10 gap-x-5">
@@ -118,12 +124,22 @@ export default function MeetingPage({ params }: { params: { id: string } }) {
           <MainTab />
           <Highlights />
         </div>
-        <div className="col-span-2 border-l border-white/10">
-          <Data />
-        </div>
-        <div className="col-span-2">
-          <Profile />
-        </div>
+        {toggleTabs === "data" ? (
+          <>
+            <div className="col-span-2">
+              <Data />
+            </div>
+            <div className="col-span-2">
+              <Profile />
+            </div>
+          </>
+        ) : toggleTabs === "summary" ? (
+          <div className="col-span-4">
+            <Summary />
+          </div>
+        ) : (
+          <p>bye</p>
+        )}
       </div>
     </div>
   );

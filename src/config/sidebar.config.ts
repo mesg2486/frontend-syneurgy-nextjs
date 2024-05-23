@@ -3,6 +3,7 @@ import { BiHome } from "react-icons/bi";
 import { FaUserGroup } from "react-icons/fa6";
 import { GrGroup } from "react-icons/gr";
 import { MdAnalytics, MdOutlineLibraryBooks } from "react-icons/md";
+import { TbPhotoVideo } from "react-icons/tb";
 // import { PiVideoConferenceLight } from "react-icons/pi";
 
 interface ISidebarSubItem {
@@ -36,7 +37,7 @@ export const sidebarItems: ISidebarItem[] = [
     label: "Recent Meetings",
     link: "/meetings",
     type: "user",
-    icon: GrGroup,
+    icon: TbPhotoVideo,
     group: "/dashboard/meetings",
     exact: true,
   },
