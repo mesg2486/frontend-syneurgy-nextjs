@@ -19,7 +19,6 @@ import Link from "next/link";
 import { graphql } from "@/services/gql";
 import { useQuery } from "@tanstack/react-query";
 import { gql } from "@/services/clients/graphql.client";
-import { Meeting } from "@/services/gql/graphql";
 import AskSyneurgy from "@/components/meeting/AskSyneurgy";
 import Summary from "@/components/meeting/summary/Summary";
 
@@ -121,7 +120,7 @@ export default function MeetingPage({ params }: { params: { id: string } }) {
       </div>
       <div className="grid grid-cols-10 gap-x-5">
         <div className="col-span-6 space-y-4">
-          <MainTab />
+          <MainTab data={data || {}} />
           <Highlights />
         </div>
         {toggleTabs === "data" ? (

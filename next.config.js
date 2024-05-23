@@ -16,7 +16,7 @@ const nextConfig = {
       },
       {
         protocol: "https",
-        hostname: "projectcode-public.s3.amazonaws.com",
+        hostname: "d2n2ldezfv2tlg.cloudfront.net",
         port: "",
         pathname: "/**",
       },

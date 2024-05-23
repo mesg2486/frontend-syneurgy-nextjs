@@ -56,8 +56,11 @@ export default function usePublicUpload({
       },
     });
     const signedUrl = response.data.data.url;
-    url = response?.data?.data?.url?.split("?")[0];
-    setUrl && setUrl(url);
+    const downloadUrl = response.data.data.downloadUrl;
+
+    console.log({ downloadUrl, url });
+
+    setUrl && setUrl(downloadUrl);
     console.log({ url: response.data.data.url, file, response, payload });
     await s3Upload.put(signedUrl, file, {
       onUploadProgress: (event) => {
@@ -66,7 +69,7 @@ export default function usePublicUpload({
       },
       cancelToken: source.token,
     });
-    return url;
+    return downloadUrl;
   };
 
   return useMutation<any, any, any>({

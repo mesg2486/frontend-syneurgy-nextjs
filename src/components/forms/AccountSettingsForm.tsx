@@ -18,7 +18,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Button } from "../ui/button";
-import { AiOutlineEdit, AiOutlinePlus, AiOutlineReload } from "react-icons/ai";
+import { AiOutlineReload } from "react-icons/ai";
 import { graphql } from "@/services/gql";
 import { useSession } from "next-auth/react";
 import { countries } from "@/config/countries.config";
@@ -40,6 +40,8 @@ import { gql } from "@/services/clients/graphql.client";
 import { GET_USER } from "@/contexts/onboarding.context";
 import usePublicUpload from "@/hooks/usePublicUpload";
 import Image from "next/image";
+import { HiPencil, HiPlus } from "react-icons/hi";
+import SettingsPlaceholder from "../placeholders/Settings.skeleton";
 
 export const UPDATE_USER_ABOUT = graphql(`
   mutation updateUser(
@@ -97,7 +99,7 @@ export default function AccountSettingsForm(props: IFormProps) {
   const { data: session, status } = useSession();
 
   // get user data
-  const { data, isLoading } = useQuery({
+  let { data, isLoading } = useQuery({
     queryKey: ["user", session?.user.sub],
     queryFn: async () => {
       return await gql.request(GET_USER, {
@@ -190,6 +192,15 @@ export default function AccountSettingsForm(props: IFormProps) {
     uploadImage(files[0]);
   };
 
+  // isLoading = true;
+
+  if (isLoading || status === "loading")
+    return (
+      <div className="flex-1 max-w-xl bg-popover p-6 rounded-lg">
+        <SettingsPlaceholder />
+      </div>
+    );
+
   return (
     <div className="flex-1 max-w-xl bg-popover p-6 rounded-lg">
       <Form {...form}>
@@ -218,9 +229,9 @@ export default function AccountSettingsForm(props: IFormProps) {
                 className="absolute right-0 top-0 cursor-pointer rounded-full bg-black/40 backdrop-blur-sm p-1 translate-x-1/2 -translate-y-1/2"
               >
                 {avatar ? (
-                  <AiOutlineEdit className="text-sm" />
+                  <HiPencil className="text-sm" />
                 ) : (
-                  <AiOutlinePlus className="text-sm" />
+                  <HiPlus className="text-sm" />
                 )}
               </label>
             </div>

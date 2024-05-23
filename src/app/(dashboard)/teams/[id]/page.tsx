@@ -24,7 +24,18 @@ const GET_TEAM = graphql(`
         invited
         message
       }
-      members
+      members {
+        items {
+          userId
+          user {
+            avatar
+            email
+            sub
+            firstName
+            lastName
+          }
+        }
+      }
       name
       performance
       sentiment
@@ -62,7 +73,7 @@ export default function TeamPage({ params }: { params: { id: string } }) {
       <div className="py-5">
         <div className="flex justify-between items-center">
           <h2 className="font-light">
-            Total Members ({data?.team?.invitations?.length || 0})
+            Total Members ({data?.team?.members?.items?.length || 0})
           </h2>
           <div className="flex flex-row gap-x-3">
             <div className="relative">
@@ -80,7 +91,7 @@ export default function TeamPage({ params }: { params: { id: string } }) {
             </Button>
           </div>
         </div>
-        <div className="py-6">
+        <div className="py-4">
           {(status === "loading" || isLoading) && (
             <div className="space-y-2">
               {Array.from(Array(8).keys()).map((i) => (
@@ -91,8 +102,28 @@ export default function TeamPage({ params }: { params: { id: string } }) {
               ))}
             </div>
           )}
-          {!isLoading && Number(data?.team?.invitations?.length) > 0 && (
-            <MemberList invitations={(data?.team?.invitations as any) || []} />
+          {!isLoading && (
+            <Tabs defaultValue="members">
+              <TabsList>
+                <TabsTrigger value="members">Members</TabsTrigger>
+                <TabsTrigger value="invitations">Invitations</TabsTrigger>
+              </TabsList>
+              <TabsContent value="members">
+                {!isLoading &&
+                  Number(data?.team?.members?.items?.length) > 0 && (
+                    <MemberList
+                      members={(data?.team?.members?.items as any) || []}
+                    />
+                  )}
+              </TabsContent>
+              <TabsContent value="invitations">
+                {!isLoading && Number(data?.team?.invitations?.length) > 0 && (
+                  <InvitationsList
+                    invitations={(data?.team?.invitations as any) || []}
+                  />
+                )}
+              </TabsContent>
+            </Tabs>
           )}
         </div>
       </div>
@@ -125,8 +156,56 @@ import { useQuery } from "@tanstack/react-query";
 import { gql } from "@/services/clients/graphql.client";
 import { Badge } from "@/components/ui/badge";
 import AddMembers, { IInvitation } from "@/components/modals/AddMembers.modal";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Members } from "@/services/gql/graphql";
 
-function MemberList({ invitations }: { invitations: IInvitation[] }) {
+function MemberList({ members }: { members: Members[] }) {
+  return (
+    <Table>
+      <TableHeader>
+        <TableRow>
+          <TableHead className="pt-4 pb-3">Email</TableHead>
+          <TableHead className="pt-4 pb-3">Position</TableHead>
+          <TableHead className="pt-4 pb-3">Status</TableHead>
+          <TableHead className="pt-4 pb-3 text-right">Action</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {members?.map((member) => (
+          <TableRow key={member.user?.email}>
+            <TableCell className="pt-4 pb-3">{`${member.user?.firstName} ${member?.user?.lastName}`}</TableCell>
+            <TableCell className="pt-4 pb-3">{member.user?.email}</TableCell>
+            <TableCell className="pt-4 pb-3">Pending</TableCell>
+            <TableCell className="pt-4 pb-3 text-right">
+              <DropdownMenu>
+                <DropdownMenuTrigger>
+                  <Button variant="ghost">
+                    <HiOutlineDotsVertical />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent
+                  side="right"
+                  sideOffset={2}
+                  className="bg-secondary right-0"
+                >
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="hover:bg-tertiary w-full justify-between"
+                  >
+                    Remove
+                  </Button>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+    </Table>
+  );
+}
+
+function InvitationsList({ invitations }: { invitations: IInvitation[] }) {
   return (
     <Table>
       <TableHeader>

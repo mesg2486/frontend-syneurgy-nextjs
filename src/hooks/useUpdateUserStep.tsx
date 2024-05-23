@@ -8,6 +8,7 @@ interface TUseUpdateUserProps {
   successMsg?: string;
   errorMsg?: string;
   progress: string;
+  onSuccess?: (data: any) => void;
   setProgress: React.Dispatch<React.SetStateAction<string>>;
 }
 
@@ -15,6 +16,7 @@ export default function useUpdateUser({
   successMsg,
   errorMsg,
   progress,
+  onSuccess,
   setProgress,
 }: TUseUpdateUserProps) {
   const queryClient = useQueryClient();
@@ -30,7 +32,8 @@ export default function useUpdateUser({
       toast({
         title: successMsg || "Details Updated",
       });
-      setProgress(String(Number(progress) + 1));
+      Number(progress) < 6 && setProgress(String(Number(progress) + 1));
+      onSuccess?.(data);
     },
     onError: () => {
       toast({

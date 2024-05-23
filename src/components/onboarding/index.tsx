@@ -51,11 +51,13 @@ export default function Onboarding({ step }: { step: string }) {
         </Link>
         <div className="h-full flex-1 md:py-32 px-6 py-20 flex justify-center md:justify-end">
           <div className="space-y-4 h-full flex flex-col w-full max-w-sm relative">
-            <div className="text-xs pb-4 font-semibold text-white/60">
-              <span className="text-white">{progress}</span>
-              {" / "}
-              <span>5</span>
-            </div>
+            {Number(progress) < 6 && (
+              <div className="text-xs pb-4 font-semibold text-white/60">
+                <span className="text-white">{progress}</span>
+                {" / "}
+                <span>5</span>
+              </div>
+            )}
             <h2 className="text-4xl font-medium max-w-sm">{content?.title}</h2>
             <p>{content?.description}</p>
             {progress === "1" && (
@@ -75,6 +77,9 @@ export default function Onboarding({ step }: { step: string }) {
                 setProgress={setProgress}
                 progress={progress}
               />
+            )}
+            {progress === "7" && (
+              <AboutForm setProgress={setProgress} progress={progress} />
             )}
           </div>
         </div>

@@ -109,6 +109,19 @@ export const onboarding: OnboardingStep[] = [
     },
   },
   {
+    title: "About You",
+    type: "quote",
+    description: "We want to meet you.",
+    step: "7",
+    thumbnail: "/assets/steve-jobs.png",
+    quote: {
+      name: "Steve Jobs",
+      role: "CEO and Founder of Apple",
+      content:
+        "Great things in business are never done by one person, they're done by a team of people.",
+    },
+  },
+  {
     title: "Invite your team",
     type: "quote",
     description: "We want to meet you.",

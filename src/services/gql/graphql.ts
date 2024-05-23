@@ -39,6 +39,7 @@ export type CreateMeetingInput = {
   date: Scalars["String"]["input"];
   dimensions?: InputMaybe<Scalars["String"]["input"]>;
   highlights?: InputMaybe<Scalars["String"]["input"]>;
+  id: Scalars["ID"]["input"];
   name: Scalars["String"]["input"];
   performance?: InputMaybe<Scalars["String"]["input"]>;
   sentiment?: InputMaybe<Scalars["String"]["input"]>;
@@ -48,6 +49,26 @@ export type CreateMeetingInput = {
   type: Scalars["String"]["input"];
   url: Scalars["String"]["input"];
   userId: Scalars["String"]["input"];
+};
+
+export type CreateMembersInput = {
+  dimensions?: InputMaybe<Scalars["String"]["input"]>;
+  highlights?: InputMaybe<Scalars["String"]["input"]>;
+  invited: Scalars["Boolean"]["input"];
+  joined: Scalars["Boolean"]["input"];
+  performance?: InputMaybe<Scalars["String"]["input"]>;
+  sentiment?: InputMaybe<Scalars["String"]["input"]>;
+  synchrony?: InputMaybe<Scalars["String"]["input"]>;
+  teamId: Scalars["ID"]["input"];
+  userId: Scalars["ID"]["input"];
+};
+
+export type CreateNotificationInput = {
+  content: Scalars["String"]["input"];
+  from: Scalars["String"]["input"];
+  read: Scalars["Boolean"]["input"];
+  to: Scalars["String"]["input"];
+  type: Scalars["String"]["input"];
 };
 
 export type CreateTeamInput = {
@@ -62,6 +83,17 @@ export type CreateTeamInput = {
   syncHistory?: InputMaybe<Scalars["String"]["input"]>;
   synchrony?: InputMaybe<Scalars["Float"]["input"]>;
   teamInSync?: InputMaybe<Scalars["String"]["input"]>;
+};
+
+export type CreateTeamInvitationsInput = {
+  accepted?: InputMaybe<Scalars["String"]["input"]>;
+  content?: InputMaybe<Scalars["String"]["input"]>;
+  email?: InputMaybe<Scalars["String"]["input"]>;
+  invited?: InputMaybe<Scalars["String"]["input"]>;
+  teamId: Scalars["ID"]["input"];
+  type?: InputMaybe<Scalars["String"]["input"]>;
+  userId?: InputMaybe<Scalars["String"]["input"]>;
+  username?: InputMaybe<Scalars["String"]["input"]>;
 };
 
 export type CreateUserInput = {
@@ -88,8 +120,21 @@ export type DeleteMeetingInput = {
   id: Scalars["ID"]["input"];
 };
 
+export type DeleteMembersInput = {
+  teamId: Scalars["ID"]["input"];
+  userId: Scalars["ID"]["input"];
+};
+
+export type DeleteNotificationInput = {
+  id: Scalars["ID"]["input"];
+};
+
 export type DeleteTeamInput = {
   id: Scalars["ID"]["input"];
+};
+
+export type DeleteTeamInvitationsInput = {
+  teamId: Scalars["ID"]["input"];
 };
 
 export type DeleteUserInput = {
@@ -128,6 +173,26 @@ export type MeetingConnection = {
   nextToken?: Maybe<Scalars["String"]["output"]>;
 };
 
+export type Members = {
+  __typename?: "Members";
+  dimensions?: Maybe<Scalars["String"]["output"]>;
+  highlights?: Maybe<Scalars["String"]["output"]>;
+  invited: Scalars["Boolean"]["output"];
+  joined: Scalars["Boolean"]["output"];
+  performance?: Maybe<Scalars["String"]["output"]>;
+  sentiment?: Maybe<Scalars["String"]["output"]>;
+  synchrony?: Maybe<Scalars["String"]["output"]>;
+  teamId: Scalars["ID"]["output"];
+  user?: Maybe<User>;
+  userId: Scalars["ID"]["output"];
+};
+
+export type MembersConnection = {
+  __typename?: "MembersConnection";
+  items?: Maybe<Array<Maybe<Members>>>;
+  nextToken?: Maybe<Scalars["String"]["output"]>;
+};
+
 export type ModelSizeInput = {
   between?: InputMaybe<Array<InputMaybe<Scalars["Int"]["input"]>>>;
   eq?: InputMaybe<Scalars["Int"]["input"]>;
@@ -141,13 +206,23 @@ export type ModelSizeInput = {
 export type Mutation = {
   __typename?: "Mutation";
   createMeeting?: Maybe<Meeting>;
+  createMembers?: Maybe<Members>;
+  createNotification?: Maybe<Notification>;
   createTeam?: Maybe<Team>;
+  createTeamInvitations?: Maybe<TeamInvitations>;
   createUser?: Maybe<User>;
   deleteMeeting?: Maybe<Meeting>;
+  deleteMembers?: Maybe<Members>;
+  deleteNotification?: Maybe<Notification>;
   deleteTeam?: Maybe<Team>;
+  deleteTeamInvitations?: Maybe<TeamInvitations>;
   deleteUser?: Maybe<User>;
+  inviteTeamInBulk?: Maybe<Array<Maybe<TeamInvitations>>>;
   updateMeeting?: Maybe<Meeting>;
+  updateMembers?: Maybe<Members>;
+  updateNotification?: Maybe<Notification>;
   updateTeam?: Maybe<Team>;
+  updateTeamInvitations?: Maybe<TeamInvitations>;
   updateUser?: Maybe<User>;
 };
 
@@ -155,8 +230,20 @@ export type MutationCreateMeetingArgs = {
   input: CreateMeetingInput;
 };
 
+export type MutationCreateMembersArgs = {
+  input: CreateMembersInput;
+};
+
+export type MutationCreateNotificationArgs = {
+  input: CreateNotificationInput;
+};
+
 export type MutationCreateTeamArgs = {
   input: CreateTeamInput;
+};
+
+export type MutationCreateTeamInvitationsArgs = {
+  input: CreateTeamInvitationsInput;
 };
 
 export type MutationCreateUserArgs = {
@@ -167,33 +254,84 @@ export type MutationDeleteMeetingArgs = {
   input: DeleteMeetingInput;
 };
 
+export type MutationDeleteMembersArgs = {
+  input: DeleteMembersInput;
+};
+
+export type MutationDeleteNotificationArgs = {
+  input: DeleteNotificationInput;
+};
+
 export type MutationDeleteTeamArgs = {
   input: DeleteTeamInput;
+};
+
+export type MutationDeleteTeamInvitationsArgs = {
+  input: DeleteTeamInvitationsInput;
 };
 
 export type MutationDeleteUserArgs = {
   input: DeleteUserInput;
 };
 
+export type MutationInviteTeamInBulkArgs = {
+  invitations?: InputMaybe<Array<InputMaybe<CreateTeamInvitationsInput>>>;
+};
+
 export type MutationUpdateMeetingArgs = {
   input: UpdateMeetingInput;
+};
+
+export type MutationUpdateMembersArgs = {
+  input: UpdateMembersInput;
+};
+
+export type MutationUpdateNotificationArgs = {
+  input: UpdateNotificationInput;
 };
 
 export type MutationUpdateTeamArgs = {
   input: UpdateTeamInput;
 };
 
+export type MutationUpdateTeamInvitationsArgs = {
+  input: UpdateTeamInvitationsInput;
+};
+
 export type MutationUpdateUserArgs = {
   input: UpdateUserInput;
+};
+
+export type Notification = {
+  __typename?: "Notification";
+  content: Scalars["String"]["output"];
+  from: Scalars["String"]["output"];
+  fromUser?: Maybe<User>;
+  id: Scalars["ID"]["output"];
+  read: Scalars["Boolean"]["output"];
+  to: Scalars["String"]["output"];
+  type: Scalars["String"]["output"];
+};
+
+export type NotificationConnection = {
+  __typename?: "NotificationConnection";
+  items?: Maybe<Array<Maybe<Notification>>>;
+  nextToken?: Maybe<Scalars["String"]["output"]>;
 };
 
 export type Query = {
   __typename?: "Query";
   getMeeting?: Maybe<Meeting>;
+  getMembers?: Maybe<Members>;
+  getNotification?: Maybe<Notification>;
   getTeam?: Maybe<Team>;
+  getTeamInvitations?: Maybe<TeamInvitations>;
   getUser?: Maybe<User>;
   listMeetings?: Maybe<MeetingConnection>;
   listMeetingsByUserId?: Maybe<MeetingConnection>;
+  listMembers?: Maybe<MembersConnection>;
+  listNotifications?: Maybe<NotificationConnection>;
+  listTeamInvitations?: Maybe<TeamInvitationsConnection>;
   listTeams?: Maybe<TeamConnection>;
   listTeamsByUserId?: Maybe<TeamConnection>;
   listUsers?: Maybe<UserConnection>;
@@ -203,8 +341,21 @@ export type QueryGetMeetingArgs = {
   id: Scalars["ID"]["input"];
 };
 
+export type QueryGetMembersArgs = {
+  teamId: Scalars["ID"]["input"];
+  userId: Scalars["ID"]["input"];
+};
+
+export type QueryGetNotificationArgs = {
+  id: Scalars["ID"]["input"];
+};
+
 export type QueryGetTeamArgs = {
   id: Scalars["ID"]["input"];
+};
+
+export type QueryGetTeamInvitationsArgs = {
+  teamId: Scalars["ID"]["input"];
 };
 
 export type QueryGetUserArgs = {
@@ -222,6 +373,24 @@ export type QueryListMeetingsByUserIdArgs = {
   limit?: InputMaybe<Scalars["Int"]["input"]>;
   nextToken?: InputMaybe<Scalars["String"]["input"]>;
   userId: Scalars["ID"]["input"];
+};
+
+export type QueryListMembersArgs = {
+  filter?: InputMaybe<TableMembersFilterInput>;
+  limit?: InputMaybe<Scalars["Int"]["input"]>;
+  nextToken?: InputMaybe<Scalars["String"]["input"]>;
+};
+
+export type QueryListNotificationsArgs = {
+  filter?: InputMaybe<TableNotificationFilterInput>;
+  limit?: InputMaybe<Scalars["Int"]["input"]>;
+  nextToken?: InputMaybe<Scalars["String"]["input"]>;
+};
+
+export type QueryListTeamInvitationsArgs = {
+  filter?: InputMaybe<TableTeamInvitationsFilterInput>;
+  limit?: InputMaybe<Scalars["Int"]["input"]>;
+  nextToken?: InputMaybe<Scalars["String"]["input"]>;
 };
 
 export type QueryListTeamsArgs = {
@@ -246,13 +415,22 @@ export type QueryListUsersArgs = {
 export type Subscription = {
   __typename?: "Subscription";
   onCreateMeeting?: Maybe<Meeting>;
+  onCreateMembers?: Maybe<Members>;
+  onCreateNotification?: Maybe<Notification>;
   onCreateTeam?: Maybe<Team>;
+  onCreateTeamInvitations?: Maybe<TeamInvitations>;
   onCreateUser?: Maybe<User>;
   onDeleteMeeting?: Maybe<Meeting>;
+  onDeleteMembers?: Maybe<Members>;
+  onDeleteNotification?: Maybe<Notification>;
   onDeleteTeam?: Maybe<Team>;
+  onDeleteTeamInvitations?: Maybe<TeamInvitations>;
   onDeleteUser?: Maybe<User>;
   onUpdateMeeting?: Maybe<Meeting>;
+  onUpdateMembers?: Maybe<Members>;
+  onUpdateNotification?: Maybe<Notification>;
   onUpdateTeam?: Maybe<Team>;
+  onUpdateTeamInvitations?: Maybe<TeamInvitations>;
   onUpdateUser?: Maybe<User>;
 };
 
@@ -264,12 +442,36 @@ export type SubscriptionOnCreateMeetingArgs = {
   synchrony?: InputMaybe<Scalars["String"]["input"]>;
 };
 
+export type SubscriptionOnCreateMembersArgs = {
+  dimensions?: InputMaybe<Scalars["String"]["input"]>;
+  highlights?: InputMaybe<Scalars["String"]["input"]>;
+  invited?: InputMaybe<Scalars["Boolean"]["input"]>;
+  teamId?: InputMaybe<Scalars["ID"]["input"]>;
+  userId?: InputMaybe<Scalars["ID"]["input"]>;
+};
+
+export type SubscriptionOnCreateNotificationArgs = {
+  content?: InputMaybe<Scalars["String"]["input"]>;
+  from?: InputMaybe<Scalars["String"]["input"]>;
+  id?: InputMaybe<Scalars["ID"]["input"]>;
+  to?: InputMaybe<Scalars["String"]["input"]>;
+  type?: InputMaybe<Scalars["String"]["input"]>;
+};
+
 export type SubscriptionOnCreateTeamArgs = {
   createdBy?: InputMaybe<Scalars["ID"]["input"]>;
   goals?: InputMaybe<Scalars["String"]["input"]>;
   id?: InputMaybe<Scalars["ID"]["input"]>;
   invitations?: InputMaybe<Scalars["String"]["input"]>;
   name?: InputMaybe<Scalars["String"]["input"]>;
+};
+
+export type SubscriptionOnCreateTeamInvitationsArgs = {
+  content?: InputMaybe<Scalars["String"]["input"]>;
+  email?: InputMaybe<Scalars["String"]["input"]>;
+  teamId?: InputMaybe<Scalars["ID"]["input"]>;
+  userId?: InputMaybe<Scalars["String"]["input"]>;
+  username?: InputMaybe<Scalars["String"]["input"]>;
 };
 
 export type SubscriptionOnCreateUserArgs = {
@@ -288,12 +490,36 @@ export type SubscriptionOnDeleteMeetingArgs = {
   synchrony?: InputMaybe<Scalars["String"]["input"]>;
 };
 
+export type SubscriptionOnDeleteMembersArgs = {
+  dimensions?: InputMaybe<Scalars["String"]["input"]>;
+  highlights?: InputMaybe<Scalars["String"]["input"]>;
+  invited?: InputMaybe<Scalars["Boolean"]["input"]>;
+  teamId?: InputMaybe<Scalars["ID"]["input"]>;
+  userId?: InputMaybe<Scalars["ID"]["input"]>;
+};
+
+export type SubscriptionOnDeleteNotificationArgs = {
+  content?: InputMaybe<Scalars["String"]["input"]>;
+  from?: InputMaybe<Scalars["String"]["input"]>;
+  id?: InputMaybe<Scalars["ID"]["input"]>;
+  to?: InputMaybe<Scalars["String"]["input"]>;
+  type?: InputMaybe<Scalars["String"]["input"]>;
+};
+
 export type SubscriptionOnDeleteTeamArgs = {
   createdBy?: InputMaybe<Scalars["ID"]["input"]>;
   goals?: InputMaybe<Scalars["String"]["input"]>;
   id?: InputMaybe<Scalars["ID"]["input"]>;
   invitations?: InputMaybe<Scalars["String"]["input"]>;
   name?: InputMaybe<Scalars["String"]["input"]>;
+};
+
+export type SubscriptionOnDeleteTeamInvitationsArgs = {
+  content?: InputMaybe<Scalars["String"]["input"]>;
+  email?: InputMaybe<Scalars["String"]["input"]>;
+  teamId?: InputMaybe<Scalars["ID"]["input"]>;
+  userId?: InputMaybe<Scalars["String"]["input"]>;
+  username?: InputMaybe<Scalars["String"]["input"]>;
 };
 
 export type SubscriptionOnDeleteUserArgs = {
@@ -312,12 +538,36 @@ export type SubscriptionOnUpdateMeetingArgs = {
   synchrony?: InputMaybe<Scalars["String"]["input"]>;
 };
 
+export type SubscriptionOnUpdateMembersArgs = {
+  dimensions?: InputMaybe<Scalars["String"]["input"]>;
+  highlights?: InputMaybe<Scalars["String"]["input"]>;
+  invited?: InputMaybe<Scalars["Boolean"]["input"]>;
+  teamId?: InputMaybe<Scalars["ID"]["input"]>;
+  userId?: InputMaybe<Scalars["ID"]["input"]>;
+};
+
+export type SubscriptionOnUpdateNotificationArgs = {
+  content?: InputMaybe<Scalars["String"]["input"]>;
+  from?: InputMaybe<Scalars["String"]["input"]>;
+  id?: InputMaybe<Scalars["ID"]["input"]>;
+  to?: InputMaybe<Scalars["String"]["input"]>;
+  type?: InputMaybe<Scalars["String"]["input"]>;
+};
+
 export type SubscriptionOnUpdateTeamArgs = {
   createdBy?: InputMaybe<Scalars["ID"]["input"]>;
   goals?: InputMaybe<Scalars["String"]["input"]>;
   id?: InputMaybe<Scalars["ID"]["input"]>;
   invitations?: InputMaybe<Scalars["String"]["input"]>;
   name?: InputMaybe<Scalars["String"]["input"]>;
+};
+
+export type SubscriptionOnUpdateTeamInvitationsArgs = {
+  content?: InputMaybe<Scalars["String"]["input"]>;
+  email?: InputMaybe<Scalars["String"]["input"]>;
+  teamId?: InputMaybe<Scalars["ID"]["input"]>;
+  userId?: InputMaybe<Scalars["String"]["input"]>;
+  username?: InputMaybe<Scalars["String"]["input"]>;
 };
 
 export type SubscriptionOnUpdateUserArgs = {
@@ -387,6 +637,39 @@ export type TableMeetingFilterInput = {
   userId?: InputMaybe<TableStringFilterInput>;
 };
 
+export type TableMemberTypeFilterInput = {
+  dimensions?: InputMaybe<TableStringFilterInput>;
+  highlights?: InputMaybe<TableStringFilterInput>;
+  invited?: InputMaybe<TableBooleanFilterInput>;
+  joined?: InputMaybe<TableBooleanFilterInput>;
+  performance?: InputMaybe<TableStringFilterInput>;
+  sentiment?: InputMaybe<TableStringFilterInput>;
+  synchrony?: InputMaybe<TableStringFilterInput>;
+  teamId?: InputMaybe<TableIdFilterInput>;
+  userId?: InputMaybe<TableIdFilterInput>;
+};
+
+export type TableMembersFilterInput = {
+  dimensions?: InputMaybe<TableStringFilterInput>;
+  highlights?: InputMaybe<TableStringFilterInput>;
+  invited?: InputMaybe<TableBooleanFilterInput>;
+  joined?: InputMaybe<TableBooleanFilterInput>;
+  performance?: InputMaybe<TableStringFilterInput>;
+  sentiment?: InputMaybe<TableStringFilterInput>;
+  synchrony?: InputMaybe<TableStringFilterInput>;
+  teamId?: InputMaybe<TableIdFilterInput>;
+  userId?: InputMaybe<TableIdFilterInput>;
+};
+
+export type TableNotificationFilterInput = {
+  content?: InputMaybe<TableStringFilterInput>;
+  from?: InputMaybe<TableStringFilterInput>;
+  id?: InputMaybe<TableIdFilterInput>;
+  read?: InputMaybe<TableBooleanFilterInput>;
+  to?: InputMaybe<TableStringFilterInput>;
+  type?: InputMaybe<TableStringFilterInput>;
+};
+
 export type TableStringFilterInput = {
   attributeExists?: InputMaybe<Scalars["Boolean"]["input"]>;
   beginsWith?: InputMaybe<Scalars["String"]["input"]>;
@@ -417,6 +700,17 @@ export type TableTeamFilterInput = {
   teamInSync?: InputMaybe<TableStringFilterInput>;
 };
 
+export type TableTeamInvitationsFilterInput = {
+  accepted?: InputMaybe<TableStringFilterInput>;
+  content?: InputMaybe<TableStringFilterInput>;
+  email?: InputMaybe<TableStringFilterInput>;
+  invited?: InputMaybe<TableStringFilterInput>;
+  teamId?: InputMaybe<TableIdFilterInput>;
+  type?: InputMaybe<TableStringFilterInput>;
+  userId?: InputMaybe<TableStringFilterInput>;
+  username?: InputMaybe<TableStringFilterInput>;
+};
+
 export type TableUserFilterInput = {
   avatar?: InputMaybe<TableStringFilterInput>;
   company?: InputMaybe<TableStringFilterInput>;
@@ -445,7 +739,7 @@ export type Team = {
   goals?: Maybe<Scalars["String"]["output"]>;
   id: Scalars["ID"]["output"];
   invitations?: Maybe<Array<Maybe<Invitations>>>;
-  members?: Maybe<Array<Maybe<Scalars["String"]["output"]>>>;
+  members?: Maybe<MembersConnection>;
   name: Scalars["String"]["output"];
   performance?: Maybe<Scalars["String"]["output"]>;
   sentiment?: Maybe<Scalars["String"]["output"]>;
@@ -458,6 +752,24 @@ export type Team = {
 export type TeamConnection = {
   __typename?: "TeamConnection";
   items?: Maybe<Array<Maybe<Team>>>;
+  nextToken?: Maybe<Scalars["String"]["output"]>;
+};
+
+export type TeamInvitations = {
+  __typename?: "TeamInvitations";
+  accepted?: Maybe<Scalars["String"]["output"]>;
+  content?: Maybe<Scalars["String"]["output"]>;
+  email?: Maybe<Scalars["String"]["output"]>;
+  invited?: Maybe<Scalars["String"]["output"]>;
+  teamId: Scalars["ID"]["output"];
+  type?: Maybe<Scalars["String"]["output"]>;
+  userId?: Maybe<Scalars["String"]["output"]>;
+  username?: Maybe<Scalars["String"]["output"]>;
+};
+
+export type TeamInvitationsConnection = {
+  __typename?: "TeamInvitationsConnection";
+  items?: Maybe<Array<Maybe<TeamInvitations>>>;
   nextToken?: Maybe<Scalars["String"]["output"]>;
 };
 
@@ -483,6 +795,27 @@ export type UpdateMeetingInput = {
   userId?: InputMaybe<Scalars["String"]["input"]>;
 };
 
+export type UpdateMembersInput = {
+  dimensions?: InputMaybe<Scalars["String"]["input"]>;
+  highlights?: InputMaybe<Scalars["String"]["input"]>;
+  invited?: InputMaybe<Scalars["Boolean"]["input"]>;
+  joined?: InputMaybe<Scalars["Boolean"]["input"]>;
+  performance?: InputMaybe<Scalars["String"]["input"]>;
+  sentiment?: InputMaybe<Scalars["String"]["input"]>;
+  synchrony?: InputMaybe<Scalars["String"]["input"]>;
+  teamId: Scalars["ID"]["input"];
+  userId: Scalars["ID"]["input"];
+};
+
+export type UpdateNotificationInput = {
+  content?: InputMaybe<Scalars["String"]["input"]>;
+  from?: InputMaybe<Scalars["String"]["input"]>;
+  id: Scalars["ID"]["input"];
+  read?: InputMaybe<Scalars["Boolean"]["input"]>;
+  to?: InputMaybe<Scalars["String"]["input"]>;
+  type?: InputMaybe<Scalars["String"]["input"]>;
+};
+
 export type UpdateTeamInput = {
   createdBy?: InputMaybe<Scalars["ID"]["input"]>;
   engagementLevel?: InputMaybe<Scalars["String"]["input"]>;
@@ -496,6 +829,17 @@ export type UpdateTeamInput = {
   syncHistory?: InputMaybe<Scalars["String"]["input"]>;
   synchrony?: InputMaybe<Scalars["Float"]["input"]>;
   teamInSync?: InputMaybe<Scalars["String"]["input"]>;
+};
+
+export type UpdateTeamInvitationsInput = {
+  accepted?: InputMaybe<Scalars["String"]["input"]>;
+  content?: InputMaybe<Scalars["String"]["input"]>;
+  email?: InputMaybe<Scalars["String"]["input"]>;
+  invited?: InputMaybe<Scalars["String"]["input"]>;
+  teamId: Scalars["ID"]["input"];
+  type?: InputMaybe<Scalars["String"]["input"]>;
+  userId?: InputMaybe<Scalars["String"]["input"]>;
+  username?: InputMaybe<Scalars["String"]["input"]>;
 };
 
 export type UpdateUserInput = {
@@ -533,6 +877,7 @@ export type User = {
   firstName?: Maybe<Scalars["String"]["output"]>;
   firstTeam?: Maybe<Scalars["String"]["output"]>;
   gender?: Maybe<Scalars["String"]["output"]>;
+  invitedByTeam?: Maybe<Scalars["Boolean"]["output"]>;
   lastLogin?: Maybe<Scalars["String"]["output"]>;
   lastName?: Maybe<Scalars["String"]["output"]>;
   onboarded: Scalars["Boolean"]["output"];
@@ -591,7 +936,6 @@ export type GetTeamQuery = {
     engagementLevel?: string | null;
     goals?: string | null;
     id: string;
-    members?: Array<string | null> | null;
     name: string;
     performance?: string | null;
     sentiment?: string | null;
@@ -605,6 +949,21 @@ export type GetTeamQuery = {
       invited: boolean;
       message?: string | null;
     } | null> | null;
+    members?: {
+      __typename?: "MembersConnection";
+      items?: Array<{
+        __typename?: "Members";
+        userId: string;
+        user?: {
+          __typename?: "User";
+          avatar?: string | null;
+          email: string;
+          sub: string;
+          firstName?: string | null;
+          lastName?: string | null;
+        } | null;
+      } | null> | null;
+    } | null;
   } | null;
 };
 
@@ -622,7 +981,6 @@ export type ListTeamsByUserIdQuery = {
       engagementLevel?: string | null;
       goals?: string | null;
       id: string;
-      members?: Array<string | null> | null;
       name: string;
       performance?: string | null;
       sentiment?: string | null;
@@ -631,6 +989,21 @@ export type ListTeamsByUserIdQuery = {
       updatedAt: string;
       synchrony?: number | null;
       teamInSync?: string | null;
+      members?: {
+        __typename?: "MembersConnection";
+        items?: Array<{
+          __typename?: "Members";
+          userId: string;
+          user?: {
+            __typename?: "User";
+            avatar?: string | null;
+            email: string;
+            sub: string;
+            firstName?: string | null;
+            lastName?: string | null;
+          } | null;
+        } | null> | null;
+      } | null;
       invitations?: Array<{
         __typename?: "Invitations";
         email: string;
@@ -753,6 +1126,7 @@ export type CreateMeetingMutationVariables = Exact<{
   url: Scalars["String"]["input"];
   thumbnail?: InputMaybe<Scalars["String"]["input"]>;
   date: Scalars["String"]["input"];
+  id: Scalars["ID"]["input"];
 }>;
 
 export type CreateMeetingMutation = {
@@ -935,7 +1309,57 @@ export const GetTeamDocument = {
                     ],
                   },
                 },
-                { kind: "Field", name: { kind: "Name", value: "members" } },
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "members" },
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "items" },
+                        selectionSet: {
+                          kind: "SelectionSet",
+                          selections: [
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "userId" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "user" },
+                              selectionSet: {
+                                kind: "SelectionSet",
+                                selections: [
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "avatar" },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "email" },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "sub" },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "firstName" },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "lastName" },
+                                  },
+                                ],
+                              },
+                            },
+                          ],
+                        },
+                      },
+                    ],
+                  },
+                },
                 { kind: "Field", name: { kind: "Name", value: "name" } },
                 { kind: "Field", name: { kind: "Name", value: "performance" } },
                 { kind: "Field", name: { kind: "Name", value: "sentiment" } },
@@ -1007,10 +1431,6 @@ export const ListTeamsByUserIdDocument = {
                       },
                       { kind: "Field", name: { kind: "Name", value: "goals" } },
                       { kind: "Field", name: { kind: "Name", value: "id" } },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "members" },
-                      },
                       { kind: "Field", name: { kind: "Name", value: "name" } },
                       {
                         kind: "Field",
@@ -1023,6 +1443,69 @@ export const ListTeamsByUserIdDocument = {
                       {
                         kind: "Field",
                         name: { kind: "Name", value: "syncHistory" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "members" },
+                        selectionSet: {
+                          kind: "SelectionSet",
+                          selections: [
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "items" },
+                              selectionSet: {
+                                kind: "SelectionSet",
+                                selections: [
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "userId" },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "user" },
+                                    selectionSet: {
+                                      kind: "SelectionSet",
+                                      selections: [
+                                        {
+                                          kind: "Field",
+                                          name: {
+                                            kind: "Name",
+                                            value: "avatar",
+                                          },
+                                        },
+                                        {
+                                          kind: "Field",
+                                          name: {
+                                            kind: "Name",
+                                            value: "email",
+                                          },
+                                        },
+                                        {
+                                          kind: "Field",
+                                          name: { kind: "Name", value: "sub" },
+                                        },
+                                        {
+                                          kind: "Field",
+                                          name: {
+                                            kind: "Name",
+                                            value: "firstName",
+                                          },
+                                        },
+                                        {
+                                          kind: "Field",
+                                          name: {
+                                            kind: "Name",
+                                            value: "lastName",
+                                          },
+                                        },
+                                      ],
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                          ],
+                        },
                       },
                       {
                         kind: "Field",
@@ -1947,6 +2430,14 @@ export const CreateMeetingDocument = {
             },
           },
         },
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "id" } },
+          type: {
+            kind: "NonNullType",
+            type: { kind: "NamedType", name: { kind: "Name", value: "ID" } },
+          },
+        },
       ],
       selectionSet: {
         kind: "SelectionSet",
@@ -2040,6 +2531,14 @@ export const CreateMeetingDocument = {
                       value: {
                         kind: "Variable",
                         name: { kind: "Name", value: "url" },
+                      },
+                    },
+                    {
+                      kind: "ObjectField",
+                      name: { kind: "Name", value: "id" },
+                      value: {
+                        kind: "Variable",
+                        name: { kind: "Name", value: "id" },
                       },
                     },
                     {

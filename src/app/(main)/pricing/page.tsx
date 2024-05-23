@@ -58,8 +58,8 @@ export default function page() {
           </div>
           <div className="flex flex-col ">
             <h2 className="text-5xl font-medium mb-4">
-            &quot;Syneurgy helped my teams communicate and connect more effectively
-              and that drove clear results and ROI.&quot;
+              &quot;Syneurgy helped my teams communicate and connect more
+              effectively and that drove clear results and ROI.&quot;
             </h2>
             <div>
               <p className="font-medium">MT</p>

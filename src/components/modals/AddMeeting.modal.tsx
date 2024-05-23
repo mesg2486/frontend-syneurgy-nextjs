@@ -47,6 +47,7 @@ import { Calendar } from "../ui/calendar";
 import { cn } from "@/lib/utils";
 import { generateThumbnail } from "@/utils/generate-thumbnail";
 import { convertBlobToFile } from "@/utils/blob-to-file";
+import { v4 as uuidv4 } from "uuid";
 
 interface IAddMeetingProps {
   open: boolean;
@@ -54,6 +55,7 @@ interface IAddMeetingProps {
 }
 
 export default function AddMeeting({ open, setIsOpen }: IAddMeetingProps) {
+  const [id, setId] = useState(uuidv4());
   const [url, setUrl] = useState("");
   const { toast } = useToast();
   const [thumbnail, setThumbnail] = useState("");
@@ -63,7 +65,7 @@ export default function AddMeeting({ open, setIsOpen }: IAddMeetingProps) {
 
   const { mutate: upload } = usePublicUpload({
     setUrl,
-    meetingId: "asdf",
+    meetingId: id,
     type: "meeting",
     contentType: "video/mp4",
   });
@@ -111,6 +113,8 @@ export default function AddMeeting({ open, setIsOpen }: IAddMeetingProps) {
       url,
       userId: user?.sub,
       teamId: "team",
+      thumbnail,
+      id,
       date: data.date.toISOString(),
     } as any);
   }

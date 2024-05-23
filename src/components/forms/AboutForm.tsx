@@ -34,6 +34,7 @@ import {
   CommandList,
 } from "../ui/command";
 import { cn } from "@/lib/utils";
+import { useRouter } from "next/navigation";
 
 export const UPDATE_USER_ABOUT = graphql(`
   mutation updateUser(
@@ -88,10 +89,14 @@ interface IFormProps {
 
 export default function AboutForm({ progress, setProgress }: IFormProps) {
   const { data: session } = useSession();
+  const router = useRouter();
 
   const { mutate, isPending } = useUpdateUser({
     progress,
     setProgress,
+    onSuccess(data) {
+      router.push("/dashboard");
+    },
   });
 
   async function onSubmit(data: TAboutFormSchema) {
@@ -99,7 +104,8 @@ export default function AboutForm({ progress, setProgress }: IFormProps) {
     mutate({
       ...data,
       sub: session?.user.sub,
-      step: "4",
+      onboarded: Number(progress) === 7 ? true : false,
+      step: Number(progress) === 7 ? "6" : "4",
     } as any);
   }
 

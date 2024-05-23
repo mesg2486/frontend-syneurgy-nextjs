@@ -101,7 +101,7 @@ export default function OnboardingQuestions({
           onboarded: true,
         } as any);
         await queryClient.invalidateQueries({ queryKey: ["user"] });
-        router.push("/");
+        router.push("/dashboard");
       },
       onError: (error) => {
         return toast({

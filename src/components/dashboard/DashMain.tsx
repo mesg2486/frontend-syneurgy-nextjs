@@ -30,13 +30,7 @@ import { BsChatRightTextFill } from "react-icons/bs";
 import { HiHand } from "react-icons/hi";
 import { useSession } from "next-auth/react";
 import CircleProgress from "../fragments/CircleProgressWithIcon";
-import {
-  FaFaceFrown,
-  FaFaceMeh,
-  FaFaceSmile,
-  FaRegFaceFrownOpen,
-  FaRegFaceMeh,
-} from "react-icons/fa6";
+import { FaFaceFrown, FaFaceMeh, FaFaceSmile } from "react-icons/fa6";
 
 export default function DashMain() {
   const { data: session } = useSession();

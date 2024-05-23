@@ -52,11 +52,16 @@ export default function Dashnav() {
             </Button>
           </DropdownMenuContent>
         </DropdownMenu>
-        <FaBell />
+        <Link href={`/notifications`}>
+          <FaBell />
+        </Link>
         <DropdownMenu>
           <DropdownMenuTrigger className="focus:ring-0 flex gap-2 focus:border-0">
             <Avatar className="h-6 w-6">
-              <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+              <AvatarImage
+                src={session?.user.avatar || "/user.png"}
+                alt="avatar"
+              />
               <AvatarFallback>SG</AvatarFallback>
             </Avatar>
             <div className="capitalize">{session?.user.firstName}</div>

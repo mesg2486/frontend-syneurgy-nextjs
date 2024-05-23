@@ -43,10 +43,16 @@ export default async function getPresignedUrl(
 
     console.log({ s3Params });
 
-    const uploadURL = await s3.getSignedUrlPromise("putObject", s3Params);
+    const signedURL = await s3.getSignedUrlPromise("putObject", s3Params);
+    const unsignedURL = signedURL?.split("?")[0];
+
+    const cloudFrontURL = unsignedURL?.replace(
+      `${process.env.AWS_S3_DOWNLOAD_ENDPOINT}`,
+      `${process.env.AWS_CLOUDFRONT_DOWNLOAD_ENDPOINT}`,
+    );
 
     response.status = 200;
-    response.data = { url: uploadURL };
+    response.data = { url: signedURL, downloadUrl: cloudFrontURL };
   } catch (error: any) {
     console.error("Error generating presigned URL:", error);
     response.status = 500;

@@ -22,11 +22,22 @@ const LIST_TEAMS_BY_USERID = graphql(`
         engagementLevel
         goals
         id
-        members
         name
         performance
         sentiment
         syncHistory
+        members {
+          items {
+            userId
+            user {
+              avatar
+              email
+              sub
+              firstName
+              lastName
+            }
+          }
+        }
         invitations {
           email
           invited

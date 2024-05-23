@@ -72,7 +72,7 @@ export default function Meetings() {
   return (
     <div className="p-6 bg-secondary w-full">
       <Tabs defaultValue="meetings" className="w-full min-h-[600px]">
-        <TabsList className="bg-transparent">
+        <TabsList>
           <TabsTrigger value="meetings">Meetings</TabsTrigger>
           <TabsTrigger value="members">Members</TabsTrigger>
         </TabsList>

@@ -59,14 +59,16 @@ export default function TeamCard({ team }: { team: Team }) {
     <div className="bg-tertiary space-y-2 rounded-lg p-4">
       <div className="flex justify-between items-center">
         <div className="flex pl-2">
-          {Array.from(Array(team.invitations?.length || 3).keys()).map((i) => (
-            <Avatar
-              key={i}
-              className="h-6 w-6 rounded-full overflow-hidden shadow -ml-2"
-            >
-              <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-            </Avatar>
-          ))}
+          {Array.from(Array(team.members?.items?.length || 3).keys()).map(
+            (i) => (
+              <Avatar
+                key={i}
+                className="h-6 w-6 rounded-full border shadow-md overflow-hidden -ml-2"
+              >
+                <AvatarImage src="/user.png" alt="member" />
+              </Avatar>
+            ),
+          )}
         </div>
         <div>
           <DropdownMenu>
@@ -75,7 +77,7 @@ export default function TeamCard({ team }: { team: Team }) {
                 <HiOutlineDotsVertical />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent side="bottom" className="bg-secondary">
+            <DropdownMenuContent side="bottom" className="bg-secondary w-20">
               <Button
                 variant="ghost"
                 size="sm"
@@ -92,6 +94,21 @@ export default function TeamCard({ team }: { team: Team }) {
               >
                 Delete
               </Button>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => {
+                  navigator.clipboard.writeText(
+                    `${window.location.origin}/auth/register?teamId=${team.id}`,
+                  );
+                  toast({
+                    title: "Invite Link Copied",
+                  });
+                }}
+                className="hover:bg-tertiary w-full justify-between"
+              >
+                Copy Invite Link
+              </Button>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
@@ -105,7 +122,7 @@ export default function TeamCard({ team }: { team: Team }) {
         </Link>
         <div className="flex items-center justify-between">
           <p className="text-primary opacity-80 text-xs">
-            {team.invitations?.length || 0} members
+            {team.members?.items?.length || 0} members
           </p>
           <p className="text-xs">
             {format(new Date(team.createdAt), "do MMM, yyyy")}

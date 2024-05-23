@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input";
 import React, { ChangeEvent, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useToast } from "@/components/ui/use-toast";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { format } from "date-fns";
 import {
   Form,
@@ -42,6 +42,7 @@ import useUpdateUser from "@/hooks/useUpdateUserStep";
 import { useOnboardingData } from "@/contexts/onboarding.context";
 import { generateThumbnail } from "@/utils/generate-thumbnail";
 import { Blob } from "buffer";
+import { v4 as uuidv4 } from "uuid";
 
 export const CREATE_MEETING = graphql(`
   mutation createMeeting(
@@ -57,6 +58,7 @@ export const CREATE_MEETING = graphql(`
     $url: String!
     $thumbnail: String
     $date: String!
+    $id: ID!
   ) {
     meeting: createMeeting(
       input: {
@@ -70,6 +72,7 @@ export const CREATE_MEETING = graphql(`
         highlights: $highlights
         type: $type
         url: $url
+        id: $id
         thumbnail: $thumbnail
         date: $date
       }
@@ -95,6 +98,7 @@ interface IFormProps {
 }
 
 export default function UploadMeeting({ progress, setProgress }: IFormProps) {
+  const [id, setId] = useState(uuidv4());
   const [url, setUrl] = useState("");
   const [thumbnail, setThumbnail] = useState<Blob | undefined>();
   const { toast } = useToast();
@@ -102,7 +106,7 @@ export default function UploadMeeting({ progress, setProgress }: IFormProps) {
 
   const { mutate: upload } = usePublicUpload({
     setUrl,
-    meetingId: "asdf",
+    meetingId: id,
     type: "meeting",
     contentType: "video/mp4",
   });
@@ -156,6 +160,8 @@ export default function UploadMeeting({ progress, setProgress }: IFormProps) {
       url,
       userId: user.sub,
       teamId: "team",
+      thumbnail,
+      id,
       date: data.date.toISOString(),
     } as any);
   }

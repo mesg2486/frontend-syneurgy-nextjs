@@ -15,7 +15,10 @@ export default function MeetingCard({ meeting }: { meeting: Meeting }) {
       <div className="h-32 overflow-hidden rounded-t-lg">
         <img
           className="w-full h-full object-cover rounded-xl"
-          src="https://plus.unsplash.com/premium_photo-1661688963878-4f3282dd1263"
+          src={
+            meeting.thumbnail ||
+            "https://plus.unsplash.com/premium_photo-1661688963878-4f3282dd1263"
+          }
         />
       </div>
       <div className="p-4 space-y-2">

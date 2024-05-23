@@ -1,8 +1,8 @@
 import React from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Meeting } from "@/services/gql/graphql";
+import { GetMeetingQuery, Meeting } from "@/services/gql/graphql";
 
-export default function MainTab() {
+export default function MainTab({ data }: { data: GetMeetingQuery }) {
   return (
     <div className="w-full p-6 rounded-lg bg-slate-800">
       <Tabs defaultValue="meeting">
@@ -40,11 +40,8 @@ export default function MainTab() {
         </TabsList>
         <TabsContent value="meeting">
           {/* This image is just for testing purpose  */}
-          <video width="640" height="360" controls>
-            <source
-              src="https://d2n2ldezfv2tlg.cloudfront.net/meetings/asdf/gitlab_demo.mp4"
-              type="video/mp4"
-            />
+          <video className="w-full" controls>
+            <source src={data.meeting?.url} type="video/mp4" />
             Your browser does not support the video tag.
           </video>
           {/* <ReactPlayer url={meeting?.url} /> */}

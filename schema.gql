@@ -5,6 +5,7 @@ input CreateInvitationsInput {
 }
 
 input CreateMeetingInput {
+  id: ID!
   name: String!
   synchrony: String
   dimensions: String
@@ -19,6 +20,26 @@ input CreateMeetingInput {
   date: String!
 }
 
+input CreateMembersInput {
+  dimensions: String
+  highlights: String
+  userId: ID!
+  teamId: ID!
+  invited: Boolean!
+  joined: Boolean!
+  performance: String
+  sentiment: String
+  synchrony: String
+}
+
+input CreateNotificationInput {
+  content: String!
+  to: String!
+  from: String!
+  type: String!
+  read: Boolean!
+}
+
 input CreateTeamInput {
   name: String!
   createdBy: ID!
@@ -31,6 +52,17 @@ input CreateTeamInput {
   synchrony: Float
   performance: String
   sentiment: String
+}
+
+input CreateTeamInvitationsInput {
+  teamId: ID!
+  content: String
+  email: String
+  userId: String
+  username: String
+  type: String
+  accepted: String
+  invited: String
 }
 
 input CreateUserInput {
@@ -57,8 +89,21 @@ input DeleteMeetingInput {
   id: ID!
 }
 
+input DeleteMembersInput {
+  userId: ID!
+  teamId: ID!
+}
+
+input DeleteNotificationInput {
+  id: ID!
+}
+
 input DeleteTeamInput {
   id: ID!
+}
+
+input DeleteTeamInvitationsInput {
+  teamId: ID!
 }
 
 input DeleteUserInput {
@@ -94,6 +139,24 @@ type MeetingConnection {
   nextToken: String
 }
 
+type Members {
+  dimensions: String
+  highlights: String
+  userId: ID!
+  user: User
+  teamId: ID!
+  invited: Boolean!
+  joined: Boolean!
+  performance: String
+  sentiment: String
+  synchrony: String
+}
+
+type MembersConnection {
+  items: [Members]
+  nextToken: String
+}
+
 input ModelSizeInput {
   ne: Int
   eq: Int
@@ -102,6 +165,21 @@ input ModelSizeInput {
   ge: Int
   gt: Int
   between: [Int]
+}
+
+type Notification {
+  id: ID!
+  content: String!
+  to: String!
+  from: String!
+  fromUser: User
+  type: String!
+  read: Boolean!
+}
+
+type NotificationConnection {
+  items: [Notification]
+  nextToken: String
 }
 
 input TableBooleanFilterInput {
@@ -163,6 +241,39 @@ input TableMeetingFilterInput {
   date: TableIntFilterInput
 }
 
+input TableMemberTypeFilterInput {
+  dimensions: TableStringFilterInput
+  highlights: TableStringFilterInput
+  userId: TableIDFilterInput
+  teamId: TableIDFilterInput
+  invited: TableBooleanFilterInput
+  joined: TableBooleanFilterInput
+  performance: TableStringFilterInput
+  sentiment: TableStringFilterInput
+  synchrony: TableStringFilterInput
+}
+
+input TableMembersFilterInput {
+  dimensions: TableStringFilterInput
+  highlights: TableStringFilterInput
+  userId: TableIDFilterInput
+  teamId: TableIDFilterInput
+  invited: TableBooleanFilterInput
+  joined: TableBooleanFilterInput
+  performance: TableStringFilterInput
+  sentiment: TableStringFilterInput
+  synchrony: TableStringFilterInput
+}
+
+input TableNotificationFilterInput {
+  id: TableIDFilterInput
+  content: TableStringFilterInput
+  to: TableStringFilterInput
+  from: TableStringFilterInput
+  type: TableStringFilterInput
+  read: TableBooleanFilterInput
+}
+
 input TableStringFilterInput {
   ne: String
   eq: String
@@ -191,6 +302,17 @@ input TableTeamFilterInput {
   synchrony: TableFloatFilterInput
   performance: TableStringFilterInput
   sentiment: TableStringFilterInput
+}
+
+input TableTeamInvitationsFilterInput {
+  teamId: TableIDFilterInput
+  content: TableStringFilterInput
+  email: TableStringFilterInput
+  userId: TableStringFilterInput
+  username: TableStringFilterInput
+  type: TableStringFilterInput
+  accepted: TableStringFilterInput
+  invited: TableStringFilterInput
 }
 
 input TableUserFilterInput {
@@ -222,7 +344,7 @@ type Team {
   engagementLevel: String
   teamInSync: String
   syncHistory: String
-  members: [String]
+  members: MembersConnection
   synchrony: Float
   performance: String
   sentiment: String
@@ -232,6 +354,22 @@ type Team {
 
 type TeamConnection {
   items: [Team]
+  nextToken: String
+}
+
+type TeamInvitations {
+  teamId: ID!
+  content: String
+  email: String
+  userId: String
+  username: String
+  type: String
+  accepted: String
+  invited: String
+}
+
+type TeamInvitationsConnection {
+  items: [TeamInvitations]
   nextToken: String
 }
 
@@ -257,6 +395,27 @@ input UpdateMeetingInput {
   date: String
 }
 
+input UpdateMembersInput {
+  dimensions: String
+  highlights: String
+  userId: ID!
+  teamId: ID!
+  invited: Boolean
+  joined: Boolean
+  performance: String
+  sentiment: String
+  synchrony: String
+}
+
+input UpdateNotificationInput {
+  id: ID!
+  content: String
+  to: String
+  from: String
+  type: String
+  read: Boolean
+}
+
 input UpdateTeamInput {
   id: ID!
   name: String
@@ -270,6 +429,17 @@ input UpdateTeamInput {
   synchrony: Float
   performance: String
   sentiment: String
+}
+
+input UpdateTeamInvitationsInput {
+  teamId: ID!
+  content: String
+  email: String
+  userId: String
+  username: String
+  type: String
+  accepted: String
+  invited: String
 }
 
 input UpdateUserInput {
@@ -315,6 +485,7 @@ type User {
   resultPrivacy: Boolean!
   firstMeeting: String
   firstTeam: String
+  invitedByTeam: Boolean
   createdAt: String!
   updatedAt: String!
 }
@@ -334,6 +505,16 @@ type Mutation {
   createMeeting(input: CreateMeetingInput!): Meeting
   updateMeeting(input: UpdateMeetingInput!): Meeting
   deleteMeeting(input: DeleteMeetingInput!): Meeting
+  createMembers(input: CreateMembersInput!): Members
+  updateMembers(input: UpdateMembersInput!): Members
+  deleteMembers(input: DeleteMembersInput!): Members
+  createNotification(input: CreateNotificationInput!): Notification
+  updateNotification(input: UpdateNotificationInput!): Notification
+  deleteNotification(input: DeleteNotificationInput!): Notification
+  createTeamInvitations(input: CreateTeamInvitationsInput!): TeamInvitations
+  updateTeamInvitations(input: UpdateTeamInvitationsInput!): TeamInvitations
+  deleteTeamInvitations(input: DeleteTeamInvitationsInput!): TeamInvitations
+  inviteTeamInBulk(invitations: [CreateTeamInvitationsInput]): [TeamInvitations]
 }
 
 type Query {
@@ -367,6 +548,24 @@ type Query {
     limit: Int
     nextToken: String
   ): MeetingConnection
+  getMembers(teamId: ID!, userId: ID!): Members
+  listMembers(
+    filter: TableMembersFilterInput
+    limit: Int
+    nextToken: String
+  ): MembersConnection
+  getNotification(id: ID!): Notification
+  listNotifications(
+    filter: TableNotificationFilterInput
+    limit: Int
+    nextToken: String
+  ): NotificationConnection
+  getTeamInvitations(teamId: ID!): TeamInvitations
+  listTeamInvitations(
+    filter: TableTeamInvitationsFilterInput
+    limit: Int
+    nextToken: String
+  ): TeamInvitationsConnection
 }
 
 type Subscription {
@@ -433,4 +632,67 @@ type Subscription {
     dimensions: String
     performance: String
   ): Meeting @aws_subscribe(mutations: ["deleteMeeting"])
+  onCreateMembers(
+    dimensions: String
+    highlights: String
+    userId: ID
+    teamId: ID
+    invited: Boolean
+  ): Members @aws_subscribe(mutations: ["createMembers"])
+  onUpdateMembers(
+    dimensions: String
+    highlights: String
+    userId: ID
+    teamId: ID
+    invited: Boolean
+  ): Members @aws_subscribe(mutations: ["updateMembers"])
+  onDeleteMembers(
+    dimensions: String
+    highlights: String
+    userId: ID
+    teamId: ID
+    invited: Boolean
+  ): Members @aws_subscribe(mutations: ["deleteMembers"])
+  onCreateNotification(
+    id: ID
+    content: String
+    to: String
+    from: String
+    type: String
+  ): Notification @aws_subscribe(mutations: ["createNotification"])
+  onUpdateNotification(
+    id: ID
+    content: String
+    to: String
+    from: String
+    type: String
+  ): Notification @aws_subscribe(mutations: ["updateNotification"])
+  onDeleteNotification(
+    id: ID
+    content: String
+    to: String
+    from: String
+    type: String
+  ): Notification @aws_subscribe(mutations: ["deleteNotification"])
+  onCreateTeamInvitations(
+    teamId: ID
+    content: String
+    email: String
+    userId: String
+    username: String
+  ): TeamInvitations @aws_subscribe(mutations: ["createTeamInvitations"])
+  onUpdateTeamInvitations(
+    teamId: ID
+    content: String
+    email: String
+    userId: String
+    username: String
+  ): TeamInvitations @aws_subscribe(mutations: ["updateTeamInvitations"])
+  onDeleteTeamInvitations(
+    teamId: ID
+    content: String
+    email: String
+    userId: String
+    username: String
+  ): TeamInvitations @aws_subscribe(mutations: ["deleteTeamInvitations"])
 }

@@ -60,7 +60,7 @@ export default function LoginForm({ className, ...props }: LoginFormProps) {
     setIsPending(true);
     await signIn("credentials", {
       ...data,
-      callbackUrl: location.origin,
+      callbackUrl: location.origin + "/dashboard",
       redirect: true,
     });
     setIsPending(false);
