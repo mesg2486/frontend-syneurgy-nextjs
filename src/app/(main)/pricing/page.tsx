@@ -16,10 +16,6 @@ export default function page() {
             <h2 className="max-w-3xl mx-auto text-6xl font-semibold mb-4">
               Simple, month-to-month pricing with Annual and Enterprise options
             </h2>
-            <p className="">
-              From individuals to enterprises, our clients always leave with a
-              smile.
-            </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {pricing?.map((price) => (
@@ -58,8 +54,8 @@ export default function page() {
           </div>
           <div className="flex flex-col ">
             <h2 className="text-5xl font-medium mb-4">
-            &quot;Syneurgy helped my teams communicate and connect more effectively
-              and that drove clear results and ROI.&quot;
+              &quot;Syneurgy helped my teams communicate and connect more
+              effectively and that drove clear results and ROI.&quot;
             </h2>
             <div>
               <p className="font-medium">MT</p>
