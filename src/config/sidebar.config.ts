@@ -22,6 +22,7 @@ interface ISidebarItem {
   subNav?: ISidebarSubItem[];
   badge?: string;
   exact: boolean;
+  drawer: boolean;
 }
 
 export const sidebarItems: ISidebarItem[] = [
@@ -32,22 +33,25 @@ export const sidebarItems: ISidebarItem[] = [
     icon: BiHome,
     group: "/dashboard",
     exact: true,
+    drawer: true,
   },
   {
     label: "Recent Meetings",
     link: "/meetings",
     type: "user",
     icon: TbPhotoVideo,
-    group: "/dashboard/meetings",
+    group: "/meetings",
     exact: true,
+    drawer: true,
   },
   {
     label: "Behaviour Engine",
     link: "/dashboard/behaviour",
     type: "user",
     icon: MdAnalytics,
-    group: "dashboard/behaviour",
+    group: "behaviour",
     exact: false,
+    drawer: true,
     subNav: [
       // {
       //   label: "Syllabus Management",
@@ -60,8 +64,9 @@ export const sidebarItems: ISidebarItem[] = [
     link: "/dashboard/challenges",
     type: "user",
     icon: MdOutlineLibraryBooks,
-    group: "dashboard/challenges",
+    group: "challenges",
     exact: false,
+    drawer: false,
     subNav: [
       // {
       //   label: "Syllabus Management",
@@ -74,8 +79,9 @@ export const sidebarItems: ISidebarItem[] = [
     link: "/teams",
     type: "user",
     icon: FaUserGroup,
-    group: "dashboard/teams",
+    group: "teams",
     exact: false,
+    drawer: true,
     subNav: [
       // {
       //   label: "Syllabus Management",

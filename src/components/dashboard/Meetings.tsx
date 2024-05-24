@@ -70,7 +70,7 @@ export default function Meetings() {
   });
 
   return (
-    <div className="p-6 bg-secondary w-full">
+    <div className="pt-6 pb-20 bg-secondary w-full">
       <Tabs defaultValue="meetings" className="w-full min-h-[600px]">
         <TabsList>
           <TabsTrigger value="meetings">Meetings</TabsTrigger>
@@ -79,19 +79,21 @@ export default function Meetings() {
         <Separator className="mb-4" />
         <TabsContent value="meetings" className="py-5">
           <div className="flex justify-between">
-            <h2 className="text-xl font-light">Total Meetings (20)</h2>
+            <h2 className="text-xl font-light">
+              Meetings ({data?.meetings?.items?.length})
+            </h2>
             <div className="flex flex-row gap-x-3">
               <div className="relative">
                 <Input
                   placeholder="Search"
-                  className="h-full border w-40 px-6 rounded-full"
+                  className="h-full border w-32 md:w-40 px-6 rounded-full"
                 />
                 <div className="absolute right-6 top-1/2 -translate-y-1/2">
                   <HiOutlineSearch />
                 </div>
               </div>
               <Select>
-                <SelectTrigger className="rounded-2xl bg-tertiary px-5 gap-1 border-0">
+                <SelectTrigger className="rounded-2xl hidden md:flex bg-tertiary px-5 gap-1 border-0">
                   <SelectValue placeholder="Meeting Type" />
                 </SelectTrigger>
                 <SelectContent>
@@ -101,7 +103,7 @@ export default function Meetings() {
                 </SelectContent>
               </Select>
               <Select>
-                <SelectTrigger className="rounded-2xl bg-tertiary px-5 gap-1 border-0">
+                <SelectTrigger className="rounded-2xl hidden md:flex bg-tertiary px-5 gap-1 border-0">
                   <SelectValue placeholder="All Dates" />
                 </SelectTrigger>
                 <SelectContent>
@@ -113,14 +115,14 @@ export default function Meetings() {
                   </SelectGroup>
                 </SelectContent>
               </Select>
-              <Button variant="outline" className="">
+              <Button className="">
                 <AiOutlinePlus />
-                Add Meeting
+                <span className="hidden md:block">Add Meeting</span>
               </Button>
             </div>
           </div>
           <div className="pt-10 space-y-6">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 md:grid-cols-4 lg:grid-cols-5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
               {(isLoading || status === "loading") &&
                 Array.from(Array(10)).map((i) => <TeamCardSkeleton key={i} />)}
               {Number(data?.meetings?.items?.length) > 0 &&

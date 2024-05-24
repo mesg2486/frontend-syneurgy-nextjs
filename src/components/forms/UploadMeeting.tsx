@@ -41,7 +41,6 @@ import { cn } from "@/lib/utils";
 import useUpdateUser from "@/hooks/useUpdateUserStep";
 import { useOnboardingData } from "@/contexts/onboarding.context";
 import { generateThumbnail } from "@/utils/generate-thumbnail";
-import { Blob } from "buffer";
 import { v4 as uuidv4 } from "uuid";
 import { convertBlobToFile } from "@/utils/blob-to-file";
 

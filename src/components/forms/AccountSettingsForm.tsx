@@ -202,7 +202,7 @@ export default function AccountSettingsForm(props: IFormProps) {
     );
 
   return (
-    <div className="flex-1 max-w-xl bg-popover p-6 rounded-lg">
+    <div className="flex-1 max-w-xl md:bg-popover md:p-6 rounded-lg">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}

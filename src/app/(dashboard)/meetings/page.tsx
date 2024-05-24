@@ -29,14 +29,16 @@ export default function Meetings() {
   });
 
   return (
-    <div className="py-6 space-y-5">
+    <div className="py-6 space-y-5 pb-32">
       <div className="flex justify-between items-center">
-        <h2 className="text-xl">Meetings</h2>
+        <h2 className="md:text-xl">
+          Meetings ({data?.meetings?.items?.length})
+        </h2>
         <div className="flex flex-row gap-x-3">
           <div className="relative">
             <Input
               placeholder="Search"
-              className="h-full border w-40 px-6 rounded-full"
+              className="h-full border w-32 md:w-40 px-6 rounded-full"
             />
             <div className="absolute right-6 top-1/2 -translate-y-1/2">
               <HiOutlineSearch />
@@ -44,7 +46,7 @@ export default function Meetings() {
           </div>
           <Button onClick={() => setOpen(true)}>
             <AiOutlinePlus />
-            Add Meeting
+            <span className="hidden md:block">Add Meeting</span>
           </Button>
         </div>
       </div>

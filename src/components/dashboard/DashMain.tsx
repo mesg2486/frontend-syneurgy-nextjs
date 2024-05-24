@@ -35,15 +35,15 @@ import { FaFaceFrown, FaFaceMeh, FaFaceSmile } from "react-icons/fa6";
 export default function DashMain() {
   const { data: session } = useSession();
   return (
-    <div className="p-6 bg-secondary ">
-      <div className="flex justify-between">
+    <div className="bg-secondary">
+      <div className="flex justify-between pt-4">
         <h2 className="text-xl font-light tracking-tight">
           Welcome <HiHand className="inline-block text-yellow-500 rotate-12" />
           <span className="font-semibold"> {session?.user.username}</span>
         </h2>
         <div className="flex flex-row gap-x-3">
           <Select>
-            <SelectTrigger className="rounded-2xl bg-tertiary px-5 gap-1 border-0">
+            <SelectTrigger className="rounded-2xl hidden md:flex bg-tertiary px-5 gap-1 border-0">
               <SelectValue placeholder="All Dates" />
             </SelectTrigger>
             <SelectContent>
@@ -56,7 +56,7 @@ export default function DashMain() {
             </SelectContent>
           </Select>
           <Select>
-            <SelectTrigger className="rounded-2xl bg-tertiary px-5 gap-1 border-0">
+            <SelectTrigger className="rounded-2xl hidden md:flex bg-tertiary px-5 gap-1 border-0">
               <SelectValue placeholder="All Teams" />
             </SelectTrigger>
             <SelectContent>
@@ -74,12 +74,13 @@ export default function DashMain() {
           </Button>
         </div>
       </div>
-      <Separator className="my-4" />
-      <div className="flex flex-col space-y-6 ">
-        <div className="flex justify-between bg-tertiary p-4 rounded-md">
-          <p className="leading-8 ">
+      <Separator className="my-2" />
+      <div className="flex flex-col space-y-4">
+        <div className="flex justify-between bg-tertiary py-2 p-4 rounded-md">
+          <p className="leading-8 md:block hidden">
             You have 35 minutes of 240 available in your plan
           </p>
+          <p className="leading-8 md:hidden">Your plan is expiring</p>
           <Button
             className="border-primary text-primary hover:bg-primary hover:text-primary-foreground"
             variant="outline"
@@ -87,7 +88,7 @@ export default function DashMain() {
             Upgrade
           </Button>
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-4 justify-around p-8 rounded-md bg-tertiary divide-x-2 divide-white/10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 md:justify-around p-8 rounded-md bg-tertiary md:divide-x-2 divide-white/10">
           <div className="">
             <h2 className="text-lg font-medium">Global Synchrony</h2>
             <div className="flex flex-row  items-center py-6 divide-x-[1px] divide-white/10">
@@ -117,7 +118,7 @@ export default function DashMain() {
             </div>
           </div>
           <div>
-            <h2 className="text-lg font-medium pl-10">Dimensions</h2>
+            <h2 className="text-lg font-medium md:pl-10">Dimensions</h2>
             <div className="w-full h-48 p-5 text-xs">
               <ResponsiveContainer width="100%" height="100%">
                 <RadarChart cx="50%" cy="50%" outerRadius="80%" data={data1}>
@@ -142,7 +143,7 @@ export default function DashMain() {
             </div>
           </div>
           <div>
-            <h2 className="text-lg font-medium pl-10">Global Performance</h2>
+            <h2 className="text-lg font-medium md:pl-10">Global Performance</h2>
             <div className="w-full overflow-hidden flex flex-row justify-around  p-5 gap-4">
               <div className="flex justify-center items-center flex-col gap-3">
                 <CircleProgress color="text-yellow-500">
@@ -165,7 +166,7 @@ export default function DashMain() {
             </div>
           </div>
           <div>
-            <h2 className="text-lg font-medium pl-10">Global Sentiment</h2>
+            <h2 className="text-lg font-medium md:pl-10">Global Sentiment</h2>
             <div className="w-full overflow-hidden flex flex-row justify-around  p-5 gap-4">
               <div className="flex justify-center items-center flex-col gap-3">
                 <CircleProgress color="text-red-500">
@@ -197,8 +198,10 @@ export default function DashMain() {
         {/* Line Chart  */}
         <div className="max-w-full ">
           <div className="bg-tertiary p-6 rounded-md max-w-full mx-auto">
-            <h2 className="text-lg font-medium pl-10 mb-5">Global Progress</h2>
-            <div className="w-full h-80">
+            <h2 className="text-lg font-medium md:pl-10 mb-5">
+              Global Progress
+            </h2>
+            <div className="w-full h-60 md:h-80">
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart data={data2}>
                   <CartesianGrid strokeDasharray="3 3" />

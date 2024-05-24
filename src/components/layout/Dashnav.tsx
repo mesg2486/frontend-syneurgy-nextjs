@@ -21,8 +21,10 @@ export default function Dashnav() {
   const [teamModalOpen, setTeamModalOpen] = useState(false);
 
   return (
-    <div className="border-b px-6 border-white/20 h-16 flex items-center justify-between">
-      <div></div>
+    <div className="border-b px-4 md:px-6 border-white/20 h-16 flex items-center justify-between">
+      <div className="">
+        <img src="./logo-icon.png" className="h-6 md:hidden" alt="syneurgy" />
+      </div>
       <div className="flex items-center gap-4">
         <DropdownMenu>
           <DropdownMenuTrigger>

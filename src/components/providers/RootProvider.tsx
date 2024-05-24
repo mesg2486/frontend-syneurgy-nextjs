@@ -31,11 +31,11 @@ export default function RootProvider({
           />
           <AxiosUploadProvider>
             <Uploader />
-            <div className="flex bg-secondary text-secondary-foreground">
+            <div className="flex bg-secondary text-secondary-foreground max-w-full">
               <Sidebar />
               <main className="flex-1 bg-secondary text-secondary-foreground">
                 <Dashnav />
-                <div className="px-8">{children}</div>
+                <div className="px-4 md:px-8">{children}</div>
               </main>
               <Toaster />
             </div>
@@ -43,7 +43,7 @@ export default function RootProvider({
           {/* <Footer /> */}
         </SessionProvider>
 
-        <ReactQueryDevtools position="right" />
+        <ReactQueryDevtools position="left" />
       </QueryClientProvider>
     </>
   );
