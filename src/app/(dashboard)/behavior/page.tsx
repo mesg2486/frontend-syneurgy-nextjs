@@ -81,15 +81,15 @@ export default function Behavior() {
             Next Meetings
           </h3>
           <div className="divide-y py-2 divide-white/10">
-            <div className="py-4">
+            <div className="py-4 space-y-1">
               <p className="opacity-60 text-sm">5/25/2024 10:00 AM</p>
               <p>Attentiveness</p>
             </div>
-            <div className="py-4">
+            <div className="py-4 space-y-1">
               <p className="opacity-60 text-sm">5/26/2024 10:00 AM</p>
               <p>Clear Mind</p>
             </div>
-            <div className="py-4">
+            <div className="py-4 space-y-1">
               <p className="opacity-60 text-sm">5/26/2024 10:00 AM</p>
               <p>Empathy</p>
             </div>
