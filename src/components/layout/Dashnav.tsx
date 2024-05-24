@@ -24,7 +24,9 @@ export default function Dashnav() {
   return (
     <div className="border-b px-4 md:px-6 border-white/20 h-16 flex items-center justify-between">
       <div className="">
-        <img src="./logo-icon.png" className="h-6 md:hidden" alt="syneurgy" />
+        <Link href="/">
+          <img src="/logo-icon.png" className="h-6 md:hidden" alt="syneurgy" />
+        </Link>
       </div>
       <div className="flex items-center gap-4">
         <DropdownMenu>

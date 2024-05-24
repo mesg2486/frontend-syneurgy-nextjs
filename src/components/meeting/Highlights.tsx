@@ -5,7 +5,7 @@ export default function Highlights() {
   return (
     <div className="w-full p-6 rounded-lg bg-slate-800">
       <Tabs defaultValue="teamHighlight">
-        <TabsList className="bg-transparent space-x-4">
+        <TabsList className="bg-transparent space-x-4 overflow-x-auto max-w-full">
           <TabsTrigger
             value="teamHighlight"
             className=" rounded-none data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:text-white border-slate-300"

@@ -28,6 +28,7 @@ interface LoginFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 export default function LoginForm({ className, ...props }: LoginFormProps) {
   const [isPending, setIsPending] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+
   const { toast } = useToast();
 
   const search = useSearchParams();
@@ -60,7 +61,7 @@ export default function LoginForm({ className, ...props }: LoginFormProps) {
     setIsPending(true);
     await signIn("credentials", {
       ...data,
-      callbackUrl: location.origin + "/dashboard",
+      callbackUrl: location.origin + "/",
       redirect: true,
     });
     setIsPending(false);

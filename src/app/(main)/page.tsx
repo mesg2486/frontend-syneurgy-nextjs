@@ -1,47 +1,25 @@
-"use client";
+import Home from "@/components/homepage";
+import { authOptions } from "@/pages/api/auth/[...nextauth]";
+import { fetchql } from "@/services/clients/fetch";
+import { Session, getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
+import React from "react";
 
-import Explore from "@/components/homepage/Explore";
-import Features from "@/components/homepage/Features";
-import Hero from "@/components/homepage/Hero";
-import Process from "@/components/homepage/Process";
-import { GET_USER } from "@/contexts/onboarding.context";
-import { gql } from "@/services/clients/graphql.client";
-import { useQuery } from "@tanstack/react-query";
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+export default async function page() {
+  const session: Session | null = await getServerSession(authOptions as any);
 
-export default function Home() {
-  const { data: session, status } = useSession();
-
-  const { data, isLoading } = useQuery({
-    queryKey: ["user", session?.user.sub],
-    queryFn: async () => {
-      return await gql.request(GET_USER, {
-        sub: String(session?.user.sub),
-      });
-    },
-    enabled: !!session?.user,
-  });
-
-  const router = useRouter();
-
-  console.log({ data });
-
-  useEffect(() => {
-    if (status === "loading") return;
-    if (isLoading) return;
-    if (!data?.user) return;
-    if (data.user.onboarded) return;
-    router.push("/auth/onboarding");
-  }, [session, router, status, data?.user, isLoading]);
-
-  return (
-    <>
-      <Hero />
-      <Features />
-      <Process />
-      <Explore />
-    </>
+  const { data, errors } = await fetchql(
+    `
+  query getUser($sub: ID!){
+    user: getUser(sub: $sub) {
+      step
+      onboarded
+    }
+  }`,
+    { sub: session?.user.sub },
   );
+
+  if (data?.user && data.user.onboarded === false) redirect("/auth/onboarding");
+
+  return <Home />;
 }

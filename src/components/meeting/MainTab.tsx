@@ -7,7 +7,7 @@ export default function MainTab({ data }: { data: GetMeetingQuery }) {
   return (
     <div className="w-full p-6 rounded-lg bg-slate-800">
       <Tabs defaultValue="meeting">
-        <TabsList className="bg-transparent space-x-4">
+        <TabsList className="bg-transparent overflow-x-auto max-w-full space-x-4">
           <TabsTrigger
             value="meeting"
             className=" rounded-none data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:text-white border-slate-300"
@@ -48,6 +48,7 @@ export default function MainTab({ data }: { data: GetMeetingQuery }) {
               width="100%"
               controls
               muted
+              height="100%"
               url={data.meeting?.url}
             />
           )}

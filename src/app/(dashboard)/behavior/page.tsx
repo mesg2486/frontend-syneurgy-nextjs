@@ -11,6 +11,7 @@ import { gql } from "@/services/clients/graphql.client";
 import { Meeting } from "@/services/gql/graphql";
 import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 import React from "react";
 import { BiCalendar } from "react-icons/bi";
 import { MdSupervisedUserCircle } from "react-icons/md";
@@ -98,7 +99,7 @@ export default function Behavior() {
       </div>
       <Separator className="my-4" />
       <div className="grid grid-cols-4 gap-5">
-        <div className="bg-popover col-span-2 md:col-span-1 space-y-4 rounded-xl p-5">
+        <div className="bg-popover col-span-2 md:col-span-1 space-y-4 rounded-xl sm:p-5 p-3">
           <div className="flex justify-between items-center">
             <h3 className="flex items-center gap-2">
               <span className="p-1 bg-[#BDB0FF] text-black rounded-full">
@@ -108,7 +109,7 @@ export default function Behavior() {
             </h3>
             <CustomTooltip>Suggest a suitable hint</CustomTooltip>
           </div>
-          <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2 justify-between">
             <div className="">
               <span className="text-5xl font-bold">76</span>
               <span>%</span>
@@ -116,7 +117,7 @@ export default function Behavior() {
             <img src="/assets/graph-up.png" alt="up" />
           </div>
         </div>
-        <div className="bg-popover col-span-2 md:col-span-1 space-y-4 rounded-xl p-5">
+        <div className="bg-popover col-span-2 md:col-span-1 space-y-4 rounded-xl sm:p-5 p-3">
           <div className="flex justify-between items-center">
             <h3 className="flex items-center gap-2">
               <span className="p-1 bg-[#76FD3F] text-black rounded-full">
@@ -130,10 +131,10 @@ export default function Behavior() {
             <div className="">
               <span className="text-5xl font-bold">3</span>
             </div>
-            <img src="/assets/graph-up.png" alt="up" />
+            {/* <img src="/assets/graph-up.png" alt="up" /> */}
           </div>
         </div>
-        <div className="bg-popover col-span-4 md:col-span-2 space-y-4 rounded-xl p-5">
+        <div className="bg-popover col-span-4 md:col-span-2 space-y-4 rounded-xl sm:p-5 p-3">
           <div className="flex justify-between items-center">
             <h3 className="flex items-center gap-2">
               <span className="p-1 bg-[#FFA043] text-black rounded-full">
@@ -174,30 +175,42 @@ export default function Behavior() {
         <div className="space-y-4 col-span-2 md:col-span-1">
           <h3 className="text-lg font-medium">Challenges</h3>
           <div className="space-y-2">
-            <div className="bg-popover p-4 py-5 flex justify-between items-center rounded-md">
-              <p>Comunication</p>
+            <Link
+              href={`/behavior/wizard`}
+              className="bg-popover p-4 py-5 flex justify-between items-center rounded-md"
+            >
+              <span>Communication</span>
               <span className="p-1 bg-[#FFA043] text-black rounded-full">
                 <PiTarget />
               </span>
-            </div>
-            <div className="bg-popover p-4 py-5 flex justify-between items-center rounded-md">
-              <p>Wise listener</p>
+            </Link>
+            <Link
+              href={`/behavior/wizard`}
+              className="bg-popover p-4 py-5 flex justify-between items-center rounded-md"
+            >
+              <span>Wise listener</span>
               <span className="p-1 bg-[#FFA043] text-black rounded-full">
                 <PiTarget />
               </span>
-            </div>
-            <div className="bg-popover p-4 py-5 flex justify-between items-center rounded-md">
-              <p>Non verbal Communication</p>
+            </Link>
+            <Link
+              href={`/behavior/wizard`}
+              className="bg-popover p-4 py-5 flex justify-between items-center rounded-md"
+            >
+              <span>Non verbal Communication</span>
               <span className="p-1 bg-[#FFA043] text-black rounded-full">
                 <PiTarget />
               </span>
-            </div>
-            <div className="bg-popover p-4 py-5 flex justify-between items-center rounded-md">
-              <p>Open Ended Questions</p>
+            </Link>
+            <Link
+              href={`/behavior/wizard`}
+              className="bg-popover p-4 py-5 flex justify-between items-center rounded-md"
+            >
+              <span>Open Ended Questions</span>
               <span className="p-1 bg-[#FFA043] text-black rounded-full">
                 <PiTarget />
               </span>
-            </div>
+            </Link>
           </div>
         </div>
       </div>

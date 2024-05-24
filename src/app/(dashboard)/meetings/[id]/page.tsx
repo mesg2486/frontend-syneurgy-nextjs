@@ -58,7 +58,7 @@ export default function MeetingPage({ params }: { params: { id: string } }) {
   });
 
   return (
-    <div className="p-5 space-y-6">
+    <div className="pt-5 space-y-6 pb-32">
       {/* Nav Section */}
       <div>
         <Breadcrumb className="opacity-60">
@@ -80,16 +80,20 @@ export default function MeetingPage({ params }: { params: { id: string } }) {
         </Breadcrumb>
       </div>
       <div className="flex justify-between ">
-        <div className="flex items-center gap-x-4">
-          <Link href="/meetings">
-            <Button variant="outline" size="icon">
-              <HiArrowLeft className="" />
-            </Button>
-          </Link>
-          <h2 className="text-xl font-medium">{data?.meeting?.name}</h2>
+        <div className="flex justify-between items-center flex-1">
+          <div className="flex items-center gap-x-4">
+            <Link href="/meetings">
+              <Button variant="outline" size="icon">
+                <HiArrowLeft className="" />
+              </Button>
+            </Link>
+            <h2 className="text-xl font-medium">{data?.meeting?.name}</h2>
+          </div>
+          <Button onClick={() => setToggleSyneurgy(true)} className="md:hidden">
+            <BsChatRightTextFill /> Ask Syneurgy
+          </Button>
         </div>
-        <div className="flex flex-row space-x-6">
-          <Button variant="outline">All Participants</Button>
+        <div className="flex-row space-x-6 hidden md:flex">
           <ul className="flex flex-row gap-x-3 text-xs font-medium">
             <li
               className={`${toggleTabs === "data" ? "border-b-2 border-primary opacity-100" : "opacity-60"} content-center  cursor-pointer`}
@@ -118,26 +122,26 @@ export default function MeetingPage({ params }: { params: { id: string } }) {
           )}
         </div>
       </div>
-      <div className="grid grid-cols-10 gap-x-5">
-        <div className="col-span-6 space-y-4">
+      <div className="grid grid-cols-10 md:gap-x-5">
+        <div className="col-span-12 lg:col-span-6 space-y-4">
           <MainTab data={data || {}} />
           <Highlights />
         </div>
         {toggleTabs === "data" ? (
           <>
-            <div className="col-span-2">
+            <div className="col-span-12 lg:col-span-2 py-6 md:py-0">
               <Data />
             </div>
-            <div className="col-span-2">
+            <div className="col-span-12 lg:col-span-2">
               <Profile />
             </div>
           </>
         ) : toggleTabs === "summary" ? (
-          <div className="col-span-4">
+          <div className="col-span-12 lg:col-span-4">
             <Summary />
           </div>
         ) : (
-          <p>bye</p>
+          <p>NA</p>
         )}
       </div>
     </div>

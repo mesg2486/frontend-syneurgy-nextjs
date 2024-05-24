@@ -6,15 +6,11 @@ import CircleProgressWithIcon from "../fragments/CircleProgressWithIcon";
 
 export default function Profile() {
   return (
-    <div className="bg-slate-800 flex flex-col text-center justify-center space-y-4 p-4 ml-5 rounded-lg">
+    <div className="bg-slate-800 flex flex-col text-center justify-center space-y-4 p-4 rounded-lg">
       <div className="w-full flex flex-col items-center space-y-3">
         <Avatar className="w-10 h-10">
-          <AvatarImage
-            className="w-10 h-10"
-            src="https://github.com/shadcn.png"
-            alt="@shadcn"
-          />
-          <AvatarFallback>CN</AvatarFallback>
+          <AvatarImage className="w-10 h-10" src="/user.png" alt="@shadcn" />
+          <AvatarFallback>S</AvatarFallback>
         </Avatar>
         <h2>My Performance</h2>
       </div>

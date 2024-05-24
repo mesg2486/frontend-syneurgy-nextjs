@@ -12,7 +12,7 @@ import CircleProgressWithIcon from "../fragments/CircleProgressWithIcon";
 
 export default function Data() {
   return (
-    <div className="flex flex-col space-y-6 ml-5">
+    <div className="flex flex-col space-y-6">
       <div className="w-full bg-slate-800 rounded-xl p-3">
         <h2 className="text-md font-medium flex items-center gap-x-1">
           Team Synchrony <FaInfoCircle />
