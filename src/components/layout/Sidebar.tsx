@@ -4,11 +4,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { signOut } from "next-auth/react";
-import {
-  HiChevronDoubleDown,
-  HiChevronDown,
-  HiChevronRight,
-} from "react-icons/hi";
+import { HiChevronDown, HiChevronRight } from "react-icons/hi";
 import { FaCog } from "react-icons/fa";
 import { FiLogOut } from "react-icons/fi";
 import { Drawer, DrawerContent } from "../ui/drawer";
@@ -43,7 +39,7 @@ export default function Sidebar() {
             <img src="/logo-icon.png" className="h-5" alt="syneurgy" />
           </span>
           <span
-            className={`${expanded ? "flex-1 opacity-60 text-sm flex whitespace-nowrap items-center" : "hidden"}`}
+            className={`${expanded ? "flex-1 text-sm flex whitespace-nowrap items-center" : "hidden"}`}
           >
             Syneurgy
           </span>

@@ -46,10 +46,10 @@ export const sidebarItems: ISidebarItem[] = [
   },
   {
     label: "Behaviour Engine",
-    link: "/dashboard/behaviour",
+    link: "/behavior",
     type: "user",
     icon: MdAnalytics,
-    group: "behaviour",
+    group: "behavior",
     exact: false,
     drawer: true,
     subNav: [
@@ -61,7 +61,7 @@ export const sidebarItems: ISidebarItem[] = [
   },
   {
     label: "Challenges",
-    link: "/dashboard/challenges",
+    link: "/challenges",
     type: "user",
     icon: MdOutlineLibraryBooks,
     group: "challenges",
