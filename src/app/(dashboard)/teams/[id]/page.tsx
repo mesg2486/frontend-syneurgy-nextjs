@@ -79,7 +79,7 @@ export default function TeamPage({ params }: { params: { id: string } }) {
             <div className="relative">
               <Input
                 placeholder="Search"
-                className="h-full border w-32 md:w-40 px-6 rounded-full"
+                className="h-full border w-40 px-6 rounded-full"
               />
               <div className="absolute right-6 top-1/2 -translate-y-1/2">
                 <HiOutlineSearch />
@@ -161,25 +161,22 @@ import { Members } from "@/services/gql/graphql";
 
 function MemberList({ members }: { members: Members[] }) {
   return (
-    <div className="max-w-full">
-      <div className="hidden md:block">
-        <div className="grid grid-cols-4 gap-4">
-          <div className="">Email</div>
-          <div className="">Position</div>
-          <div className="">Status</div>
-          <div className=" text-right">Action</div>
-        </div>
-      </div>
-      <div className="space-y-4 md:space-y-1 text-sm">
+    <Table>
+      <TableHeader>
+        <TableRow>
+          <TableHead className="pt-4 pb-3">Email</TableHead>
+          <TableHead className="pt-4 pb-3">Position</TableHead>
+          <TableHead className="pt-4 pb-3">Status</TableHead>
+          <TableHead className="pt-4 pb-3 text-right">Action</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
         {members?.map((member) => (
-          <div
-            key={member.user?.email}
-            className="md:grid md:grid-cols-4 bg-tertiary md:bg-transparent p-4 md:p-0 md:gap-4 md:hover:bg-tertiary transition-all"
-          >
-            <div className="">{`${member.user?.firstName} ${member?.user?.lastName}`}</div>
-            <div className="">{member.user?.email}</div>
-            <div className="">Pending</div>
-            <div className=" text-right">
+          <TableRow key={member.user?.email}>
+            <TableCell className="pt-4 pb-3">{`${member.user?.firstName} ${member?.user?.lastName}`}</TableCell>
+            <TableCell className="pt-4 pb-3">{member.user?.email}</TableCell>
+            <TableCell className="pt-4 pb-3">Pending</TableCell>
+            <TableCell className="pt-4 pb-3 text-right">
               <DropdownMenu>
                 <DropdownMenuTrigger>
                   <Button variant="ghost">
@@ -200,11 +197,11 @@ function MemberList({ members }: { members: Members[] }) {
                   </Button>
                 </DropdownMenuContent>
               </DropdownMenu>
-            </div>
-          </div>
+            </TableCell>
+          </TableRow>
         ))}
-      </div>
-    </div>
+      </TableBody>
+    </Table>
   );
 }
 
@@ -213,21 +210,21 @@ function InvitationsList({ invitations }: { invitations: IInvitation[] }) {
     <Table>
       <TableHeader>
         <TableRow>
-          <TableHead className="">Email</TableHead>
-          <TableHead className="">Position</TableHead>
-          <TableHead className="">Status</TableHead>
-          <TableHead className=" text-right">Action</TableHead>
+          <TableHead className="pt-4 pb-3">Email</TableHead>
+          <TableHead className="pt-4 pb-3">Position</TableHead>
+          <TableHead className="pt-4 pb-3">Status</TableHead>
+          <TableHead className="pt-4 pb-3 text-right">Action</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
         {invitations?.map((invitation) => (
           <TableRow key={invitation.email}>
-            <TableCell className="">{invitation.email}</TableCell>
-            <TableCell className="">Pending</TableCell>
-            <TableCell className="">
+            <TableCell className="pt-4 pb-3">{invitation.email}</TableCell>
+            <TableCell className="pt-4 pb-3">Pending</TableCell>
+            <TableCell className="pt-4 pb-3">
               <Badge>Invitation Pending</Badge>
             </TableCell>
-            <TableCell className=" text-right">
+            <TableCell className="pt-4 pb-3 text-right">
               <DropdownMenu>
                 <DropdownMenuTrigger>
                   <Button variant="ghost">

@@ -12,8 +12,8 @@ export default function page() {
     <div className="pt-16">
       <section className="bg-[#F7F7FD] flex justify-center py-20">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-10">
-            <h2 className="max-w-3xl mx-auto text-6xl font-semibold mb-4">
+          <div className="text-center pb-24">
+            <h2 className="max-w-3xl mx-auto text-3xl md:text-4xl font-semibold mb-4">
               Simple, month-to-month pricing with Annual and Enterprise options
             </h2>
           </div>
@@ -67,8 +67,8 @@ export default function page() {
         </div>
       </section>
       <section className="bg-[#F7F7FD]">
-        <div className=" container mx-auto py-16 text-center">
-          <h2 className="text-6xl font-semibold mb-4">
+        <div className=" container mx-auto py-24 text-center">
+          <h2 className="text-4xl md:text-4xl font-semibold mb-4">
             Frequently asked questions
           </h2>
           <p className="opacity-80 text-lg">
