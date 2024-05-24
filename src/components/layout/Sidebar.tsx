@@ -35,16 +35,19 @@ export default function Sidebar() {
             className={`transition-all duration-500 ${expanded ? "rotate-180" : "rotate-0"}`}
           />
         </button>
-        <div className="hidden md:flex justify-center items-center pt-4">
-          <div className="w-14 text-lg flex justify-center items-center">
-            <img src="./logo-icon.png" className="h-6" alt="syneurgy" />
-          </div>
-          <div
+        <Link
+          href="/"
+          className="hidden cursor-pointer md:flex justify-center items-center pt-4"
+        >
+          <span className="w-14 text-lg flex justify-center items-center">
+            <img src="/logo-icon.png" className="h-5" alt="syneurgy" />
+          </span>
+          <span
             className={`${expanded ? "flex-1 opacity-60 text-sm flex whitespace-nowrap items-center" : "hidden"}`}
           >
             Syneurgy
-          </div>
-        </div>
+          </span>
+        </Link>
         <div className="py-6 flex-1">
           {sidebarItems?.map((tab) => (
             <Link
@@ -146,20 +149,20 @@ export default function Sidebar() {
               ))}
             </div>
             <div className="w-full text-lg pb-6 space-y-6">
-              <div onClick={() => signOut()}>
-                <div className="flex justify-between items-center">
-                  <div className="w-14 text-lg h-12 flex justify-center items-center">
-                    <div className="w-14 flex justify-center items-center">
+              <button className="cursor-pointer" onClick={() => signOut()}>
+                <span className="flex justify-between items-center">
+                  <span className="w-14 text-lg h-12 flex justify-center items-center">
+                    <span className="w-14 flex justify-center items-center">
                       <FiLogOut />
-                    </div>
-                  </div>
-                  <div
+                    </span>
+                  </span>
+                  <span
                     className={`flex-1 opacity-60 text-sm flex whitespace-nowrap items-center h-12"}`}
                   >
                     Sign Out
-                  </div>
-                </div>
-              </div>
+                  </span>
+                </span>
+              </button>
               <Link href={"/settings/account"}>
                 <div className="flex justify-between items-center">
                   <div className="w-14 text-lg h-12 flex justify-center items-center">

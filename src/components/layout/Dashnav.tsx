@@ -6,6 +6,7 @@ import { AiOutlinePlus } from "react-icons/ai";
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuItem,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import { FaBell } from "react-icons/fa6";
@@ -70,16 +71,13 @@ export default function Dashnav() {
             <div className="capitalize">{session?.user.firstName}</div>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="bg-tertiary">
-            <Link href={"/settings/account"}>
-              <Button
-                className="hover:bg-secondary justify-between text-left block w-full"
-                size="sm"
-                variant="ghost"
-                type="button"
-              >
-                Settings
-              </Button>
-            </Link>
+            <DropdownMenuItem asChild className="p-2.5">
+              <Link href={"/settings/account"}>
+                <span className="block w-full text-xs rounded-md">
+                  Settings
+                </span>
+              </Link>
+            </DropdownMenuItem>
             <Button
               className="hover:bg-secondary justify-between w-full"
               size="sm"
