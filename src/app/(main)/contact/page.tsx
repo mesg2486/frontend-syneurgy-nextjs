@@ -1,30 +1,23 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
 import React from "react";
 
 export default function page() {
   return (
-    <div className="bg-[#F7F7FD] pt-16 ">
-      <div className="container  grid sm:grid-cols-2 justify-center py-20">
-        <div className=" mx-auto w-full">
-          <h2 className="text-4xl font-semibold">We’d love to hear from you</h2>
-          <p className="opacity-80 font-medium">
+    <div className="bg-[#F7F7FD] pt-24">
+      <div className="container flex flex-col items-center justify-center space-y-10 py-20">
+        <div className="w-full max-w-3xl text-center">
+          <h2 className="text-4xl md:text-6xl font-semibold mb-6">
+            We’d love to hear from you
+          </h2>
+          <p className="opacity-80 font-medium text-base md:text-xl">
             Complete this form and we will contact you.{" "}
           </p>
-          <div className="mt-8">
-            <h2 className="text-xl font-medium text-sky-500 mb-4">
-              Contact Us
-            </h2>
-            <p className="font-medium">Syneurgy, Inc.</p>
-            <p className="font-medium">9701 Wilshire Blvd.</p>
-            <p className="font-medium">Tenth Floor</p>
-            <p className="font-medium">Beverly Hills, CA 90212</p>
-            <p className="font-medium">USA</p>
-          </div>
         </div>
-        <div className="p-8 mx-auto w-full bg-white text-black  rounded-md">
+        <div className="p-8 border-b mx-auto w-full text-black max-w-3xl pb-20">
           <h2 className="text-4xl mb-10 font-semibold">Get In Touch</h2>
           <form>
             <div className="mt-4 w-full">
@@ -68,6 +61,13 @@ export default function page() {
               Lets talk
             </Button>
           </form>
+        </div>
+        <div className="mt-8 space-y-4 text-center">
+          <p className=" text-2xl font-medium">Syneurgy, Inc.</p>
+          <p className="text-base font-light">9701 Wilshire Blvd.</p>
+          <p className="text-base font-light">Tenth Floor</p>
+          <p className="text-base font-medium">USA</p>
+          <p className="text-base font-medium">Beverly Hills, CA 90212</p>
         </div>
       </div>
     </div>

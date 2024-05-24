@@ -4,7 +4,7 @@ export default function page() {
   return (
     <div className="pt-16">
       <section className="bg-[#F7F7FD] flex justify-center py-20">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-4 pb-32">
           <div className="text-left mb-10">
             <h2 className="max-w-3xl text-6xl font-semibold mb-4">Our Team</h2>
           </div>
@@ -12,7 +12,7 @@ export default function page() {
             {team?.map((team) => (
               <div
                 key={team.id}
-                className="bg-white rounded-lg p-6 space-y-4 shadow-lg"
+                className="bg-white rounded-lg p-3 space-y-4 shadow-lg"
               >
                 <div>
                   <img
@@ -26,7 +26,7 @@ export default function page() {
                   </h2>
                   <p className="font-medium opacity-60">{team.position}</p>
                 </div>
-                <ul className="text-left space-y-2 list-disc pl-4">
+                <ul className="text-left space-y-2 list-disc pl-4 text-sm">
                   {team.education?.map((education, index) => (
                     <li key={index} className="font-medium opacity-60">
                       {education}
