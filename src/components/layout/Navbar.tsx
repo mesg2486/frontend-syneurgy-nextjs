@@ -20,7 +20,7 @@ export default function Navbar() {
               Home
             </Link>
             <Link
-              href="#"
+              href="science"
               className="text-white/60 hover:text-white/80 transition-all"
             >
               The Science
