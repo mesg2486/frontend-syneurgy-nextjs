@@ -1,5 +1,7 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Accordion,
   AccordionContent,
@@ -7,45 +9,72 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
-export default function page() {
+import { loadStripe } from "@stripe/stripe-js";
+
+// Make sure to call `loadStripe` outside of a component’s render to avoid
+// recreating the `Stripe` object on every render.
+const stripePromise = loadStripe(
+  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || ""
+);
+
+export default function Payment() {
+  useEffect(() => {
+    // Check to see if this is a redirect back from Checkout
+    const query = new URLSearchParams(window.location.search);
+    if (query.get("success")) {
+      console.log("Order placed! You will receive an email confirmation.");
+    }
+
+    if (query.get("canceled")) {
+      console.log(
+        "Order canceled -- continue to shop around and checkout when you’re ready."
+      );
+    }
+  }, []);
+
   return (
     <div className="pt-16">
       <section className="bg-[#F7F7FD] flex justify-center py-20">
-        <div className="container mx-auto px-4">
-          <div className="text-center pb-24">
-            <h2 className="max-w-3xl mx-auto text-3xl md:text-4xl font-semibold mb-4">
+        <div className="container px-4 mx-auto">
+          <div className="pb-24 text-center">
+            <h2 className="max-w-3xl mx-auto mb-4 text-3xl font-semibold md:text-4xl">
               Simple, month-to-month pricing with Annual and Enterprise options
             </h2>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {pricing?.map((price) => (
-              <div
+              <form
+                action="/api/payment"
+                method="POST"
                 key={price.id}
-                className="bg-white rounded-lg p-6 space-y-4 shadow-lg"
+                className="p-6 space-y-4 bg-white rounded-lg shadow-lg"
               >
-                <h2 className="text-sky-600 font-semibold text-2xl">
+                <h2 className="text-2xl font-semibold text-sky-600">
                   {price.title}
                 </h2>
                 <p className="font-medium opacity-60">{price.description}</p>
 
                 <h5 className="text-2xl font-semibold">{price.price}</h5>
-                <Button className="bg-black text-white hover:bg-black hover:text-white hover:opacity-90">
+                <Button
+                  type="submit"
+                  className="text-white bg-black hover:bg-black hover:text-white hover:opacity-90"
+                >
                   Get Started
                 </Button>
-                <ul className="text-left space-y-2 list-disc pl-4">
+                <ul className="pl-4 space-y-2 text-left list-disc">
                   {price.features?.map((features, index) => (
                     <li key={index} className="font-medium opacity-60">
                       {features}
                     </li>
                   ))}
                 </ul>
-              </div>
+              </form>
             ))}
           </div>
         </div>
       </section>
       <section className="bg-slate-800 ">
-        <div className="container mx-auto text-white py-16 grid grid-cols-2 gap-x-8 items-center">
+        <div className="container grid items-center grid-cols-2 py-16 mx-auto text-white gap-x-8">
           <div>
             <img
               className="object-cover rounded-md"
@@ -53,7 +82,7 @@ export default function page() {
             />
           </div>
           <div className="flex flex-col ">
-            <h2 className="text-5xl font-medium mb-4">
+            <h2 className="mb-4 text-5xl font-medium">
               &quot;Syneurgy helped my teams communicate and connect more
               effectively and that drove clear results and ROI.&quot;
             </h2>
@@ -67,11 +96,11 @@ export default function page() {
         </div>
       </section>
       <section className="bg-[#F7F7FD]">
-        <div className=" container mx-auto py-24 text-center">
-          <h2 className="text-4xl md:text-4xl font-semibold mb-4">
+        <div className="container py-24 mx-auto text-center ">
+          <h2 className="mb-4 text-4xl font-semibold md:text-4xl">
             Frequently asked questions
           </h2>
-          <p className="opacity-80 text-lg">
+          <p className="text-lg opacity-80">
             Answers to commonly asked questions
           </p>
           <div className="pt-12">
@@ -86,12 +115,12 @@ export default function page() {
                   <AccordionItem
                     key={faq.id}
                     value={`${faq.id}`}
-                    className="text-left bg-white rounded-md border-none px-5"
+                    className="px-5 text-left bg-white border-none rounded-md"
                   >
                     <AccordionTrigger className="text-lg">
                       {faq.question}
                     </AccordionTrigger>
-                    <AccordionContent className="text-md opacity-80 font-medium ">
+                    <AccordionContent className="font-medium text-md opacity-80 ">
                       {faq.answer}
                     </AccordionContent>
                   </AccordionItem>
