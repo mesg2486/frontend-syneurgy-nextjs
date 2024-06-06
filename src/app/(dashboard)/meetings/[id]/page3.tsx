@@ -124,7 +124,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
         if (onVideoSize) onVideoSize(width, height);
       });
       resizeObserver.observe(
-        document.getElementById("video_player") as HTMLElement
+        document.getElementById("video_player") as HTMLElement,
       );
 
       const handleTimeUpdate = (event: Event) => {
@@ -198,7 +198,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
           // Emit the event here
         }
       },
-      true
+      true,
     );
   };
 
