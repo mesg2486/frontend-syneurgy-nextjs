@@ -54,9 +54,12 @@ export default function Menu() {
             <MenuLink link="/pricing" title="Pricing" />
             <MenuLink link="/blog" title="Blog" />
             <MenuLink link="/contact" title="Contact" />
-            <button className="h-7 px-6 text-sm rounded-full font-semibold bg-primary text-[#1B212F]">
+            <Link
+              href="/contact"
+              className="h-7 px-6 items-center flex text-sm rounded-full font-semibold bg-primary text-[#1B212F]"
+            >
               Request Demo
-            </button>
+            </Link>
             {session?.user.accessToken ? (
               <Link
                 href={`/dashboard`}

@@ -20,31 +20,31 @@ export default function Navbar() {
               Home
             </Link>
             <Link
-              href="#"
+              href="/science"
               className="text-white/60 hover:text-white/80 transition-all"
             >
               The Science
             </Link>
             <Link
-              href="about"
+              href="/about"
               className="text-white/60 hover:text-white/80 transition-all"
             >
               About Us
             </Link>
             <Link
-              href="pricing"
+              href="/pricing"
               className="text-white/60 hover:text-white/80 transition-all"
             >
               Pricing
             </Link>
             <Link
-              href="#"
+              href="/blog"
               className="text-white/60 hover:text-white/80 transition-all"
             >
               Blog
             </Link>
             <Link
-              href="contact"
+              href="/contact"
               className="text-white/60 hover:text-white/80 transition-all"
             >
               Contact
@@ -58,9 +58,12 @@ export default function Navbar() {
               </Link>
             ) : (
               <>
-                <button className="h-7 px-6 text-sm rounded-full font-semibold bg-primary text-[#1B212F]">
+                <Link
+                  href={"/contact"}
+                  className="h-7 px-6 flex items-center text-sm rounded-full font-semibold bg-primary text-[#1B212F]"
+                >
                   Request Demo
-                </button>
+                </Link>
                 <Link
                   href={`/auth/login`}
                   className="h-7 px-6 text-sm rounded-full font-semibold flex justify-center items-center bg-primary text-[#1B212F]"

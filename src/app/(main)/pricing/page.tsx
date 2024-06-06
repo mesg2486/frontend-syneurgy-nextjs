@@ -10,27 +10,40 @@ import {
 } from "@/components/ui/accordion";
 
 import { loadStripe } from "@stripe/stripe-js";
+import { TiTick } from "react-icons/ti";
+import { HiCheck } from "react-icons/hi";
+import { useToast } from "@/components/ui/use-toast";
+import { useSearchParams } from "next/navigation";
 
 // Make sure to call `loadStripe` outside of a component’s render to avoid
 // recreating the `Stripe` object on every render.
 const stripePromise = loadStripe(
-  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || "",
+  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || ""
 );
 
 export default function Payment() {
-  useEffect(() => {
-    // Check to see if this is a redirect back from Checkout
-    const query = new URLSearchParams(window.location.search);
-    if (query.get("success")) {
-      console.log("Order placed! You will receive an email confirmation.");
-    }
+  // Check to see if this is a redirect back from Checkout
+  const { toast } = useToast();
+  const search = useSearchParams();
 
-    if (query.get("canceled")) {
-      console.log(
-        "Order canceled -- continue to shop around and checkout when you’re ready.",
-      );
-    }
-  }, []);
+  if (search?.get("success")) {
+    return (
+      <div className="min-h-screen flex justify-center items-center gap-2 flex-col py-20 c-container">
+        <span className="bg-emerald-500 text-white p-2 rounded-full text-2xl">
+          <HiCheck />
+        </span>
+        <h1>Thank you for your payment!</h1>
+        <p>Your subscription is active now.</p>
+      </div>
+    );
+  }
+
+  if (search?.get("canceled")) {
+    toast({
+      title: "Payment canceled",
+      description: "You did not complete the payment.",
+    });
+  }
 
   return (
     <div className="pt-16">
@@ -53,7 +66,7 @@ export default function Payment() {
                   {price.title}
                 </h2>
                 <p className="font-medium opacity-60">{price.description}</p>
-
+                <input type="text" name="price" value={price.pricing} hidden />
                 <h5 className="text-2xl font-semibold">{price.price}</h5>
                 <Button
                   type="submit"
@@ -138,6 +151,7 @@ const pricing = [
   {
     id: 1,
     title: "Free",
+    pricing: "0",
     description: "Comprehensive Data Analysis.",
     price: "$0/month",
     features: ["No minutes for uploads", "Access to team data"],
@@ -147,6 +161,7 @@ const pricing = [
     title: "Pro",
     description: "Comprehensive Data Analysis and Behavior Engine.",
     price: "$29/month",
+    pricing: "29",
     features: [
       "7-day free trial",
       "200 minutes for uploads and analysis",
@@ -160,6 +175,7 @@ const pricing = [
     description:
       "Enterprise Solutions, Comprehensive Data Analysis and Behavior Engine.",
     price: "$59/month",
+    pricing: "59",
     features: [
       "7-day free trial",
       "400 minutes for uploads and analysis",
@@ -173,6 +189,7 @@ const pricing = [
     description:
       "Enterprise Plus Solutions, Comprehensive Data Analysis and Behavior Engine.",
     price: "$99/month",
+    pricing: "99",
     features: [
       "7-day free trial",
       "700 minutes for uploads and analysis or more than 100 users",
