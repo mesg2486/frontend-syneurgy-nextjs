@@ -19,6 +19,8 @@ const documents = {
     types.GetTeamDocument,
   "\n  query listTeamsByUserId($userId: ID!) {\n    teams: listTeamsByUserId(userId: $userId) {\n      items {\n        createdBy\n        engagementLevel\n        goals\n        id\n        name\n        performance\n        sentiment\n        syncHistory\n        members {\n          items {\n            userId\n            user {\n              avatar\n              email\n              sub\n              firstName\n              lastName\n            }\n          }\n        }\n        invitations {\n          email\n          invited\n          message\n        }\n        createdAt\n        updatedAt\n        synchrony\n        teamInSync\n      }\n    }\n  }\n":
     types.ListTeamsByUserIdDocument,
+  "\n  mutation createContact(\n    $name: String!\n    $email: String!\n    $phone: String\n    $subject: String\n    $message: String!\n  ) {\n    contact: createContact(\n      input: {\n        name: $name\n        email: $email\n        phone: $phone\n        subject: $subject\n        message: $message\n      }\n    ) {\n      id\n    }\n  }\n":
+    types.CreateContactDocument,
   "\n  mutation deleteTeam($id: ID!) {\n    team: deleteTeam(input: { id: $id }) {\n      id\n    }\n  }\n":
     types.DeleteTeamDocument,
   "\n  query listMeetingsByUserId($userId: ID!) {\n    meetings: listMeetingsByUserId(userId: $userId) {\n      items {\n        date\n        dimensions\n        highlights\n        id\n        name\n        createdAt\n        updatedAt\n        sentiment\n        performance\n        synchrony\n        teamId\n        thumbnail\n        type\n        url\n        userId\n      }\n    }\n  }\n":
@@ -71,6 +73,12 @@ export function graphql(
 export function graphql(
   source: "\n  query listTeamsByUserId($userId: ID!) {\n    teams: listTeamsByUserId(userId: $userId) {\n      items {\n        createdBy\n        engagementLevel\n        goals\n        id\n        name\n        performance\n        sentiment\n        syncHistory\n        members {\n          items {\n            userId\n            user {\n              avatar\n              email\n              sub\n              firstName\n              lastName\n            }\n          }\n        }\n        invitations {\n          email\n          invited\n          message\n        }\n        createdAt\n        updatedAt\n        synchrony\n        teamInSync\n      }\n    }\n  }\n",
 ): (typeof documents)["\n  query listTeamsByUserId($userId: ID!) {\n    teams: listTeamsByUserId(userId: $userId) {\n      items {\n        createdBy\n        engagementLevel\n        goals\n        id\n        name\n        performance\n        sentiment\n        syncHistory\n        members {\n          items {\n            userId\n            user {\n              avatar\n              email\n              sub\n              firstName\n              lastName\n            }\n          }\n        }\n        invitations {\n          email\n          invited\n          message\n        }\n        createdAt\n        updatedAt\n        synchrony\n        teamInSync\n      }\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: "\n  mutation createContact(\n    $name: String!\n    $email: String!\n    $phone: String\n    $subject: String\n    $message: String!\n  ) {\n    contact: createContact(\n      input: {\n        name: $name\n        email: $email\n        phone: $phone\n        subject: $subject\n        message: $message\n      }\n    ) {\n      id\n    }\n  }\n",
+): (typeof documents)["\n  mutation createContact(\n    $name: String!\n    $email: String!\n    $phone: String\n    $subject: String\n    $message: String!\n  ) {\n    contact: createContact(\n      input: {\n        name: $name\n        email: $email\n        phone: $phone\n        subject: $subject\n        message: $message\n      }\n    ) {\n      id\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

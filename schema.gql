@@ -1,3 +1,26 @@
+type Contact {
+  id: ID!
+  name: String!
+  email: String!
+  phone: String
+  subject: String
+  message: String
+  createdAt: String!
+}
+
+type ContactConnection {
+  items: [Contact]
+  nextToken: String
+}
+
+input CreateContactInput {
+  name: String!
+  email: String!
+  phone: String
+  subject: String
+  message: String
+}
+
 input CreateInvitationsInput {
   email: String!
   message: String
@@ -83,6 +106,10 @@ input CreateUserInput {
   country: String
   company: String
   position: String
+}
+
+input DeleteContactInput {
+  id: ID!
 }
 
 input DeleteMeetingInput {
@@ -186,6 +213,15 @@ input TableBooleanFilterInput {
   ne: Boolean
   eq: Boolean
   attributeExists: Boolean
+}
+
+input TableContactFilterInput {
+  id: TableIDFilterInput
+  name: TableStringFilterInput
+  email: TableStringFilterInput
+  phone: TableStringFilterInput
+  subject: TableStringFilterInput
+  message: TableStringFilterInput
 }
 
 input TableFloatFilterInput {
@@ -373,6 +409,15 @@ type TeamInvitationsConnection {
   nextToken: String
 }
 
+input UpdateContactInput {
+  id: ID!
+  name: String
+  email: String
+  phone: String
+  subject: String
+  message: String
+}
+
 input UpdateInvitationsInput {
   email: String
   message: String
@@ -515,6 +560,9 @@ type Mutation {
   updateTeamInvitations(input: UpdateTeamInvitationsInput!): TeamInvitations
   deleteTeamInvitations(input: DeleteTeamInvitationsInput!): TeamInvitations
   inviteTeamInBulk(invitations: [CreateTeamInvitationsInput]): [TeamInvitations]
+  createContact(input: CreateContactInput!): Contact
+  updateContact(input: UpdateContactInput!): Contact
+  deleteContact(input: DeleteContactInput!): Contact
 }
 
 type Query {
@@ -566,6 +614,12 @@ type Query {
     limit: Int
     nextToken: String
   ): TeamInvitationsConnection
+  getContact(id: ID!): Contact
+  listContacts(
+    filter: TableContactFilterInput
+    limit: Int
+    nextToken: String
+  ): ContactConnection
 }
 
 type Subscription {
@@ -695,4 +749,25 @@ type Subscription {
     userId: String
     username: String
   ): TeamInvitations @aws_subscribe(mutations: ["deleteTeamInvitations"])
+  onCreateContact(
+    id: ID
+    name: String
+    email: String
+    phone: String
+    subject: String
+  ): Contact @aws_subscribe(mutations: ["createContact"])
+  onUpdateContact(
+    id: ID
+    name: String
+    email: String
+    phone: String
+    subject: String
+  ): Contact @aws_subscribe(mutations: ["updateContact"])
+  onDeleteContact(
+    id: ID
+    name: String
+    email: String
+    phone: String
+    subject: String
+  ): Contact @aws_subscribe(mutations: ["deleteContact"])
 }
