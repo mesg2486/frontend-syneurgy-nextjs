@@ -29,6 +29,31 @@ export type Scalars = {
   Float: { input: number; output: number };
 };
 
+export type Contact = {
+  __typename?: "Contact";
+  createdAt: Scalars["String"]["output"];
+  email: Scalars["String"]["output"];
+  id: Scalars["ID"]["output"];
+  message?: Maybe<Scalars["String"]["output"]>;
+  name: Scalars["String"]["output"];
+  phone?: Maybe<Scalars["String"]["output"]>;
+  subject?: Maybe<Scalars["String"]["output"]>;
+};
+
+export type ContactConnection = {
+  __typename?: "ContactConnection";
+  items?: Maybe<Array<Maybe<Contact>>>;
+  nextToken?: Maybe<Scalars["String"]["output"]>;
+};
+
+export type CreateContactInput = {
+  email: Scalars["String"]["input"];
+  message?: InputMaybe<Scalars["String"]["input"]>;
+  name: Scalars["String"]["input"];
+  phone?: InputMaybe<Scalars["String"]["input"]>;
+  subject?: InputMaybe<Scalars["String"]["input"]>;
+};
+
 export type CreateInvitationsInput = {
   email: Scalars["String"]["input"];
   invited: Scalars["Boolean"]["input"];
@@ -114,6 +139,10 @@ export type CreateUserInput = {
   step?: InputMaybe<Scalars["String"]["input"]>;
   sub: Scalars["ID"]["input"];
   username: Scalars["String"]["input"];
+};
+
+export type DeleteContactInput = {
+  id: Scalars["ID"]["input"];
 };
 
 export type DeleteMeetingInput = {
@@ -205,12 +234,14 @@ export type ModelSizeInput = {
 
 export type Mutation = {
   __typename?: "Mutation";
+  createContact?: Maybe<Contact>;
   createMeeting?: Maybe<Meeting>;
   createMembers?: Maybe<Members>;
   createNotification?: Maybe<Notification>;
   createTeam?: Maybe<Team>;
   createTeamInvitations?: Maybe<TeamInvitations>;
   createUser?: Maybe<User>;
+  deleteContact?: Maybe<Contact>;
   deleteMeeting?: Maybe<Meeting>;
   deleteMembers?: Maybe<Members>;
   deleteNotification?: Maybe<Notification>;
@@ -218,12 +249,17 @@ export type Mutation = {
   deleteTeamInvitations?: Maybe<TeamInvitations>;
   deleteUser?: Maybe<User>;
   inviteTeamInBulk?: Maybe<Array<Maybe<TeamInvitations>>>;
+  updateContact?: Maybe<Contact>;
   updateMeeting?: Maybe<Meeting>;
   updateMembers?: Maybe<Members>;
   updateNotification?: Maybe<Notification>;
   updateTeam?: Maybe<Team>;
   updateTeamInvitations?: Maybe<TeamInvitations>;
   updateUser?: Maybe<User>;
+};
+
+export type MutationCreateContactArgs = {
+  input: CreateContactInput;
 };
 
 export type MutationCreateMeetingArgs = {
@@ -248,6 +284,10 @@ export type MutationCreateTeamInvitationsArgs = {
 
 export type MutationCreateUserArgs = {
   input: CreateUserInput;
+};
+
+export type MutationDeleteContactArgs = {
+  input: DeleteContactInput;
 };
 
 export type MutationDeleteMeetingArgs = {
@@ -276,6 +316,10 @@ export type MutationDeleteUserArgs = {
 
 export type MutationInviteTeamInBulkArgs = {
   invitations?: InputMaybe<Array<InputMaybe<CreateTeamInvitationsInput>>>;
+};
+
+export type MutationUpdateContactArgs = {
+  input: UpdateContactInput;
 };
 
 export type MutationUpdateMeetingArgs = {
@@ -321,12 +365,14 @@ export type NotificationConnection = {
 
 export type Query = {
   __typename?: "Query";
+  getContact?: Maybe<Contact>;
   getMeeting?: Maybe<Meeting>;
   getMembers?: Maybe<Members>;
   getNotification?: Maybe<Notification>;
   getTeam?: Maybe<Team>;
   getTeamInvitations?: Maybe<TeamInvitations>;
   getUser?: Maybe<User>;
+  listContacts?: Maybe<ContactConnection>;
   listMeetings?: Maybe<MeetingConnection>;
   listMeetingsByUserId?: Maybe<MeetingConnection>;
   listMembers?: Maybe<MembersConnection>;
@@ -335,6 +381,10 @@ export type Query = {
   listTeams?: Maybe<TeamConnection>;
   listTeamsByUserId?: Maybe<TeamConnection>;
   listUsers?: Maybe<UserConnection>;
+};
+
+export type QueryGetContactArgs = {
+  id: Scalars["ID"]["input"];
 };
 
 export type QueryGetMeetingArgs = {
@@ -360,6 +410,12 @@ export type QueryGetTeamInvitationsArgs = {
 
 export type QueryGetUserArgs = {
   sub: Scalars["ID"]["input"];
+};
+
+export type QueryListContactsArgs = {
+  filter?: InputMaybe<TableContactFilterInput>;
+  limit?: InputMaybe<Scalars["Int"]["input"]>;
+  nextToken?: InputMaybe<Scalars["String"]["input"]>;
 };
 
 export type QueryListMeetingsArgs = {
@@ -414,24 +470,35 @@ export type QueryListUsersArgs = {
 
 export type Subscription = {
   __typename?: "Subscription";
+  onCreateContact?: Maybe<Contact>;
   onCreateMeeting?: Maybe<Meeting>;
   onCreateMembers?: Maybe<Members>;
   onCreateNotification?: Maybe<Notification>;
   onCreateTeam?: Maybe<Team>;
   onCreateTeamInvitations?: Maybe<TeamInvitations>;
   onCreateUser?: Maybe<User>;
+  onDeleteContact?: Maybe<Contact>;
   onDeleteMeeting?: Maybe<Meeting>;
   onDeleteMembers?: Maybe<Members>;
   onDeleteNotification?: Maybe<Notification>;
   onDeleteTeam?: Maybe<Team>;
   onDeleteTeamInvitations?: Maybe<TeamInvitations>;
   onDeleteUser?: Maybe<User>;
+  onUpdateContact?: Maybe<Contact>;
   onUpdateMeeting?: Maybe<Meeting>;
   onUpdateMembers?: Maybe<Members>;
   onUpdateNotification?: Maybe<Notification>;
   onUpdateTeam?: Maybe<Team>;
   onUpdateTeamInvitations?: Maybe<TeamInvitations>;
   onUpdateUser?: Maybe<User>;
+};
+
+export type SubscriptionOnCreateContactArgs = {
+  email?: InputMaybe<Scalars["String"]["input"]>;
+  id?: InputMaybe<Scalars["ID"]["input"]>;
+  name?: InputMaybe<Scalars["String"]["input"]>;
+  phone?: InputMaybe<Scalars["String"]["input"]>;
+  subject?: InputMaybe<Scalars["String"]["input"]>;
 };
 
 export type SubscriptionOnCreateMeetingArgs = {
@@ -482,6 +549,14 @@ export type SubscriptionOnCreateUserArgs = {
   username?: InputMaybe<Scalars["String"]["input"]>;
 };
 
+export type SubscriptionOnDeleteContactArgs = {
+  email?: InputMaybe<Scalars["String"]["input"]>;
+  id?: InputMaybe<Scalars["ID"]["input"]>;
+  name?: InputMaybe<Scalars["String"]["input"]>;
+  phone?: InputMaybe<Scalars["String"]["input"]>;
+  subject?: InputMaybe<Scalars["String"]["input"]>;
+};
+
 export type SubscriptionOnDeleteMeetingArgs = {
   dimensions?: InputMaybe<Scalars["String"]["input"]>;
   id?: InputMaybe<Scalars["ID"]["input"]>;
@@ -528,6 +603,14 @@ export type SubscriptionOnDeleteUserArgs = {
   status?: InputMaybe<Scalars["String"]["input"]>;
   sub?: InputMaybe<Scalars["ID"]["input"]>;
   username?: InputMaybe<Scalars["String"]["input"]>;
+};
+
+export type SubscriptionOnUpdateContactArgs = {
+  email?: InputMaybe<Scalars["String"]["input"]>;
+  id?: InputMaybe<Scalars["ID"]["input"]>;
+  name?: InputMaybe<Scalars["String"]["input"]>;
+  phone?: InputMaybe<Scalars["String"]["input"]>;
+  subject?: InputMaybe<Scalars["String"]["input"]>;
 };
 
 export type SubscriptionOnUpdateMeetingArgs = {
@@ -582,6 +665,15 @@ export type TableBooleanFilterInput = {
   attributeExists?: InputMaybe<Scalars["Boolean"]["input"]>;
   eq?: InputMaybe<Scalars["Boolean"]["input"]>;
   ne?: InputMaybe<Scalars["Boolean"]["input"]>;
+};
+
+export type TableContactFilterInput = {
+  email?: InputMaybe<TableStringFilterInput>;
+  id?: InputMaybe<TableIdFilterInput>;
+  message?: InputMaybe<TableStringFilterInput>;
+  name?: InputMaybe<TableStringFilterInput>;
+  phone?: InputMaybe<TableStringFilterInput>;
+  subject?: InputMaybe<TableStringFilterInput>;
 };
 
 export type TableFloatFilterInput = {
@@ -771,6 +863,15 @@ export type TeamInvitationsConnection = {
   __typename?: "TeamInvitationsConnection";
   items?: Maybe<Array<Maybe<TeamInvitations>>>;
   nextToken?: Maybe<Scalars["String"]["output"]>;
+};
+
+export type UpdateContactInput = {
+  email?: InputMaybe<Scalars["String"]["input"]>;
+  id: Scalars["ID"]["input"];
+  message?: InputMaybe<Scalars["String"]["input"]>;
+  name?: InputMaybe<Scalars["String"]["input"]>;
+  phone?: InputMaybe<Scalars["String"]["input"]>;
+  subject?: InputMaybe<Scalars["String"]["input"]>;
 };
 
 export type UpdateInvitationsInput = {
@@ -1012,6 +1113,19 @@ export type ListTeamsByUserIdQuery = {
       } | null> | null;
     } | null> | null;
   } | null;
+};
+
+export type CreateContactMutationVariables = Exact<{
+  name: Scalars["String"]["input"];
+  email: Scalars["String"]["input"];
+  phone?: InputMaybe<Scalars["String"]["input"]>;
+  subject?: InputMaybe<Scalars["String"]["input"]>;
+  message: Scalars["String"]["input"];
+}>;
+
+export type CreateContactMutation = {
+  __typename?: "Mutation";
+  contact?: { __typename?: "Contact"; id: string } | null;
 };
 
 export type DeleteTeamMutationVariables = Exact<{
@@ -1557,6 +1671,143 @@ export const ListTeamsByUserIdDocument = {
 } as unknown as DocumentNode<
   ListTeamsByUserIdQuery,
   ListTeamsByUserIdQueryVariables
+>;
+export const CreateContactDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "createContact" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "name" } },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "String" },
+            },
+          },
+        },
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "email" },
+          },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "String" },
+            },
+          },
+        },
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "phone" },
+          },
+          type: { kind: "NamedType", name: { kind: "Name", value: "String" } },
+        },
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "subject" },
+          },
+          type: { kind: "NamedType", name: { kind: "Name", value: "String" } },
+        },
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "message" },
+          },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "String" },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            alias: { kind: "Name", value: "contact" },
+            name: { kind: "Name", value: "createContact" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "input" },
+                value: {
+                  kind: "ObjectValue",
+                  fields: [
+                    {
+                      kind: "ObjectField",
+                      name: { kind: "Name", value: "name" },
+                      value: {
+                        kind: "Variable",
+                        name: { kind: "Name", value: "name" },
+                      },
+                    },
+                    {
+                      kind: "ObjectField",
+                      name: { kind: "Name", value: "email" },
+                      value: {
+                        kind: "Variable",
+                        name: { kind: "Name", value: "email" },
+                      },
+                    },
+                    {
+                      kind: "ObjectField",
+                      name: { kind: "Name", value: "phone" },
+                      value: {
+                        kind: "Variable",
+                        name: { kind: "Name", value: "phone" },
+                      },
+                    },
+                    {
+                      kind: "ObjectField",
+                      name: { kind: "Name", value: "subject" },
+                      value: {
+                        kind: "Variable",
+                        name: { kind: "Name", value: "subject" },
+                      },
+                    },
+                    {
+                      kind: "ObjectField",
+                      name: { kind: "Name", value: "message" },
+                      value: {
+                        kind: "Variable",
+                        name: { kind: "Name", value: "message" },
+                      },
+                    },
+                  ],
+                },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "id" } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  CreateContactMutation,
+  CreateContactMutationVariables
 >;
 export const DeleteTeamDocument = {
   kind: "Document",
