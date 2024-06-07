@@ -14,6 +14,7 @@ import { HiCheck } from "react-icons/hi";
 import { useToast } from "@/components/ui/use-toast";
 import { useSearchParams } from "next/navigation";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 // Make sure to call `loadStripe` outside of a component’s render to avoid
 // recreating the `Stripe` object on every render.
@@ -27,7 +28,25 @@ export default function Payment() {
   const search = useSearchParams();
   const { data: session } = useSession();
 
-  if (search?.get("success")) {
+  const isCustomerId = !!session?.user.stripeCustomerId;
+  const router = useRouter();
+
+  useEffect(() => {
+    const canceled = search?.get("canceled");
+
+    if (!canceled) {
+      return;
+    }
+
+    toast({
+      title: "Payment canceled",
+      description: "You did not complete the payment.",
+    });
+  }, [search]);
+
+  const success = search?.get("success");
+
+  if (success) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen gap-2 py-20 c-container">
         <span className="p-2 text-2xl text-white rounded-full bg-emerald-500">
@@ -37,13 +56,6 @@ export default function Payment() {
         <p>Your subscription is active now.</p>
       </div>
     );
-  }
-
-  if (search?.get("canceled")) {
-    toast({
-      title: "Payment canceled",
-      description: "You did not complete the payment.",
-    });
   }
 
   return (
@@ -76,7 +88,10 @@ export default function Payment() {
                 <input type="text" name="price" value={price.pricing} hidden />
                 <h5 className="text-2xl font-semibold">{price.price}</h5>
                 <Button
-                  type="submit"
+                  type={isCustomerId ? "submit" : "button"}
+                  onClick={
+                    isCustomerId ? undefined : () => router.push("/auth/login")
+                  }
                   className="text-white bg-black hover:bg-black hover:text-white hover:opacity-90"
                 >
                   Get Started
