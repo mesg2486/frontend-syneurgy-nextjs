@@ -3,10 +3,10 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse,
+  res: NextApiResponse
 ) {
-  const { price } = req.body;
-  console.log(price);
+  const { price, stripeCustomerId } = req.body;
+  console.log({ price, stripeCustomerId });
 
   const pricing: Record<string, string> = {
     "99": "price_1PKi74AOfjau4IibBxWpO6k3",
@@ -18,6 +18,7 @@ export default async function handler(
   if (req.method === "POST") {
     try {
       const session = await stripe.checkout.sessions.create({
+        customer: stripeCustomerId,
         line_items: [
           {
             price: pricing[price],

@@ -10,26 +10,27 @@ import {
 } from "@/components/ui/accordion";
 
 import { loadStripe } from "@stripe/stripe-js";
-import { TiTick } from "react-icons/ti";
 import { HiCheck } from "react-icons/hi";
 import { useToast } from "@/components/ui/use-toast";
 import { useSearchParams } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 // Make sure to call `loadStripe` outside of a component’s render to avoid
 // recreating the `Stripe` object on every render.
 const stripePromise = loadStripe(
-  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || "",
+  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || ""
 );
 
 export default function Payment() {
   // Check to see if this is a redirect back from Checkout
   const { toast } = useToast();
   const search = useSearchParams();
+  const { data: session } = useSession();
 
   if (search?.get("success")) {
     return (
-      <div className="min-h-screen flex justify-center items-center gap-2 flex-col py-20 c-container">
-        <span className="bg-emerald-500 text-white p-2 rounded-full text-2xl">
+      <div className="flex flex-col items-center justify-center min-h-screen gap-2 py-20 c-container">
+        <span className="p-2 text-2xl text-white rounded-full bg-emerald-500">
           <HiCheck />
         </span>
         <h1>Thank you for your payment!</h1>
@@ -66,6 +67,12 @@ export default function Payment() {
                   {price.title}
                 </h2>
                 <p className="font-medium opacity-60">{price.description}</p>
+                <input
+                  type="text"
+                  name="stripeCustomerId"
+                  value={session?.user.stripeCustomerId}
+                  hidden
+                />
                 <input type="text" name="price" value={price.pricing} hidden />
                 <h5 className="text-2xl font-semibold">{price.price}</h5>
                 <Button

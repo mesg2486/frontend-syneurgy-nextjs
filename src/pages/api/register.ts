@@ -2,6 +2,8 @@ import awsConfig from "@/config/aws.config";
 import { config, CognitoIdentityServiceProvider } from "aws-sdk";
 import { NextApiRequest, NextApiResponse } from "next";
 
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+
 config.update({
   region: awsConfig.region,
   apiVersion: "latest",
@@ -19,7 +21,7 @@ interface IResponse {
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<IResponse>,
+  res: NextApiResponse<IResponse>
 ) {
   const response: any = { data: "", error: null, status: null };
 
@@ -33,6 +35,14 @@ export default async function handler(
       group = "user", // passing group from payload can be a disaster
     } = req.body;
 
+    // Create Stripe Customer
+    const stripeCustomer = await stripe.customers.create({
+      name,
+      email,
+    });
+
+    console.log({ stripeCustomer });
+
     const cognitoClient = new CognitoIdentityServiceProvider({
       region: awsConfig.region,
     });
@@ -45,6 +55,7 @@ export default async function handler(
         { Name: "name", Value: name },
         { Name: "email", Value: email },
         { Name: "custom:teamId", Value: teamId || "any" },
+        { Name: "custom:stripeCustomerId", Value: stripeCustomer.id },
       ],
     };
 

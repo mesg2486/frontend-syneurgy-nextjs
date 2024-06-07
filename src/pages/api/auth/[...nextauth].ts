@@ -184,6 +184,7 @@ export const authOptions = {
                   onboarded
                   firstName
                   username
+                  stripeCustomerId
                   lastName
                   status
                   createdAt
@@ -210,6 +211,7 @@ export const authOptions = {
         session.user.lastName = data.user.lastName;
         session.user.username = data.user.username;
         session.user.onboarding = data.user.onboarding;
+        session.user.stripeCustomerId = data.user.stripeCustomerId;
 
         // session.user.onboarding_about = data.onboarding.about;
         // session.user.onboarding_createTeam = data.onboarding.createTeam;
