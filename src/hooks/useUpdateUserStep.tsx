@@ -33,6 +33,8 @@ export default function useUpdateUser({
         title: successMsg || "Details Updated",
       });
       Number(progress) < 6 && setProgress(String(Number(progress) + 1));
+
+      console.log({ progress });
       onSuccess?.(data);
     },
     onError: () => {
