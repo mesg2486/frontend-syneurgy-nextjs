@@ -26,16 +26,16 @@ export default function AskSyneurgy({ setToggleSyneurgy }: AskSyneurgyProps) {
   return (
     <div className="w-full p-5 ">
       {screen === 1 ? (
-        <div className="divide-y-2 space-y-6 divide-slate-200 divide-opacity-25">
-          <div className="flex justify-between items-center">
-            <h2 className="flex flex-row gap-x-2 rounded-xl items-center">
+        <div className="space-y-6 divide-y-2 divide-slate-200 divide-opacity-25">
+          <div className="flex items-center justify-between">
+            <h2 className="flex flex-row items-center gap-x-2 rounded-xl">
               <MdChat /> Ask Syneurgy
             </h2>
             <RxCross1 onClick={() => setToggleSyneurgy(false)} />
           </div>
           <div>
             <Tabs defaultValue="question">
-              <TabsList className="bg-transparent space-x-4">
+              <TabsList className="space-x-4 bg-transparent">
                 <TabsTrigger
                   value="question"
                   className=" rounded-none data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:text-white border-slate-300"
@@ -57,7 +57,7 @@ export default function AskSyneurgy({ setToggleSyneurgy }: AskSyneurgyProps) {
                   <AccordionItem value="item-1">
                     <AccordionTrigger>Is it accessible?</AccordionTrigger>
                     <AccordionContent
-                      className="opacity-60 font-extralight pl-6"
+                      className="pl-6 opacity-60 font-extralight"
                       onClick={() => setScreen(2)}
                     >
                       Yes. It adheres to the WAI-ARIA design pattern.
@@ -66,7 +66,7 @@ export default function AskSyneurgy({ setToggleSyneurgy }: AskSyneurgyProps) {
                   <AccordionItem value="item-2">
                     <AccordionTrigger>Brainstrom</AccordionTrigger>
                     <AccordionContent
-                      className="opacity-60 font-extralight pl-6"
+                      className="pl-6 opacity-60 font-extralight"
                       onClick={() => setScreen(2)}
                     >
                       Yes. It adheres to the WAI-ARIA design pattern.
@@ -75,7 +75,7 @@ export default function AskSyneurgy({ setToggleSyneurgy }: AskSyneurgyProps) {
                   <AccordionItem value="item-3">
                     <AccordionTrigger>Collaborative Work</AccordionTrigger>
                     <AccordionContent
-                      className="opacity-60 font-extralight pl-6"
+                      className="pl-6 opacity-60 font-extralight"
                       onClick={() => setScreen(2)}
                     >
                       Yes. It adheres to the WAI-ARIA design pattern.
@@ -84,7 +84,7 @@ export default function AskSyneurgy({ setToggleSyneurgy }: AskSyneurgyProps) {
                   <AccordionItem value="item-4">
                     <AccordionTrigger>Another dimension</AccordionTrigger>
                     <AccordionContent
-                      className="opacity-60 font-extralight pl-6"
+                      className="pl-6 opacity-60 font-extralight"
                       onClick={() => setScreen(2)}
                     >
                       Yes. It adheres to the WAI-ARIA design pattern.
@@ -93,7 +93,7 @@ export default function AskSyneurgy({ setToggleSyneurgy }: AskSyneurgyProps) {
                   <AccordionItem value="item-5">
                     <AccordionTrigger>Leadership</AccordionTrigger>
                     <AccordionContent
-                      className="opacity-60 font-extralight pl-6"
+                      className="pl-6 opacity-60 font-extralight"
                       onClick={() => setScreen(2)}
                     >
                       Yes. It adheres to the WAI-ARIA design pattern.
@@ -102,7 +102,7 @@ export default function AskSyneurgy({ setToggleSyneurgy }: AskSyneurgyProps) {
                   <AccordionItem value="item-6">
                     <AccordionTrigger>Brainstrom</AccordionTrigger>
                     <AccordionContent
-                      className="opacity-60 font-extralight pl-6"
+                      className="pl-6 opacity-60 font-extralight"
                       onClick={() => setScreen(2)}
                     >
                       Yes. It adheres to the WAI-ARIA design pattern.
@@ -113,9 +113,9 @@ export default function AskSyneurgy({ setToggleSyneurgy }: AskSyneurgyProps) {
                   <Input
                     type="search"
                     placeholder="write prompt..."
-                    className="border h-12 w-full px-4 rounded-full"
+                    className="w-full h-12 px-4 border rounded-full"
                   />
-                  <div className="absolute right-4 top-1/2 -translate-y-1/2">
+                  <div className="absolute -translate-y-1/2 right-4 top-1/2">
                     <Button>
                       Send <IoMdSend />
                     </Button>
@@ -127,8 +127,8 @@ export default function AskSyneurgy({ setToggleSyneurgy }: AskSyneurgyProps) {
           </div>
         </div>
       ) : (
-        <div className="divide-y-2 space-y-6 divide-slate-200 divide-opacity-25">
-          <div className="flex justify-between items-center">
+        <div className="space-y-6 divide-y-2 divide-slate-200 divide-opacity-25">
+          <div className="flex items-center justify-between">
             <div className="flex flex-row content-center gap-x-4">
               <FiArrowLeftCircle
                 className="text-3xl"
@@ -139,11 +139,11 @@ export default function AskSyneurgy({ setToggleSyneurgy }: AskSyneurgyProps) {
             <RxCross1 onClick={() => setToggleSyneurgy(false)} />
           </div>
           <div className="grid grid-cols-2 py-6 divide-x-2 divide-slate-500 divide-opacity-25">
-            <div className="flex flex-col space-y-4 divide-y-2 divide-slate-500 divide-opacity-25 pr-4">
-              <h2 className="text-lg flex items-center gap-x-1">
+            <div className="flex flex-col pr-4 space-y-4 divide-y-2 divide-slate-500 divide-opacity-25">
+              <h2 className="flex items-center text-lg gap-x-1">
                 <MdOutlineMessage size={20} /> Questions
               </h2>
-              <div className="flex flex-col space-y-4 py-6">
+              <div className="flex flex-col py-6 space-y-4">
                 <h2 className="text-md">Who was the user...</h2>
                 <p>
                   Gpt: Lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -151,18 +151,18 @@ export default function AskSyneurgy({ setToggleSyneurgy }: AskSyneurgyProps) {
                 </p>
               </div>
             </div>
-            <div className="flex flex-col space-y-4 divide-y-2 divide-slate-500 divide-opacity-25 pl-4">
-              <h2 className="text-lg flex items-center gap-x-1">
+            <div className="flex flex-col pl-4 space-y-4 divide-y-2 divide-slate-500 divide-opacity-25">
+              {/* <h2 className="flex items-center text-lg gap-x-1">
                 <PiNewspaper size={20} /> Transcript
               </h2>
-              <div className="flex flex-col space-y-4 pt-6">
+              <div className="flex flex-col max-h-screen pt-6 space-y-4 overflow-hidden">
                 {transcripts?.map((transscript) => (
                   <div
                     key={transscript.id}
                     className="relative pl-12 overflow-hidden"
                   >
                     <div className="text-base font-semibold">
-                      <div className="absolute left-0 top-0 flex size-5">
+                      <div className="absolute top-0 left-0 flex size-5">
                         <Avatar className="w-8 h-8">
                           <AvatarImage
                             className="object-cover"
@@ -173,7 +173,7 @@ export default function AskSyneurgy({ setToggleSyneurgy }: AskSyneurgyProps) {
                       </div>
                       <div className="flex gap-x-2">
                         <p className="opacity-80 ">{transscript.name}</p>
-                        <p className="h-max w-max text-sm font-extralight rounded-lg px-1 border-[1px] border-slate-200 border-opacity-25">
+                        <p className="h-5 text-xs rounded-lg px-1 border-[1px] border-white/20">
                           {transscript.time}
                         </p>
                       </div>
@@ -183,7 +183,7 @@ export default function AskSyneurgy({ setToggleSyneurgy }: AskSyneurgyProps) {
                     </p>
                   </div>
                 ))}
-              </div>
+              </div> */}
             </div>
           </div>
           <div className="pt-4">
@@ -191,9 +191,9 @@ export default function AskSyneurgy({ setToggleSyneurgy }: AskSyneurgyProps) {
               <Input
                 type="search"
                 placeholder="write prompt..."
-                className="border h-12 w-full px-4 rounded-full"
+                className="w-full h-12 px-4 border rounded-full"
               />
-              <div className="absolute right-4 top-1/2 -translate-y-1/2">
+              <div className="absolute -translate-y-1/2 right-4 top-1/2">
                 <Button>
                   Send <IoMdSend />
                 </Button>

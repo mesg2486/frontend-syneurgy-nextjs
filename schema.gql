@@ -149,6 +149,7 @@ type Meeting {
   synchrony: String
   dimensions: String
   performance: String
+  transcript: [TranscriptSegment]
   sentiment: String
   highlights: String
   url: String!
@@ -407,6 +408,13 @@ type TeamInvitations {
 type TeamInvitationsConnection {
   items: [TeamInvitations]
   nextToken: String
+}
+
+type TranscriptSegment {
+  start: String!
+  end: String!
+  speaker: String!
+  sentence: String!
 }
 
 input UpdateContactInput {
