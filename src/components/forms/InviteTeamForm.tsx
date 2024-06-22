@@ -95,11 +95,11 @@ export default function InviteTeam({ progress, setProgress }: IFormProps) {
   // console.log(fields);
 
   return (
-    <div className="pt-8 flex-1">
+    <div className="flex-1 pt-8">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="gap-4 text-white/60 flex h-full flex-col"
+          className="flex flex-col h-full gap-4 text-white/60"
         >
           {fields.map((i: any, index) => (
             <FormField
@@ -110,7 +110,7 @@ export default function InviteTeam({ progress, setProgress }: IFormProps) {
               render={({ field }) => (
                 <FormItem className="max-w-xl gap-2">
                   <FormLabel>Email Address</FormLabel>
-                  <div className="flex gap-2 items-center">
+                  <div className="flex items-center gap-2">
                     <FormControl>
                       <Input {...field} className="border-white/20" />
                     </FormControl>
@@ -137,14 +137,14 @@ export default function InviteTeam({ progress, setProgress }: IFormProps) {
               Add more members
             </button>
           </div>
-          <div className="flex-1 flex flex-col justify-end">
+          <div className="flex flex-col justify-end flex-1">
             <Button
               type="submit"
               size="lg"
-              className="rounded-full w-full bg-white hover:bg-white/90"
+              className="w-full bg-white rounded-full hover:bg-white/90"
             >
               {isPending ? (
-                <span className="flex gap-2 items-center">
+                <span className="flex items-center gap-2">
                   <span>Pending</span>
                   <AiOutlineReload className="animate-spin" />
                 </span>

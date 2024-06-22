@@ -59,7 +59,7 @@ export default function MeetingPage({ params }: { params: { id: string } }) {
   });
 
   return (
-    <div className="pt-5 space-y-6 pb-32">
+    <div className="pt-5 pb-32 space-y-6">
       {/* Nav Section */}
       <div>
         <Breadcrumb className="opacity-60">
@@ -81,7 +81,7 @@ export default function MeetingPage({ params }: { params: { id: string } }) {
         </Breadcrumb>
       </div>
       <div className="flex justify-between ">
-        <div className="flex justify-between items-center flex-1">
+        <div className="flex items-center justify-between flex-1">
           <div className="flex items-center gap-x-4">
             <Link href="/meetings">
               <Button variant="outline" size="icon">
@@ -94,8 +94,8 @@ export default function MeetingPage({ params }: { params: { id: string } }) {
             <BsChatRightTextFill /> Ask Syneurgy
           </Button>
         </div>
-        <div className="flex-row space-x-6 hidden md:flex">
-          <ul className="flex flex-row gap-x-3 text-xs font-medium">
+        <div className="flex-row hidden space-x-6 md:flex">
+          <ul className="flex flex-row text-xs font-medium gap-x-3">
             <li
               className={`${toggleTabs === "data" ? "border-b-2 border-primary opacity-100" : "opacity-60"} content-center  cursor-pointer`}
               onClick={() => setToggleTabs("data")}
@@ -124,13 +124,13 @@ export default function MeetingPage({ params }: { params: { id: string } }) {
         </div>
       </div>
       <div className="grid grid-cols-10 md:gap-x-5">
-        <div className="col-span-12 lg:col-span-6 space-y-4">
+        <div className="col-span-12 space-y-4 lg:col-span-6">
           <MainTab data={data || {}} />
           <Highlights />
         </div>
         {toggleTabs === "data" ? (
           <>
-            <div className="col-span-12 lg:col-span-2 py-6 md:py-0">
+            <div className="col-span-12 py-6 lg:col-span-2 md:py-0">
               <Data />
             </div>
             <div className="flex flex-col space-y-4 col-span-12 lg:col-span-2">

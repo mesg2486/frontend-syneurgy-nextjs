@@ -190,6 +190,7 @@ export type Meeting = {
   synchrony?: Maybe<Scalars["String"]["output"]>;
   teamId: Scalars["String"]["output"];
   thumbnail?: Maybe<Scalars["String"]["output"]>;
+  transcript?: Maybe<Array<Maybe<TranscriptSegment>>>;
   type: Scalars["String"]["output"];
   updatedAt: Scalars["String"]["output"];
   url: Scalars["String"]["output"];
@@ -865,6 +866,14 @@ export type TeamInvitationsConnection = {
   nextToken?: Maybe<Scalars["String"]["output"]>;
 };
 
+export type TranscriptSegment = {
+  __typename?: "TranscriptSegment";
+  end: Scalars["String"]["output"];
+  sentence: Scalars["String"]["output"];
+  speaker: Scalars["String"]["output"];
+  start: Scalars["String"]["output"];
+};
+
 export type UpdateContactInput = {
   email?: InputMaybe<Scalars["String"]["input"]>;
   id: Scalars["ID"]["input"];
@@ -987,6 +996,7 @@ export type User = {
   resultPrivacy: Scalars["Boolean"]["output"];
   status: Scalars["String"]["output"];
   step: Scalars["String"]["output"];
+  stripeCustomerId: Scalars["String"]["output"];
   sub: Scalars["ID"]["output"];
   updatedAt: Scalars["String"]["output"];
   username: Scalars["String"]["output"];
@@ -1258,6 +1268,25 @@ export type CreateMeetingMutation = {
     url: string;
     thumbnail?: string | null;
     date: string;
+  } | null;
+};
+
+export type GetMeetingTranscriptsQueryVariables = Exact<{
+  id: Scalars["ID"]["input"];
+}>;
+
+export type GetMeetingTranscriptsQuery = {
+  __typename?: "Query";
+  meeting?: {
+    __typename?: "Meeting";
+    id: string;
+    transcript?: Array<{
+      __typename?: "TranscriptSegment";
+      end: string;
+      sentence: string;
+      speaker: string;
+      start: string;
+    } | null> | null;
   } | null;
 };
 
@@ -2836,6 +2865,74 @@ export const CreateMeetingDocument = {
 } as unknown as DocumentNode<
   CreateMeetingMutation,
   CreateMeetingMutationVariables
+>;
+export const GetMeetingTranscriptsDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "query",
+      name: { kind: "Name", value: "getMeetingTranscripts" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "id" } },
+          type: {
+            kind: "NonNullType",
+            type: { kind: "NamedType", name: { kind: "Name", value: "ID" } },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            alias: { kind: "Name", value: "meeting" },
+            name: { kind: "Name", value: "getMeeting" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "id" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "id" },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "id" } },
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "transcript" },
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      { kind: "Field", name: { kind: "Name", value: "end" } },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "sentence" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "speaker" },
+                      },
+                      { kind: "Field", name: { kind: "Name", value: "start" } },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  GetMeetingTranscriptsQuery,
+  GetMeetingTranscriptsQueryVariables
 >;
 export const RenameTeamDocument = {
   kind: "Document",

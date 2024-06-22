@@ -37,7 +37,7 @@ export default function ConfirmationModal({
           <DialogTitle>{title}</DialogTitle>
           <DialogDescription>{subTitle}</DialogDescription>
         </DialogHeader>
-        <div className="flex-1 flex justify-center py-8 gap-3">
+        <div className="flex justify-center flex-1 gap-3 py-8">
           <Button variant="outline" onClick={() => setIsOpen(false)}>
             Cancel
           </Button>
@@ -47,7 +47,7 @@ export default function ConfirmationModal({
             variant="destructive"
           >
             {isPending ? (
-              <span className="flex gap-2 items-center">
+              <span className="flex items-center gap-2">
                 <span>Pending</span>
                 <AiOutlineReload className="animate-spin" />
               </span>
