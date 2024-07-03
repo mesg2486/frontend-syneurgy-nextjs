@@ -21,6 +21,7 @@ import { useQuery } from "@tanstack/react-query";
 import { gql } from "@/services/clients/graphql.client";
 import AskSyneurgy from "@/components/meeting/AskSyneurgy";
 import Summary from "@/components/meeting/summary/Summary";
+import TeamDetails from "@/components/meeting/TeamDetails";
 
 const GET_MEETING = graphql(`
   query getMeeting($id: ID!) {
@@ -132,8 +133,9 @@ export default function MeetingPage({ params }: { params: { id: string } }) {
             <div className="col-span-12 py-6 lg:col-span-2 md:py-0">
               <Data />
             </div>
-            <div className="col-span-12 lg:col-span-2">
+            <div className="flex flex-col space-y-4 col-span-12 lg:col-span-2">
               <Profile />
+              <TeamDetails />
             </div>
           </>
         ) : toggleTabs === "summary" ? (
