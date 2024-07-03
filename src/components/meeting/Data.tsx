@@ -6,27 +6,28 @@ import {
   PolarAngleAxis,
   ResponsiveContainer,
 } from "recharts";
-import { GiArcheryTarget } from "react-icons/gi";
 import { FaInfoCircle } from "react-icons/fa";
 import CircleProgressWithIcon from "../fragments/CircleProgressWithIcon";
+import CircularDashboard from "./MeetingScore";
 
 export default function Data() {
   return (
     <div className="flex flex-col space-y-6">
-      <div className="w-full bg-slate-800 rounded-xl p-3">
-        <h2 className="text-md font-medium flex items-center gap-x-1">
+      <div className="w-full p-3 bg-slate-800 rounded-xl">
+        <h2 className="flex items-center font-medium text-md gap-x-1">
           Team Synchrony <FaInfoCircle />
         </h2>
         <div>
-          <h4 className="text-3xl font-semibold mb-2">56</h4>
-          <p className="opacity-60 flex ">
+          {/* <h4 className="mb-2 text-3xl font-semibold">56</h4>
+          <p className="flex opacity-60 ">
             {" "}
             <GiArcheryTarget className="text-lg" /> Decision making
-          </p>
+          </p> */}
+          <CircularDashboard score={56} brainScore={56} />
         </div>
       </div>
-      <div className="w-full bg-slate-800 rounded-xl p-3">
-        <h2 className="text-md font-medium mb-4 flex items-center gap-x-1">
+      <div className="w-full p-3 bg-slate-800 rounded-xl">
+        <h2 className="flex items-center mb-4 font-medium text-md gap-x-1">
           Dimensions <FaInfoCircle />
         </h2>
         <div className="w-full h-48 p-5 text-xs">
@@ -52,11 +53,11 @@ export default function Data() {
           </ResponsiveContainer>
         </div>
       </div>
-      <div className="w-full bg-slate-800 rounded-xl p-3">
-        <h2 className="text-md font-medium mb-4 flex items-center gap-x-1">
+      <div className="w-full p-3 bg-slate-800 rounded-xl">
+        <h2 className="flex items-center mb-4 font-medium text-md gap-x-1">
           Team Performance <FaInfoCircle />
         </h2>
-        <div className="grid grid-cols-3 grid-flow-row gap-x-4">
+        <div className="grid grid-flow-row grid-cols-3 gap-x-4">
           <div className="">
             <CircleProgressWithIcon />
             <p className="text-sm font-thin">Brain</p>
@@ -72,11 +73,11 @@ export default function Data() {
           </div>
         </div>
       </div>
-      <div className="w-full bg-slate-800 rounded-xl p-3">
-        <h2 className="text-md font-medium mb-4 flex items-center gap-x-1">
+      <div className="w-full p-3 bg-slate-800 rounded-xl">
+        <h2 className="flex items-center mb-4 font-medium text-md gap-x-1">
           Team Sentiment <FaInfoCircle />
         </h2>
-        <div className="grid grid-cols-3 grid-flow-row gap-x-4">
+        <div className="grid grid-flow-row grid-cols-3 gap-x-4">
           <div className="">
             <CircleProgressWithIcon />
             <p className="text-sm font-thin">Brain</p>
