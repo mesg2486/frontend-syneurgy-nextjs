@@ -2,6 +2,8 @@ import React from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { GetMeetingQuery, Meeting } from "@/services/gql/graphql";
 import ReactPlayer from "react-player";
+import UniverseControl from "./UniverseChart";
+import MomentsChart from "./MomentsChart";
 
 export default function MainTab({ data }: { data: GetMeetingQuery }) {
   return (
@@ -53,9 +55,29 @@ export default function MainTab({ data }: { data: GetMeetingQuery }) {
             />
           )}
         </TabsContent>
-        <TabsContent value="universe"></TabsContent>
+        <TabsContent value="universe">
+          <div className="h-[430px]">
+            <UniverseControl />
+          </div>
+        </TabsContent>
         <TabsContent value="heatmap"></TabsContent>
-        <TabsContent value="moments"></TabsContent>
+        <TabsContent value="moments" className="relative">
+          {data.meeting?.url && (
+            <ReactPlayer
+              loop
+              width="100%"
+              controls
+              muted
+              height="100%"
+              url={data.meeting?.url}
+            />
+          )}
+          <MomentsChart
+            width__graph={1200}
+            height__graph={600}
+            isAbsolute={true}
+          />
+        </TabsContent>
         <TabsContent value="all"></TabsContent>
       </Tabs>
     </div>

@@ -54,14 +54,14 @@ const CircularDashboard = ({
       .append("path")
       .datum({ endAngle: Math.PI * 2 })
       .style("fill", "#1b212f")
-      .attr("d", backgroundInnerArcGenerator);
+      .attr("d", backgroundInnerArcGenerator as any);
 
     // Draw the outer background arc
     svg
       .append("path")
       .datum({ endAngle: Math.PI * 2 })
       .style("fill", "#1b212f")
-      .attr("d", backgroundOuterArcGenerator);
+      .attr("d", backgroundOuterArcGenerator as any);
 
     // Define the arc generator for the internal arcs
     const internalArcGenerator = d3
@@ -99,7 +99,7 @@ const CircularDashboard = ({
         .append("path")
         .datum({ startAngle: startAngle, endAngle: endAngle })
         .style("fill", team.color)
-        .attr("d", internalArcGenerator)
+        .attr("d", internalArcGenerator as any)
         .attr("class", `arc-${team.team}`);
 
       // Update start angle for the next segment
@@ -111,7 +111,7 @@ const CircularDashboard = ({
       .append("path")
       .datum({ endAngle: Math.PI * 2 * (score / 100) })
       .style("fill", "#6AE338")
-      .attr("d", outerArcGenerator)
+      .attr("d", outerArcGenerator as any)
       .attr("class", "outer-arc");
 
     teamData.forEach((team) => {
@@ -127,7 +127,7 @@ const CircularDashboard = ({
       svg
         .append("path")
         .attr("id", `textPath-${team.team}`)
-        .attr("d", textArc())
+        .attr("d", textArc({} as any))
         .style("fill", "none");
 
       // Adding curved text
@@ -164,7 +164,7 @@ const CircularDashboard = ({
             ? "#44C5AE"
             : team.label === "BODY"
               ? "#f8d864"
-              : "#2e6cfb"
+              : "#2e6cfb",
         );
 
       startAngle = endAngle;
@@ -260,7 +260,7 @@ const CircularDashboard = ({
 
     d3.select(".outer-arc")
       .datum({ endAngle: Math.PI * 2 * (score / 100) })
-      .attr("d", outerArcGenerator);
+      .attr("d", outerArcGenerator as any);
 
     // Update the team arcs
     const internalArcGenerator = d3
@@ -287,7 +287,7 @@ const CircularDashboard = ({
 
       d3.select(`.arc-${team.team}`)
         .datum({ startAngle: startAngle, endAngle: endAngle })
-        .attr("d", internalArcGenerator);
+        .attr("d", internalArcGenerator as any);
     });
 
     // Update performance value

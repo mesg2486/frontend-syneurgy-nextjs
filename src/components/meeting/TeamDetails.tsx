@@ -24,15 +24,15 @@ export default function TeamDetails() {
                       {participation.map((users, index) => (
                         <img
                           key={index}
-                          className="inline-block w-5 h-5 rounded-full ring-2 ring-slate-100 object-cover"
+                          className="inline-block object-cover w-5 h-5 rounded-full shadow-lg"
                           src={users.profile}
                         />
                       ))}
                     </div>
-                    <p className="opacity-80 font-light text-sm">Team</p>
+                    <p className="text-sm font-light opacity-80">Team</p>
                   </div>
                   <div>
-                    <p className="font-semibold opacity-80 text-sm">100%</p>
+                    <p className="text-sm font-semibold opacity-80">100%</p>
                   </div>
                 </div>
                 <div className="w-full">
@@ -55,16 +55,16 @@ export default function TeamDetails() {
                       <div className="flex flex-row gap-x-2">
                         <div className="flex -space-x-2">
                           <img
-                            className="inline-block w-5 h-5 rounded-full ring-2 ring-slate-100 object-center"
+                            className="inline-block object-center w-5 h-5 rounded-full shadow-lg"
                             src={participation.profile}
                           />
                         </div>
-                        <p className="opacity-80 font-light text-sm">
+                        <p className="text-sm font-light opacity-80">
                           {participation.name}
                         </p>
                       </div>
                       <div>
-                        <p className="font-semibold opacity-80 text-sm">
+                        <p className="text-sm font-semibold opacity-80">
                           {participation.participation}%
                         </p>
                       </div>
@@ -95,15 +95,15 @@ export default function TeamDetails() {
             <div className="flex flex-col space-y-6">
               <div className="flex flex-row space-x-3">
                 <div className="p-1 bg-tertiary rounded-xl">
-                  <FaHandPaper className="h-full w-full" />
+                  <FaHandPaper className="w-full h-full" />
                 </div>
-                <div className="w-full flex flex-col space-y-2">
+                <div className="flex flex-col w-full space-y-2">
                   <div className="flex flex-row gap-x-3">
                     <div className="flex -space-x-2">
                       {Emotion.map((users, index) => (
                         <img
                           key={index}
-                          className="inline-block w-5 h-5 rounded-full ring-2 ring-slate-100 object-cover"
+                          className="inline-block object-cover w-5 h-5 rounded-full"
                           src={users.profile}
                         />
                       ))}
@@ -114,24 +114,24 @@ export default function TeamDetails() {
                     -
                     <Progress
                       value={40}
-                      className="bg-tertiary h-1 rotate-180"
+                      className="h-1 rotate-180 bg-tertiary"
                     />
-                    <Progress value={10} className="bg-tertiary h-1" />+
+                    <Progress value={10} className="h-1 bg-tertiary" />+
                   </div>
                 </div>
               </div>
-              <div className="py-4 flex flex-col space-y-4">
+              <div className="flex flex-col py-4 space-y-4">
                 {Emotion.map((user, index) => (
                   <div key={index} className="flex flex-row space-x-3">
                     <div className="p-1 bg-tertiary rounded-xl">
-                      <FaHandPaper className="h-full w-full" />
+                      <FaHandPaper className="w-full h-full" />
                     </div>
-                    <div className="w-full flex flex-col space-y-2">
+                    <div className="flex flex-col w-full space-y-2">
                       <div className="flex flex-row gap-x-3">
                         <div className="flex -space-x-2">
                           <img
                             key={index}
-                            className="inline-block w-5 h-5 rounded-full ring-2 ring-slate-100 object-cover"
+                            className="inline-block object-cover w-5 h-5 rounded-full"
                             src={user.profile}
                           />
                         </div>
@@ -143,11 +143,11 @@ export default function TeamDetails() {
                         -
                         <Progress
                           value={user.negative}
-                          className="bg-tertiary h-1 rotate-180 "
+                          className="h-1 rotate-180 bg-tertiary "
                         />
                         <Progress
                           value={user.positive}
-                          className="bg-tertiary h-1"
+                          className="h-1 bg-tertiary"
                         />
                         +
                       </div>
@@ -161,15 +161,15 @@ export default function TeamDetails() {
             <div className="flex flex-col space-y-6">
               <div className="flex flex-row space-x-3">
                 <div className="p-1 bg-tertiary rounded-xl">
-                  <FaHandPaper className="h-full w-full" />
+                  <FaHandPaper className="w-full h-full" />
                 </div>
-                <div className="w-full flex flex-col space-y-2">
+                <div className="flex flex-col w-full space-y-2">
                   <div className="flex flex-row gap-x-3">
                     <div className="flex -space-x-2">
                       {Attention.map((users, index) => (
                         <img
                           key={index}
-                          className="inline-block w-5 h-5 rounded-full ring-2 ring-slate-100 object-cover"
+                          className="inline-block object-cover w-5 h-5 rounded-full"
                           src={users.profile}
                         />
                       ))}
@@ -180,24 +180,24 @@ export default function TeamDetails() {
                     -
                     <Progress
                       value={30}
-                      className="bg-tertiary h-1 rotate-180"
+                      className="h-1 rotate-180 bg-tertiary"
                     />
-                    <Progress value={75} className="bg-tertiary h-1" />+
+                    <Progress value={75} className="h-1 bg-tertiary" />+
                   </div>
                 </div>
               </div>
-              <div className="py-4 flex flex-col space-y-4">
+              <div className="flex flex-col py-4 space-y-4">
                 {Attention.map((user, index) => (
                   <div key={index} className="flex flex-row space-x-3">
                     <div className="p-1 bg-tertiary rounded-xl">
-                      <FaHandPaper className="h-full w-full" />
+                      <FaHandPaper className="w-full h-full" />
                     </div>
-                    <div className="w-full flex flex-col space-y-2">
+                    <div className="flex flex-col w-full space-y-2">
                       <div className="flex flex-row gap-x-3">
                         <div className="flex -space-x-2">
                           <img
                             key={index}
-                            className="inline-block w-5 h-5 rounded-full ring-2 ring-slate-100 object-cover"
+                            className="inline-block object-cover w-5 h-5 rounded-full"
                             src={user.profile}
                           />
                         </div>
@@ -209,11 +209,11 @@ export default function TeamDetails() {
                         -
                         <Progress
                           value={user.negative}
-                          className="bg-tertiary h-1 rotate-180 "
+                          className="h-1 rotate-180 bg-tertiary "
                         />
                         <Progress
                           value={user.positive}
-                          className="bg-tertiary h-1"
+                          className="h-1 bg-tertiary"
                         />
                         +
                       </div>

@@ -58,18 +58,19 @@ export default function Data() {
           Team Performance <FaInfoCircle />
         </h2>
         <div className="grid grid-flow-row grid-cols-3 gap-x-4">
-          <div className="">
+          <div className="flex flex-col items-center justify-center gap-2">
             <CircleProgressWithIcon />
-            <p className="text-sm font-thin">Brain</p>
+            <p className="text-sm">Brain</p>
           </div>
-          <div className="">
-            <CircleProgressWithIcon />
-            <p className="text-sm font-thin">Body</p>
-          </div>
-          <div className="">
+          <div className="flex flex-col items-center justify-center gap-2">
             {" "}
             <CircleProgressWithIcon />
-            <p className="text-sm font-thin">Behavior</p>
+            <p className="text-sm">Body</p>
+          </div>
+          <div className="flex flex-col items-center justify-center gap-2">
+            {" "}
+            <CircleProgressWithIcon />
+            <p className="text-sm">Behavior</p>
           </div>
         </div>
       </div>
@@ -78,19 +79,19 @@ export default function Data() {
           Team Sentiment <FaInfoCircle />
         </h2>
         <div className="grid grid-flow-row grid-cols-3 gap-x-4">
-          <div className="">
+          <div className="flex flex-col items-center justify-center gap-2">
             <CircleProgressWithIcon />
-            <p className="text-sm font-thin">Brain</p>
+            <p className="text-sm">Brain</p>
           </div>
-          <div className="">
+          <div className="flex flex-col items-center justify-center gap-2">
             {" "}
             <CircleProgressWithIcon />
-            <p className="text-sm font-thin">Body</p>
+            <p className="text-sm">Body</p>
           </div>
-          <div className="">
+          <div className="flex flex-col items-center justify-center gap-2">
             {" "}
             <CircleProgressWithIcon />
-            <p className="text-sm font-thin">Behavior</p>
+            <p className="text-sm">Behavior</p>
           </div>
         </div>
       </div>
