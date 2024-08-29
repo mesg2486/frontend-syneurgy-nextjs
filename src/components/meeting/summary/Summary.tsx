@@ -53,7 +53,7 @@ export default function Summary({ summary }: { summary: MeetingSummary[] }) {
             </li>
           </ul>
         </div> */}
-        {summary.map((i) => (
+        {summary?.map((i) => (
           <div className="" key={i.start}>
             <h3 className="my-4 font-medium text-md">
               {i.summary} ({i.start} - {i.end})
