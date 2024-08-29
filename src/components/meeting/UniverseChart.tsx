@@ -18,7 +18,7 @@ const UniverseControl = ({
 
   const debouncedUpdateWidth = _.debounce(
     () => setWidthChange(window.innerWidth),
-    500
+    500,
   );
 
   useEffect(() => {

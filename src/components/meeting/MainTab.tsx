@@ -1,6 +1,6 @@
 import React from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { GetMeetingQuery, Meeting } from "@/services/gql/graphql";
+import { GetMeetingQuery } from "@/services/gql/graphql";
 import ReactPlayer from "react-player";
 import UniverseControl from "./UniverseChart";
 import MomentsChart from "./MomentsChart";

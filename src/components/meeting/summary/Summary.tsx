@@ -1,6 +1,7 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { gql } from "@/services/clients/graphql.client";
 import { graphql } from "@/services/gql";
+import { MeetingSummary } from "@/services/gql/graphql";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import React from "react";
@@ -20,7 +21,7 @@ const GET_MEETING_TRANSCRIPT = graphql(`
   }
 `);
 
-export default function Summary() {
+export default function Summary({ summary }: { summary: MeetingSummary[] }) {
   const params = useParams();
 
   const { data, isLoading, refetch } = useQuery({
@@ -36,7 +37,7 @@ export default function Summary() {
     <div className="grid grid-cols-2 divide-x-2 gap-x-5 divide-slate-500 divide-opacity-25">
       <div className="flex flex-col p-4 space-y-4 divide-y-2 divide-slate-500 divide-opacity-25">
         <h2 className="text-lg">AI meeting summary</h2>
-        <div>
+        {/* <div>
           <ul className="mt-4 ml-5 space-y-3 list-disc">
             <li className="text-sm font-light opacity-70">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi
@@ -51,22 +52,24 @@ export default function Summary() {
               fugit possimus vel inventore ducimus nostrum?{" "}
             </li>
           </ul>
-        </div>
-        <div className="">
-          <h3 className="my-4 font-medium text-md">Chapter 1: Intro</h3>
-          <div className="space-y-3">
-            {highlights?.map((highlight, index) => (
-              <div key={index} className="flex flex-row gap-x-4">
-                <p className="h-max w-max text-sm rounded-lg px-1 border-[1px] border-slate-200 border-opacity-25">
-                  {highlight.time}
-                </p>
-                <p className="text-sm font-light opacity-70">
-                  {highlight.content}
-                </p>
-              </div>
-            ))}
+        </div> */}
+        {summary.map((i) => (
+          <div className="" key={i.start}>
+            <h3 className="my-4 font-medium text-md">
+              {i.summary} ({i.start} - {i.end})
+            </h3>
+            <div className="space-y-3">
+              {i.bullets?.map((bullet, index) => (
+                <div key={index} className="flex flex-row gap-x-4">
+                  {/* <p className="h-max w-max text-sm rounded-lg px-1 border-[1px] border-slate-200 border-opacity-25">
+                    {bullet}
+                  </p> */}
+                  <p className="text-sm font-light opacity-70">{bullet}</p>
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
+        ))}
       </div>
       <div className="flex flex-col max-h-screen p-4 space-y-4 overflow-y-auto divide-y-2 hide-scrollbar divide-slate-500 divide-opacity-25">
         <h2 className="flex items-center text-base gap-x-1">
@@ -138,18 +141,5 @@ const transcripts = [
     name: "Eve",
     time: "08:16",
     content: "I'm great, thanks!",
-  },
-];
-
-const highlights = [
-  {
-    time: "08:14",
-    content:
-      "Compared to your team average , your HRV is higher; you're feeling more positive and this topic is not grabbing your attention. ",
-  },
-  {
-    time: "12:08",
-    content:
-      "Compared to your team average , your HRV is higher; you're feeling more positive and this topic is not grabbing your attention.",
   },
 ];

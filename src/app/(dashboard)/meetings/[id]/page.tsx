@@ -41,6 +41,12 @@ const GET_MEETING = graphql(`
       updatedAt
       url
       userId
+      summary {
+        bullets
+        start
+        end
+        summary
+      }
     }
   }
 `);
@@ -133,14 +139,14 @@ export default function MeetingPage({ params }: { params: { id: string } }) {
             <div className="col-span-12 py-6 lg:col-span-2 md:py-0">
               <Data />
             </div>
-            <div className="flex flex-col space-y-4 col-span-12 lg:col-span-2">
+            <div className="flex flex-col col-span-12 space-y-4 lg:col-span-2">
               <Profile />
               <TeamDetails />
             </div>
           </>
         ) : toggleTabs === "summary" ? (
           <div className="col-span-12 lg:col-span-4">
-            <Summary />
+            <Summary summary={data?.meeting?.summary as any} />
           </div>
         ) : (
           <p>NA</p>

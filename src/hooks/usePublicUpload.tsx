@@ -23,7 +23,6 @@ interface IUploadPayload {
 }
 
 // use seturl for async uploads to get the url before the file starts uploading
-
 export default function usePublicUpload({
   sub,
   meetingId,

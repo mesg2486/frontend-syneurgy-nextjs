@@ -48,7 +48,7 @@ const VChart: React.FC<VChartProps> = ({
                 echarts.time.format(
                   startTime.getTime() + value,
                   "{HH}:{mm}",
-                  false
+                  false,
                 ),
             },
             axisPointer: {
@@ -59,7 +59,7 @@ const VChart: React.FC<VChartProps> = ({
                   echarts.time.format(
                     startTime.getTime() + params.value,
                     "{HH}:{mm}:{ss}",
-                    false
+                    false,
                   ),
                 backgroundColor: "#7581BD",
                 margin: 20,
@@ -87,7 +87,7 @@ const VChart: React.FC<VChartProps> = ({
                 echarts.time.format(
                   startTime.getTime() + value,
                   "{HH}:{mm}",
-                  false
+                  false,
                 ),
             },
             axisPointer: {
@@ -98,7 +98,7 @@ const VChart: React.FC<VChartProps> = ({
                   echarts.time.format(
                     startTime.getTime() + params.value,
                     "{HH}:{mm}:{ss}",
-                    false
+                    false,
                   ),
                 backgroundColor: "#7581BD",
                 margin: 20,
@@ -144,7 +144,7 @@ const VChart: React.FC<VChartProps> = ({
                 echarts.time.format(
                   startTime.getTime() + value,
                   "{HH}:{mm}",
-                  false
+                  false,
                 ),
             },
           },
@@ -158,7 +158,7 @@ const VChart: React.FC<VChartProps> = ({
                 echarts.time.format(
                   startTime.getTime() + value,
                   "{HH}:{mm}",
-                  false
+                  false,
                 ),
             },
           },
@@ -208,7 +208,7 @@ const VChart: React.FC<VChartProps> = ({
           myChart.dispatchAction({
             type: "legendUnSelect",
             name: e,
-          })
+          }),
         );
       } else {
         myChart.dispatchAction({

@@ -13,7 +13,7 @@ export function LineChart(
   specColorKey: string,
   single: boolean,
   marks: { [key: string]: { start: number; end: number; label?: number }[] },
-  customOpt?: EChartsOption
+  customOpt?: EChartsOption,
 ) {
   const opt: EChartsOption = {
     grid: {

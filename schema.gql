@@ -1,3 +1,23 @@
+type AResultSegment {
+  _: Float!
+  a_mean: Float!
+  a_std: Float!
+  user_0: Float!
+  user_1: Float!
+}
+
+type AnchorResultSegment {
+  _: Float!
+  user_locs: String!
+}
+
+type BlinkSegment {
+  TimeFrame: Int!
+  Overall_mean: Float!
+  Overall_std: Float!
+  speakers: [SpeakerData!]!
+}
+
 type Contact {
   id: ID!
   name: String!
@@ -137,6 +157,34 @@ input DeleteUserInput {
   sub: ID!
 }
 
+type DialogueSegment {
+  dialogue: String!
+  emotion: String!
+  end: Float!
+  sentence: String!
+  speaker: String!
+  start: Float!
+}
+
+type EmotionSegment {
+  end_time: Float!
+  keyword: String!
+  start_time: Float!
+  user_id: Int!
+  x: Int!
+  x2: Int!
+  y: Int!
+  y2: Int!
+}
+
+type EmotionTextSegment {
+  emotion: String!
+  end: Float!
+  sentence: String!
+  speaker: String!
+  start: Float!
+}
+
 type Invitations {
   email: String!
   message: String
@@ -149,7 +197,18 @@ type Meeting {
   synchrony: String
   dimensions: String
   performance: String
+  a_result: [AResultSegment]
+  v_result: [VResultSegment]
+  rppg_result: [RppgResultSegment]
+  anchor_result: [AnchorResultSegment]
+  blink: [BlinkSegment]
+  dialogue: [DialogueSegment]
+  emotion: [EmotionSegment]
+  emotionText: [EmotionTextSegment]
+  pose: [PoseSegment]
+  speaker: [SpeakerSegment]
   transcript: [TranscriptSegment]
+  summary: [MeetingSummary]
   sentiment: String
   highlights: String
   url: String!
@@ -165,6 +224,13 @@ type Meeting {
 type MeetingConnection {
   items: [Meeting]
   nextToken: String
+}
+
+type MeetingSummary {
+  bullets: [String]
+  start: String
+  end: String
+  summary: String
 }
 
 type Members {
@@ -208,6 +274,44 @@ type Notification {
 type NotificationConnection {
   items: [Notification]
   nextToken: String
+}
+
+type PoseSegment {
+  end_time: Float!
+  keyword: String!
+  person_id: Int!
+  start_time: Float!
+  x: Int!
+  x2: Int!
+  y: Int!
+  y2: Int!
+}
+
+type RppgResultSegment {
+  _: Float!
+  rppg_mean: Float!
+  rppg_std: Float!
+  user_0: Float!
+  user_1: Float!
+}
+
+type SpeakerData {
+  speaker_id: String!
+  blink_rate: Float!
+  X: Int!
+  Y: Int!
+  X2: Int!
+  Y2: Int!
+}
+
+type SpeakerSegment {
+  end_time: Float!
+  start_time: Float!
+  user_id: String!
+  x1: Int!
+  x2: Int!
+  y1: Int!
+  y2: Int!
 }
 
 input TableBooleanFilterInput {
@@ -547,6 +651,14 @@ type User {
 type UserConnection {
   items: [User]
   nextToken: String
+}
+
+type VResultSegment {
+  _: Float!
+  v_mean: Float!
+  v_std: Float!
+  user_0: Float!
+  user_1: Float!
 }
 
 type Mutation {
