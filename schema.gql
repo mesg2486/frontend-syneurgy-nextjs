@@ -209,6 +209,8 @@ type Meeting {
   speaker: [SpeakerSegment]
   transcript: [TranscriptSegment]
   summary: [MeetingSummary]
+  team_highlights: [TeamHighlight]
+  user_highlights: [UserHighlight]
   sentiment: String
   highlights: String
   url: String!
@@ -498,6 +500,12 @@ type TeamConnection {
   nextToken: String
 }
 
+type TeamHighlight {
+  description: String
+  start: String
+  end: String
+}
+
 type TeamInvitations {
   teamId: ID!
   content: String
@@ -651,6 +659,13 @@ type User {
 type UserConnection {
   items: [User]
   nextToken: String
+}
+
+type UserHighlight {
+  speaker: String
+  start: String
+  end: String
+  description: String
 }
 
 type VResultSegment {

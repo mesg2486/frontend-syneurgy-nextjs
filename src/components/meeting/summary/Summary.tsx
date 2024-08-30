@@ -37,22 +37,6 @@ export default function Summary({ summary }: { summary: MeetingSummary[] }) {
     <div className="grid grid-cols-2 divide-x-2 gap-x-5 divide-slate-500 divide-opacity-25">
       <div className="flex flex-col p-4 space-y-4 divide-y-2 divide-slate-500 divide-opacity-25">
         <h2 className="text-lg">AI meeting summary</h2>
-        {/* <div>
-          <ul className="mt-4 ml-5 space-y-3 list-disc">
-            <li className="text-sm font-light opacity-70">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi
-              fugit possimus vel inventore ducimus nostrum?{" "}
-            </li>
-            <li className="text-sm font-light opacity-70">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi
-              fugit possimus vel inventore ducimus nostrum?{" "}
-            </li>
-            <li className="text-sm font-light opacity-70">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi
-              fugit possimus vel inventore ducimus nostrum?{" "}
-            </li>
-          </ul>
-        </div> */}
         {summary?.map((i) => (
           <div className="" key={i.start}>
             <h3 className="my-4 font-medium text-md">

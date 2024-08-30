@@ -47,6 +47,17 @@ const GET_MEETING = graphql(`
         end
         summary
       }
+      team_highlights {
+        start
+        end
+        description
+      }
+      user_highlights {
+        start
+        end
+        description
+        speaker
+      }
     }
   }
 `);
@@ -132,7 +143,10 @@ export default function MeetingPage({ params }: { params: { id: string } }) {
       <div className="grid grid-cols-10 md:gap-x-5">
         <div className="col-span-12 space-y-4 lg:col-span-6">
           <MainTab data={data || {}} />
-          <Highlights />
+          <Highlights
+            teamHighlight={data?.meeting?.team_highlights as any}
+            userHighlight={data?.meeting?.user_highlights as any}
+          />
         </div>
         {toggleTabs === "data" ? (
           <>
