@@ -170,7 +170,7 @@ const CircularDashboard = ({
             ? "#44C5AE"
             : team.label === "BODY"
               ? "#f8d864"
-              : "#2e6cfb"
+              : "#2e6cfb",
         );
 
       startAngle = endAngle;

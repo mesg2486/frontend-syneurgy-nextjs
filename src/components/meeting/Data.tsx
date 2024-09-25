@@ -54,7 +54,17 @@ export default function Data({
             {" "}
             <GiArcheryTarget className="text-lg" /> Decision making
           </p> */}
-          <CircularDashboard scores={scores} />
+          {scores && <CircularDashboard scores={scores} />}
+          {!scores && (
+            <CircularDashboard
+              scores={{
+                behaviorScore: 0,
+                brainScore: 0,
+                bodyScore: 0,
+                score: 0,
+              }}
+            />
+          )}
         </div>
       </div>
       <div className="w-full p-3 bg-slate-800 rounded-xl">
