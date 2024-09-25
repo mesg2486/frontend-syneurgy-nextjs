@@ -4,6 +4,7 @@ import { GetMeetingQuery } from "@/services/gql/graphql";
 import ReactPlayer from "react-player";
 import UniverseControl from "./UniverseChart";
 import MomentsChart from "./MomentsChart";
+// import Heatmap from "./Heatmap";
 
 export default function MainTab({ data }: { data: GetMeetingQuery }) {
   return (
@@ -60,7 +61,7 @@ export default function MainTab({ data }: { data: GetMeetingQuery }) {
             <UniverseControl />
           </div>
         </TabsContent>
-        <TabsContent value="heatmap"></TabsContent>
+        <TabsContent value="heatmap">{/* <Heatmap /> */}</TabsContent>
         <TabsContent value="moments" className="relative">
           {data.meeting?.url && (
             <ReactPlayer

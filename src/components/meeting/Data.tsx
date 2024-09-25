@@ -9,8 +9,33 @@ import {
 import { FaInfoCircle } from "react-icons/fa";
 import CircleProgressWithIcon from "../fragments/CircleProgressWithIcon";
 import CircularDashboard from "./MeetingScore";
+import { Dimensions } from "@/services/gql/graphql";
 
-export default function Data() {
+const dimensionLabels: Record<string, string> = {
+  absorptionOrTaskEngagement: "Engagement",
+  enjoyment: "Enjoyment",
+  equalParticipation: "Participation",
+  sharedGoalCommitment: "Shared goal",
+  trustAndPsychologicalSafety: "Trust",
+};
+
+const defaultDimensions = {
+  absorptionOrTaskEngagement: 0,
+  enjoyment: 0,
+  equalParticipation: 0,
+  sharedGoalCommitment: 0,
+  trustAndPsychologicalSafety: 0,
+};
+
+export default function Data({ dimensions }: { dimensions: Dimensions }) {
+  const radarData = Object.entries(dimensions || defaultDimensions).map(
+    ([key, value]) => ({
+      subject: dimensionLabels[key],
+      A: value,
+      fullMark: 1,
+    }),
+  );
+
   return (
     <div className="flex flex-col space-y-6">
       <div className="w-full p-3 bg-slate-800 rounded-xl">
@@ -30,30 +55,23 @@ export default function Data() {
         <h2 className="flex items-center mb-4 font-medium text-md gap-x-1">
           Dimensions <FaInfoCircle />
         </h2>
-        <div className="w-full h-48 p-5 text-xs">
+        <div className="w-full h-48 text-xs">
           <ResponsiveContainer width="100%" height="100%">
-            <RadarChart cx="50%" cy="50%" outerRadius="80%" data={data1}>
+            <RadarChart
+              cx="50%"
+              barGap={12}
+              cy="50%"
+              outerRadius="80%"
+              data={radarData}
+            >
               <PolarGrid />
               <PolarAngleAxis dataKey="subject" />
-              <Radar
-                name="Mike"
-                dataKey="A"
-                stroke="#8884d8"
-                fill="#8884d8"
-                fillOpacity={0.6}
-              />
-              <Radar
-                name="Lily"
-                dataKey="B"
-                stroke="#82ca9d"
-                fill="#82ca9d"
-                fillOpacity={0.6}
-              />
+              <Radar name="Mike" dataKey="A" fill="#6ae338" fillOpacity={0.6} />
             </RadarChart>
           </ResponsiveContainer>
         </div>
       </div>
-      <div className="w-full p-3 bg-slate-800 rounded-xl">
+      {/* <div className="w-full p-3 bg-slate-800 rounded-xl">
         <h2 className="flex items-center mb-4 font-medium text-md gap-x-1">
           Team Performance <FaInfoCircle />
         </h2>
@@ -73,8 +91,8 @@ export default function Data() {
             <p className="text-sm">Behavior</p>
           </div>
         </div>
-      </div>
-      <div className="w-full p-3 bg-slate-800 rounded-xl">
+      </div> */}
+      <div className="w-full p-3 pb-8 bg-slate-800 rounded-xl">
         <h2 className="flex items-center mb-4 font-medium text-md gap-x-1">
           Team Sentiment <FaInfoCircle />
         </h2>
@@ -98,36 +116,3 @@ export default function Data() {
     </div>
   );
 }
-
-const data1 = [
-  {
-    subject: "Trust",
-    A: 120,
-    B: 110,
-    fullMark: 150,
-  },
-  {
-    subject: "Participation",
-    A: 98,
-    B: 130,
-    fullMark: 150,
-  },
-  {
-    subject: "Enjoyment",
-    A: 86,
-    B: 130,
-    fullMark: 150,
-  },
-  {
-    subject: "Shared goal",
-    A: 99,
-    B: 100,
-    fullMark: 150,
-  },
-  {
-    subject: "Engagement",
-    A: 85,
-    B: 90,
-    fullMark: 150,
-  },
-];

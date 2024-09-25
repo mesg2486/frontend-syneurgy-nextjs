@@ -50,7 +50,6 @@ export const CREATE_MEETING = graphql(`
     $userId: String!
     $name: String!
     $synchrony: String
-    $dimensions: String
     $performance: String
     $sentiment: String
     $highlights: String
@@ -66,7 +65,6 @@ export const CREATE_MEETING = graphql(`
         userId: $userId
         name: $name
         synchrony: $synchrony
-        dimensions: $dimensions
         performance: $performance
         sentiment: $sentiment
         highlights: $highlights
@@ -80,7 +78,6 @@ export const CREATE_MEETING = graphql(`
       id
       name
       synchrony
-      dimensions
       performance
       sentiment
       highlights
@@ -249,11 +246,11 @@ export default function UploadMeeting({ progress, setProgress }: IFormProps) {
   };
 
   return (
-    <div className="pt-8 flex-1">
+    <div className="flex-1 pt-8">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="gap-4 text-white/60 flex h-full flex-col"
+          className="flex flex-col h-full gap-4 text-white/60"
         >
           <div className="space-y-6">
             <div
@@ -265,7 +262,7 @@ export default function UploadMeeting({ progress, setProgress }: IFormProps) {
             >
               {dropped ? (
                 <>
-                  <HiDocument className="text-4xl mx-auto" />
+                  <HiDocument className="mx-auto text-4xl" />
                   <p className="pt-4">
                     {fileName.length > 40
                       ? fileName.slice(0, 40) + "..."
@@ -274,14 +271,14 @@ export default function UploadMeeting({ progress, setProgress }: IFormProps) {
                 </>
               ) : (
                 <>
-                  <FaUpload className="text-2xl mx-auto text-white" />
+                  <FaUpload className="mx-auto text-2xl text-white" />
                   <p className="pt-4 text-xs">
                     Drag & Drop or{" "}
                     <span className="text-primary">
                       Choose file
                       <input
                         onChange={handleFileChange}
-                        className="opacity-0 cursor-pointer inset-0 absolute"
+                        className="absolute inset-0 opacity-0 cursor-pointer"
                         type="file"
                         accept=".mov,.mp4,.hevc"
                       />
@@ -292,10 +289,10 @@ export default function UploadMeeting({ progress, setProgress }: IFormProps) {
                 </>
               )}
             </div>
-            <div className="flex py-3 items-center">
-              <span className="border-b border-white/30 block flex-1"></span>
-              <span className="px-5 block">or</span>
-              <span className="border-b border-white/30 block flex-1"></span>
+            <div className="flex items-center py-3">
+              <span className="flex-1 block border-b border-white/30"></span>
+              <span className="block px-5">or</span>
+              <span className="flex-1 block border-b border-white/30"></span>
             </div>
             <FormField
               control={form.control}
@@ -360,7 +357,7 @@ export default function UploadMeeting({ progress, setProgress }: IFormProps) {
                           ) : (
                             <span>Pick a date</span>
                           )}
-                          <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                          <CalendarIcon className="w-4 h-4 ml-auto opacity-50" />
                         </Button>
                       </FormControl>
                     </PopoverTrigger>
@@ -381,14 +378,14 @@ export default function UploadMeeting({ progress, setProgress }: IFormProps) {
               )}
             />
           </div>
-          <div className="flex-1 flex flex-col justify-end">
+          <div className="flex flex-col justify-end flex-1">
             <Button
               type="submit"
               size="lg"
-              className="rounded-full w-full bg-white hover:bg-white/90"
+              className="w-full bg-white rounded-full hover:bg-white/90"
             >
               {isPending ? (
-                <span className="flex gap-2 items-center">
+                <span className="flex items-center gap-2">
                   <span>Pending</span>
                   <AiOutlineReload className="animate-spin" />
                 </span>
@@ -398,7 +395,7 @@ export default function UploadMeeting({ progress, setProgress }: IFormProps) {
             </Button>
           </div>
         </form>
-        <div className="flex justify-center items-center text-xs pt-4">
+        <div className="flex items-center justify-center pt-4 text-xs">
           <button onClick={() => setProgress(String(Number(progress) + 1))}>
             Remind me later
           </button>

@@ -37,7 +37,6 @@ export const LIST_MEETINGS_BY_USERID = graphql(`
     meetings: listMeetingsByUserId(userId: $userId) {
       items {
         date
-        dimensions
         highlights
         id
         name
@@ -70,7 +69,7 @@ export default function Meetings() {
   });
 
   return (
-    <div className="pt-6 pb-20 bg-secondary w-full">
+    <div className="w-full pt-6 pb-20 bg-secondary">
       <Tabs defaultValue="meetings" className="w-full min-h-[600px]">
         <TabsList>
           <TabsTrigger value="meetings">Meetings</TabsTrigger>
@@ -86,14 +85,14 @@ export default function Meetings() {
               <div className="relative">
                 <Input
                   placeholder="Search"
-                  className="h-full border w-32 md:w-40 px-6 rounded-full"
+                  className="w-32 h-full px-6 border rounded-full md:w-40"
                 />
-                <div className="absolute right-6 top-1/2 -translate-y-1/2">
+                <div className="absolute -translate-y-1/2 right-6 top-1/2">
                   <HiOutlineSearch />
                 </div>
               </div>
               <Select>
-                <SelectTrigger className="rounded-2xl hidden md:flex bg-tertiary px-5 gap-1 border-0">
+                <SelectTrigger className="hidden gap-1 px-5 border-0 rounded-2xl md:flex bg-tertiary">
                   <SelectValue placeholder="Meeting Type" />
                 </SelectTrigger>
                 <SelectContent>
@@ -103,7 +102,7 @@ export default function Meetings() {
                 </SelectContent>
               </Select>
               <Select>
-                <SelectTrigger className="rounded-2xl hidden md:flex bg-tertiary px-5 gap-1 border-0">
+                <SelectTrigger className="hidden gap-1 px-5 border-0 rounded-2xl md:flex bg-tertiary">
                   <SelectValue placeholder="All Dates" />
                 </SelectTrigger>
                 <SelectContent>
@@ -122,7 +121,7 @@ export default function Meetings() {
             </div>
           </div>
           <div className="pt-10 space-y-6">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
               {(isLoading || status === "loading") &&
                 Array.from(Array(10)).map((i) => <TeamCardSkeleton key={i} />)}
               {Number(data?.meetings?.items?.length) > 0 &&
@@ -131,12 +130,12 @@ export default function Meetings() {
                 ))}
               {!(isLoading || status === "loading") &&
                 Number(data?.meetings?.items?.length) === 0 && (
-                  <div className="col-span-5 py-40 flex justify-center items-center">
+                  <div className="flex items-center justify-center col-span-5 py-40">
                     No meetings uploaded!
                   </div>
                 )}
             </div>
-            <div className="justify-between flex items-center pt-6">
+            <div className="flex items-center justify-between pt-6">
               <p className="opacity-70">Show 8 from 120 products</p>
               <Pagination>
                 <PaginationContent>

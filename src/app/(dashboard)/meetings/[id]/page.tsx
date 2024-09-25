@@ -22,13 +22,13 @@ import { gql } from "@/services/clients/graphql.client";
 import AskSyneurgy from "@/components/meeting/AskSyneurgy";
 import Summary from "@/components/meeting/summary/Summary";
 import TeamDetails from "@/components/meeting/TeamDetails";
+import { PosNegRate } from "@/services/gql/graphql";
 
 const GET_MEETING = graphql(`
   query getMeeting($id: ID!) {
     meeting: getMeeting(id: $id) {
       createdAt
       date
-      dimensions
       highlights
       id
       name
@@ -57,6 +57,20 @@ const GET_MEETING = graphql(`
         end
         description
         speaker
+      }
+      dimensions {
+        absorptionOrTaskEngagement
+        enjoyment
+        equalParticipation
+        sharedGoalCommitment
+        trustAndPsychologicalSafety
+      }
+      posNegRates {
+        negative_rate_a
+        negative_rate_v
+        positive_rate_a
+        positive_rate_v
+        user
       }
     }
   }
@@ -125,12 +139,12 @@ export default function MeetingPage({ params }: { params: { id: string } }) {
             >
               SUMMARY
             </li>
-            <li
+            {/* <li
               className={`${toggleTabs === "action" ? "border-b-2 border-primary opacity-100" : "opacity-60"} content-center cursor-pointer `}
               onClick={() => setToggleTabs("action")}
             >
               ACTION
-            </li>
+            </li> */}
           </ul>
           <Button onClick={() => setToggleSyneurgy(true)}>
             <BsChatRightTextFill /> Ask Syneurgy
@@ -151,11 +165,14 @@ export default function MeetingPage({ params }: { params: { id: string } }) {
         {toggleTabs === "data" ? (
           <>
             <div className="col-span-12 py-6 lg:col-span-2 md:py-0">
-              <Data />
+              <Data dimensions={data?.meeting?.dimensions as any} />
             </div>
             <div className="flex flex-col col-span-12 space-y-4 lg:col-span-2">
               <Profile />
-              <TeamDetails />
+              <TeamDetails
+                meetingId={data?.meeting?.id as string}
+                pos_neg_rates={data?.meeting?.posNegRates as PosNegRate[]}
+              />
             </div>
           </>
         ) : toggleTabs === "summary" ? (

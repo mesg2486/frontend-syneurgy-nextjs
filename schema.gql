@@ -166,6 +166,14 @@ type DialogueSegment {
   start: Float!
 }
 
+type Dimensions {
+  absorptionOrTaskEngagement: Float
+  enjoyment: Float
+  equalParticipation: Float
+  sharedGoalCommitment: Float
+  trustAndPsychologicalSafety: Float
+}
+
 type EmotionSegment {
   end_time: Float!
   keyword: String!
@@ -195,7 +203,6 @@ type Meeting {
   id: ID!
   name: String!
   synchrony: String
-  dimensions: String
   performance: String
   a_result: [AResultSegment]
   v_result: [VResultSegment]
@@ -212,6 +219,8 @@ type Meeting {
   team_highlights: [TeamHighlight]
   user_highlights: [UserHighlight]
   sentiment: String
+  posNegRates: [PosNegRate]
+  dimensions: Dimensions
   highlights: String
   url: String!
   thumbnail: String
@@ -276,6 +285,14 @@ type Notification {
 type NotificationConnection {
   items: [Notification]
   nextToken: String
+}
+
+type PosNegRate {
+  negative_rate_a: Float!
+  negative_rate_v: Float!
+  positive_rate_a: Float!
+  positive_rate_v: Float!
+  user: String!
 }
 
 type PoseSegment {
