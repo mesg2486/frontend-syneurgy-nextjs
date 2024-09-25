@@ -8,7 +8,7 @@ import {
 } from "recharts";
 import { FaInfoCircle } from "react-icons/fa";
 import CircleProgressWithIcon from "../fragments/CircleProgressWithIcon";
-import CircularDashboard from "./MeetingScore";
+import CircularDashboard, { ICircularDashboardScores } from "./MeetingScore";
 import { Dimensions } from "@/services/gql/graphql";
 
 const dimensionLabels: Record<string, string> = {
@@ -27,13 +27,19 @@ const defaultDimensions = {
   trustAndPsychologicalSafety: 0,
 };
 
-export default function Data({ dimensions }: { dimensions: Dimensions }) {
+export default function Data({
+  dimensions,
+  scores,
+}: {
+  dimensions: Dimensions;
+  scores: ICircularDashboardScores;
+}) {
   const radarData = Object.entries(dimensions || defaultDimensions).map(
     ([key, value]) => ({
       subject: dimensionLabels[key],
       A: value,
       fullMark: 1,
-    }),
+    })
   );
 
   return (
@@ -48,7 +54,7 @@ export default function Data({ dimensions }: { dimensions: Dimensions }) {
             {" "}
             <GiArcheryTarget className="text-lg" /> Decision making
           </p> */}
-          <CircularDashboard score={56} brainScore={56} />
+          <CircularDashboard scores={scores} />
         </div>
       </div>
       <div className="w-full p-3 bg-slate-800 rounded-xl">

@@ -4,12 +4,18 @@ import * as d3 from "d3";
 // import bigLogo from "./bigLogo.png"; // Import the SVG file
 // import IconAlert from "@/components/icons/IconAlert"; // Update the import path as needed
 
+export interface ICircularDashboardScores {
+  score: number;
+  brainScore: number;
+  bodyScore: number;
+  behaviorScore: number;
+}
+
 const CircularDashboard = ({
-  score,
-  brainScore,
-  bodyScore,
-  behaviorScore,
-}: any) => {
+  scores,
+}: {
+  scores: ICircularDashboardScores;
+}) => {
   const d3Container = useRef(null);
 
   useEffect(() => {
@@ -109,7 +115,7 @@ const CircularDashboard = ({
     // Draw the outer arc
     svg
       .append("path")
-      .datum({ endAngle: Math.PI * 2 * (score / 100) })
+      .datum({ endAngle: Math.PI * 2 * (scores.score / 100) })
       .style("fill", "#6AE338")
       .attr("d", outerArcGenerator as any)
       .attr("class", "outer-arc");
@@ -164,7 +170,7 @@ const CircularDashboard = ({
             ? "#44C5AE"
             : team.label === "BODY"
               ? "#f8d864"
-              : "#2e6cfb",
+              : "#2e6cfb"
         );
 
       startAngle = endAngle;
@@ -236,7 +242,7 @@ const CircularDashboard = ({
       .style("fill", "url(#gradient)")
       .style("font-size", "48px")
       .style("font-weight", "bold")
-      .text(score);
+      .text(scores.score);
 
     // Add big logo left of the performance value
     centerGroup
@@ -249,7 +255,11 @@ const CircularDashboard = ({
   };
 
   const updateArcs = () => {
-    const scoreIndex = [brainScore, bodyScore, behaviorScore];
+    const scoreIndex = [
+      scores.brainScore,
+      scores.bodyScore,
+      scores.behaviorScore,
+    ];
     // Update the outer arc
     const outerArcGenerator = d3
       .arc()
@@ -259,7 +269,7 @@ const CircularDashboard = ({
       .cornerRadius(10);
 
     d3.select(".outer-arc")
-      .datum({ endAngle: Math.PI * 2 * (score / 100) })
+      .datum({ endAngle: Math.PI * 2 * (scores.score / 100) })
       .attr("d", outerArcGenerator as any);
 
     // Update the team arcs
@@ -291,7 +301,7 @@ const CircularDashboard = ({
     });
 
     // Update performance value
-    d3.select(".team-synchrony-value").text(Math.round(score));
+    d3.select(".team-synchrony-value").text(Math.round(scores.score));
   };
 
   return <div className="introTeamChart" ref={d3Container}></div>;

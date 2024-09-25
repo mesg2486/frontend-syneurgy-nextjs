@@ -72,6 +72,10 @@ const GET_MEETING = graphql(`
         positive_rate_v
         user
       }
+      totalScore
+      bodyScore
+      behaviorScore
+      brainScore
     }
   }
 `);
@@ -165,7 +169,15 @@ export default function MeetingPage({ params }: { params: { id: string } }) {
         {toggleTabs === "data" ? (
           <>
             <div className="col-span-12 py-6 lg:col-span-2 md:py-0">
-              <Data dimensions={data?.meeting?.dimensions as any} />
+              <Data
+                scores={{
+                  score: data?.meeting?.totalScore || 0,
+                  bodyScore: data?.meeting?.bodyScore || 0,
+                  brainScore: data?.meeting?.brainScore || 0,
+                  behaviorScore: data?.meeting?.behaviorScore || 0,
+                }}
+                dimensions={data?.meeting?.dimensions as any}
+              />
             </div>
             <div className="flex flex-col col-span-12 space-y-4 lg:col-span-2">
               <Profile />

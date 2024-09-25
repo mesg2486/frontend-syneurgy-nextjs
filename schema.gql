@@ -210,6 +210,10 @@ type Meeting {
   anchor_result: [AnchorResultSegment]
   blink: [BlinkSegment]
   dialogue: [DialogueSegment]
+  totalScore: Float
+  bodyScore: Float
+  behaviorScore: Float
+  brainScore: Float
   emotion: [EmotionSegment]
   emotionText: [EmotionTextSegment]
   pose: [PoseSegment]
