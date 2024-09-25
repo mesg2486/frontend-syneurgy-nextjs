@@ -54,8 +54,8 @@ export default function Data({
             {" "}
             <GiArcheryTarget className="text-lg" /> Decision making
           </p> */}
-          {scores && <CircularDashboard scores={scores} />}
-          {!scores && (
+          {!!scores.score && <CircularDashboard scores={scores} />}
+          {!scores.score && (
             <CircularDashboard
               scores={{
                 behaviorScore: 0,
