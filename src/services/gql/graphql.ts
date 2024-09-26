@@ -265,6 +265,7 @@ export type Meeting = {
   speaker?: Maybe<Array<Maybe<SpeakerSegment>>>;
   summary?: Maybe<Array<Maybe<MeetingSummary>>>;
   synchrony?: Maybe<Scalars["String"]["output"]>;
+  team?: Maybe<Team>;
   teamId: Scalars["String"]["output"];
   team_highlights?: Maybe<Array<Maybe<TeamHighlight>>>;
   thumbnail?: Maybe<Scalars["String"]["output"]>;
@@ -966,6 +967,9 @@ export type TableUserFilterInput = {
 
 export type Team = {
   __typename?: "Team";
+  behaviorScore?: Maybe<Scalars["Float"]["output"]>;
+  bodyScore?: Maybe<Scalars["Float"]["output"]>;
+  brainScore?: Maybe<Scalars["Float"]["output"]>;
   createdAt: Scalars["String"]["output"];
   createdBy: Scalars["ID"]["output"];
   engagementLevel?: Maybe<Scalars["String"]["output"]>;
@@ -979,6 +983,7 @@ export type Team = {
   syncHistory?: Maybe<Scalars["String"]["output"]>;
   synchrony?: Maybe<Scalars["Float"]["output"]>;
   teamInSync?: Maybe<Scalars["String"]["output"]>;
+  totalScore?: Maybe<Scalars["Float"]["output"]>;
   updatedAt: Scalars["String"]["output"];
 };
 
@@ -1234,6 +1239,13 @@ export type GetMeetingQuery = {
       positive_rate_v: number;
       user: string;
     } | null> | null;
+    team?: {
+      __typename?: "Team";
+      bodyScore?: number | null;
+      brainScore?: number | null;
+      totalScore?: number | null;
+      behaviorScore?: number | null;
+    } | null;
   } | null;
 };
 
@@ -1374,6 +1386,7 @@ export type ListMeetingsByUserIdQuery = {
       type: string;
       url: string;
       userId: string;
+      totalScore?: number | null;
     } | null> | null;
   } | null;
 };
@@ -1691,6 +1704,31 @@ export const GetMeetingDocument = {
                         name: { kind: "Name", value: "positive_rate_v" },
                       },
                       { kind: "Field", name: { kind: "Name", value: "user" } },
+                    ],
+                  },
+                },
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "team" },
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "bodyScore" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "brainScore" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "totalScore" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "behaviorScore" },
+                      },
                     ],
                   },
                 },
@@ -2299,6 +2337,10 @@ export const ListMeetingsByUserIdDocument = {
                       {
                         kind: "Field",
                         name: { kind: "Name", value: "userId" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "totalScore" },
                       },
                     ],
                   },

@@ -3,9 +3,17 @@ import React from "react";
 
 interface ICircleProgressProps {
   className?: string;
+  progress: number;
 }
 
-export default function CircleProgress({ className }: ICircleProgressProps) {
+export default function CircleProgress({
+  className,
+  progress,
+}: ICircleProgressProps) {
+  const radius = 16;
+  const circumference = 2 * Math.PI * radius;
+  const offset = circumference - (progress / 100) * circumference;
+
   return (
     <div className={cn("relative size-14", className)}>
       <svg
@@ -18,21 +26,21 @@ export default function CircleProgress({ className }: ICircleProgressProps) {
         <circle
           cx="18"
           cy="18"
-          r="16"
+          r={radius}
           fill="none"
           className="stroke-current text-white/20"
-          stroke-width="5"
+          strokeWidth="5"
         ></circle>
-        <g className="origin-center -rotate-90 transform">
+        <g className="origin-center transform -rotate-90">
           <circle
             cx="18"
             cy="18"
-            r="16"
+            r={radius}
             fill="none"
             className="stroke-current text-primary"
-            stroke-width="5"
-            stroke-dasharray="100"
-            stroke-dashoffset="75"
+            strokeWidth="5"
+            strokeDasharray={circumference}
+            strokeDashoffset={offset}
           ></circle>
         </g>
       </svg>

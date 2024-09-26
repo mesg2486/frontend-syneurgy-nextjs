@@ -231,6 +231,7 @@ type Meeting {
   type: String!
   userId: String!
   teamId: String!
+  team: Team
   date: String!
   createdAt: String!
   updatedAt: String!
@@ -503,6 +504,10 @@ type Team {
   id: ID!
   name: String!
   createdBy: ID!
+  totalScore: Float
+  brainScore: Float
+  bodyScore: Float
+  behaviorScore: Float
   goals: String
   invitations: [Invitations]
   engagementLevel: String

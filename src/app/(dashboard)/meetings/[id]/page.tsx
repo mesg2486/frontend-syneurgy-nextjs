@@ -72,6 +72,12 @@ const GET_MEETING = graphql(`
         positive_rate_v
         user
       }
+      team {
+        bodyScore
+        brainScore
+        totalScore
+        behaviorScore
+      }
       totalScore
       bodyScore
       behaviorScore
@@ -175,6 +181,12 @@ export default function MeetingPage({ params }: { params: { id: string } }) {
                   bodyScore: data?.meeting?.bodyScore || 0,
                   brainScore: data?.meeting?.brainScore || 0,
                   behaviorScore: data?.meeting?.behaviorScore || 0,
+                }}
+                teamScores={{
+                  behaviorScore: data?.meeting?.team?.behaviorScore || 0,
+                  brainScore: data?.meeting?.team?.brainScore || 0,
+                  bodyScore: data?.meeting?.team?.bodyScore || 0,
+                  totalScore: data?.meeting?.team?.totalScore || 0,
                 }}
                 dimensions={data?.meeting?.dimensions as any}
               />

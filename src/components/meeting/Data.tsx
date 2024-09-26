@@ -27,19 +27,28 @@ const defaultDimensions = {
   trustAndPsychologicalSafety: 0,
 };
 
+interface ITeamScores {
+  bodyScore: number;
+  brainScore: number;
+  totalScore: number;
+  behaviorScore: number;
+}
+
 export default function Data({
   dimensions,
   scores,
+  teamScores,
 }: {
   dimensions: Dimensions;
   scores: ICircularDashboardScores;
+  teamScores: ITeamScores;
 }) {
   const radarData = Object.entries(dimensions || defaultDimensions).map(
     ([key, value]) => ({
       subject: dimensionLabels[key],
       A: value,
       fullMark: 1,
-    })
+    }),
   );
 
   return (
@@ -110,21 +119,19 @@ export default function Data({
       </div> */}
       <div className="w-full p-3 pb-8 bg-slate-800 rounded-xl">
         <h2 className="flex items-center mb-4 font-medium text-md gap-x-1">
-          Team Sentiment <FaInfoCircle />
+          Team Performance <FaInfoCircle />
         </h2>
         <div className="grid grid-flow-row grid-cols-3 gap-x-4">
           <div className="flex flex-col items-center justify-center gap-2">
-            <CircleProgressWithIcon />
+            <CircleProgressWithIcon progress={teamScores.brainScore} />
             <p className="text-sm">Brain</p>
           </div>
           <div className="flex flex-col items-center justify-center gap-2">
-            {" "}
-            <CircleProgressWithIcon />
+            <CircleProgressWithIcon progress={teamScores.bodyScore} />
             <p className="text-sm">Body</p>
           </div>
           <div className="flex flex-col items-center justify-center gap-2">
-            {" "}
-            <CircleProgressWithIcon />
+            <CircleProgressWithIcon progress={teamScores.behaviorScore} />
             <p className="text-sm">Behavior</p>
           </div>
         </div>

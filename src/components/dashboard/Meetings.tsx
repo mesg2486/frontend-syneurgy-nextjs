@@ -50,6 +50,7 @@ export const LIST_MEETINGS_BY_USERID = graphql(`
         type
         url
         userId
+        totalScore
       }
     }
   }

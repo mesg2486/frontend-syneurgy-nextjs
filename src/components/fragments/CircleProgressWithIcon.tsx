@@ -6,13 +6,19 @@ interface ICircleProgressProps {
   className?: string;
   color?: string;
   children?: React.ReactNode;
+  progress?: number;
 }
 
 export default function CircleProgressWithIcon({
   className,
   color = "text-primary",
   children,
+  progress = 80,
 }: ICircleProgressProps) {
+  const radius = 16;
+  const circumference = 2 * Math.PI * radius;
+  const offset = circumference - (progress / 100) * circumference;
+
   return (
     <div className={cn("relative size-12", className)}>
       <svg
@@ -30,22 +36,22 @@ export default function CircleProgressWithIcon({
           className="stroke-current text-white/20"
           stroke-width="3"
         ></circle>
-        <g className="origin-center -rotate-90 transform">
+        <g className="origin-center transform -rotate-90">
           <circle
             cx="18"
             cy="18"
-            r="16"
+            r={radius}
             fill="none"
             className={cn("stroke-current", color)}
             stroke-width="3"
-            stroke-dasharray="100"
-            stroke-dashoffset="75"
+            strokeDasharray={circumference}
+            strokeDashoffset={offset}
           ></circle>
         </g>
       </svg>
-      <div className="absolute top-1/2 start-1/2 transform -translate-y-1/2 -translate-x-1/2">
+      <div className="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 start-1/2">
         {children || (
-          <span className="text-center text-xl">
+          <span className="text-xl text-center">
             <FaFaceSmile />
           </span>
         )}
