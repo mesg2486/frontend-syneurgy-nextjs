@@ -161,7 +161,7 @@ export default function UploadMeeting({ progress, setProgress }: IFormProps) {
       sub: user.sub,
       url,
       userId: user.sub,
-      teamId: "team",
+      teamId: "1f593325-a0e2-43d3-a50f-da6bef7c39e2",
       thumbnail,
       id,
       date: data.date.toISOString(),
@@ -349,7 +349,7 @@ export default function UploadMeeting({ progress, setProgress }: IFormProps) {
                           variant={"outline"}
                           className={cn(
                             "text-left border-0 border-b border-input rounded-none px-0 bg-secondary w-full",
-                            !field.value && "",
+                            !field.value && ""
                           )}
                         >
                           {field.value ? (
