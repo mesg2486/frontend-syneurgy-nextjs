@@ -113,7 +113,7 @@ export default function AddMeeting({ open, setIsOpen }: IAddMeetingProps) {
       sub: user?.sub,
       url,
       userId: user?.sub,
-      teamId: "team",
+      teamId: "1f593325-a0e2-43d3-a50f-da6bef7c39e2",
       thumbnail,
       id,
       date: data.date.toISOString(),
@@ -216,7 +216,7 @@ export default function AddMeeting({ open, setIsOpen }: IAddMeetingProps) {
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className="gap-4 text-white/60 flex h-full flex-col"
+            className="flex flex-col h-full gap-4 text-white/60"
           >
             <div className="space-y-6">
               <div
@@ -228,7 +228,7 @@ export default function AddMeeting({ open, setIsOpen }: IAddMeetingProps) {
               >
                 {dropped ? (
                   <>
-                    <HiDocument className="text-4xl mx-auto" />
+                    <HiDocument className="mx-auto text-4xl" />
                     <p className="pt-4">
                       {fileName.length > 40
                         ? fileName.slice(0, 40) + "..."
@@ -237,14 +237,14 @@ export default function AddMeeting({ open, setIsOpen }: IAddMeetingProps) {
                   </>
                 ) : (
                   <>
-                    <FaUpload className="text-2xl mx-auto text-white" />
+                    <FaUpload className="mx-auto text-2xl text-white" />
                     <p className="pt-4 text-xs">
                       Drag & Drop or{" "}
                       <span className="text-primary">
                         Choose file
                         <input
                           onChange={handleFileChange}
-                          className="opacity-0 cursor-pointer inset-0 absolute"
+                          className="absolute inset-0 opacity-0 cursor-pointer"
                           type="file"
                           accept=".mov,.mp4,.hevc"
                         />
@@ -310,7 +310,7 @@ export default function AddMeeting({ open, setIsOpen }: IAddMeetingProps) {
                             variant={"outline"}
                             className={cn(
                               "text-left border-0 border-b border-input rounded-none px-0 bg-secondary w-full",
-                              !field.value && "",
+                              !field.value && ""
                             )}
                           >
                             {field.value ? (
@@ -318,7 +318,7 @@ export default function AddMeeting({ open, setIsOpen }: IAddMeetingProps) {
                             ) : (
                               <span>Pick a date</span>
                             )}
-                            <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                            <CalendarIcon className="w-4 h-4 ml-auto opacity-50" />
                           </Button>
                         </FormControl>
                       </PopoverTrigger>
@@ -339,7 +339,7 @@ export default function AddMeeting({ open, setIsOpen }: IAddMeetingProps) {
                 )}
               />
             </div>
-            <div className="flex-1 flex gap-3 justify-end">
+            <div className="flex justify-end flex-1 gap-3">
               <Button
                 type="button"
                 variant="outline"
@@ -349,10 +349,10 @@ export default function AddMeeting({ open, setIsOpen }: IAddMeetingProps) {
               </Button>
               <Button
                 type="submit"
-                className="rounded-full bg-white hover:bg-white/90"
+                className="bg-white rounded-full hover:bg-white/90"
               >
                 {isPending ? (
-                  <span className="flex gap-2 items-center">
+                  <span className="flex items-center gap-2">
                     <span>Pending</span>
                     <AiOutlineReload className="animate-spin" />
                   </span>
