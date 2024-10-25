@@ -60,11 +60,11 @@ const PolarGraph = ({
     width: any,
     height: any,
     anglePerUser: any,
-    pulse: any
+    pulse: any,
   ) => {
     const timeInMilliseconds = currentTime * 1000;
     const timeIndex = userData.findIndex(
-      (data: any) => data[0] === timeInMilliseconds
+      (data: any) => data[0] === timeInMilliseconds,
     );
     if (timeIndex === -1) return;
 
@@ -172,7 +172,10 @@ const PolarGraph = ({
           .attr("y", yPos + 3)
           .attr("fill", "white")
           .text(
-            0 + " " + circle.text.charAt(0).toUpperCase() + circle.text.slice(1)
+            0 +
+              " " +
+              circle.text.charAt(0).toUpperCase() +
+              circle.text.slice(1),
           );
 
         const bbox = text.node()?.getBBox();
@@ -197,7 +200,7 @@ const PolarGraph = ({
           .insert("path", "#title_chart")
           .attr(
             "d",
-            "M9.54545 3.85714C10.6018 3.85714 11.4482 2.99571 11.4482 1.92857C11.4482 0.861429 10.6018 0 9.54545 0C8.48909 0 7.63636 0.861429 7.63636 1.92857C7.63636 2.99571 8.48909 3.85714 9.54545 3.85714ZM4.45455 3.85714C5.51091 3.85714 6.35727 2.99571 6.35727 1.92857C6.35727 0.861429 5.51091 0 4.45455 0C3.39818 0 2.54545 0.861429 2.54545 1.92857C2.54545 2.99571 3.39818 3.85714 4.45455 3.85714ZM4.45455 5.14286C2.97182 5.14286 0 5.895 0 7.39286V9H8.90909V7.39286C8.90909 5.895 5.93727 5.14286 4.45455 5.14286ZM9.54545 5.14286C9.36091 5.14286 9.15091 5.15571 8.92818 5.175C9.66636 5.715 10.1818 6.44143 10.1818 7.39286V9H14V7.39286C14 5.895 11.0282 5.14286 9.54545 5.14286Z"
+            "M9.54545 3.85714C10.6018 3.85714 11.4482 2.99571 11.4482 1.92857C11.4482 0.861429 10.6018 0 9.54545 0C8.48909 0 7.63636 0.861429 7.63636 1.92857C7.63636 2.99571 8.48909 3.85714 9.54545 3.85714ZM4.45455 3.85714C5.51091 3.85714 6.35727 2.99571 6.35727 1.92857C6.35727 0.861429 5.51091 0 4.45455 0C3.39818 0 2.54545 0.861429 2.54545 1.92857C2.54545 2.99571 3.39818 3.85714 4.45455 3.85714ZM4.45455 5.14286C2.97182 5.14286 0 5.895 0 7.39286V9H8.90909V7.39286C8.90909 5.895 5.93727 5.14286 4.45455 5.14286ZM9.54545 5.14286C9.36091 5.14286 9.15091 5.15571 8.92818 5.175C9.66636 5.715 10.1818 6.44143 10.1818 7.39286V9H14V7.39286C14 5.895 11.0282 5.14286 9.54545 5.14286Z",
           )
           .attr("transform", `translate(${titleWidth - 138}, 178)`)
           .attr("fill", "#A4A7AF");
@@ -503,7 +506,7 @@ const PolarGraph = ({
         const wordCount = timeData[1];
         if (time === closestTime) {
           const wordCountPercentageForUser = Math.round(
-            (wordCount / totalWordCount) * 100
+            (wordCount / totalWordCount) * 100,
           );
           wordCountPercentage.push([userKey, wordCountPercentageForUser]);
         }
@@ -511,7 +514,7 @@ const PolarGraph = ({
     });
 
     wordCountPercentage.forEach(
-      (array) => (array[0] = array[0].replace("speaker", "user"))
+      (array) => (array[0] = array[0].replace("speaker", "user")),
     );
     return wordCountPercentage;
   };
@@ -574,7 +577,7 @@ const PolarGraph = ({
           width,
           height,
           anglePerUser,
-          pulse
+          pulse,
         );
         dotsPosition.splice(index, 1, currentRadius);
       });
