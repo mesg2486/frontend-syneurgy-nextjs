@@ -310,7 +310,7 @@ export default function AddMeeting({ open, setIsOpen }: IAddMeetingProps) {
                             variant={"outline"}
                             className={cn(
                               "text-left border-0 border-b border-input rounded-none px-0 bg-secondary w-full",
-                              !field.value && ""
+                              !field.value && "",
                             )}
                           >
                             {field.value ? (

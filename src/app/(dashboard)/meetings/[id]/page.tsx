@@ -20,7 +20,7 @@ import { graphql } from "@/services/gql";
 import { useQuery } from "@tanstack/react-query";
 import { gql } from "@/services/clients/graphql.client";
 import AskSyneurgy from "@/components/meeting/AskSyneurgy";
-import Summary from "@/components/meeting/summary/Summary";
+import Summary from "@/components/meeting/Summary";
 import TeamDetails from "@/components/meeting/TeamDetails";
 import { PosNegRate } from "@/services/gql/graphql";
 
@@ -78,6 +78,25 @@ const GET_MEETING = graphql(`
         totalScore
         behaviorScore
       }
+      participation {
+        speakerId
+        time
+      }
+      speaker_rates {
+        speakerId
+        rate
+      }
+      speaker_rate_chunks {
+        speakerId
+        chunks {
+          time
+          rate
+        }
+      }
+      speaker_times {
+        speakerId
+        time
+      }
       totalScore
       bodyScore
       behaviorScore
@@ -98,6 +117,11 @@ export default function MeetingPage({ params }: { params: { id: string } }) {
       });
     },
   });
+
+  const averageRate =
+    Number(
+      data?.meeting?.speaker_rates?.reduce((sum, i) => sum + Number(i?.rate), 0)
+    ) / Number(data?.meeting?.speaker_rates?.length);
 
   return (
     <div className="pt-5 pb-32 space-y-6">
@@ -194,6 +218,15 @@ export default function MeetingPage({ params }: { params: { id: string } }) {
             <div className="flex flex-col col-span-12 space-y-4 lg:col-span-2">
               <Profile />
               <TeamDetails
+                participation={data?.meeting?.participation?.map(
+                  (i, index) => ({
+                    color: colors[index % colors.length],
+                    rate: i?.time,
+                    speaker: i?.speakerId,
+                    wpm: data.meeting?.speaker_rates?.[index]?.rate,
+                  })
+                )}
+                teamAvgWpm={averageRate}
                 meetingId={data?.meeting?.id as string}
                 pos_neg_rates={data?.meeting?.posNegRates as PosNegRate[]}
               />
@@ -210,3 +243,16 @@ export default function MeetingPage({ params }: { params: { id: string } }) {
     </div>
   );
 }
+
+const colors = [
+  "#FFA500", // orange
+  "#87CEFA", // light sky blue
+  "#FFD700", // gold
+  "#98FB98", // pale green
+  "#FF8C00", // dark orange
+  "#E0FFFF", // light cyan
+  "#FFB347", // light orange
+  "#F0E68C", // khaki (soft yellow-green)
+  "#FFDAB9", // peach puff
+  "#AFEEEE", // pale turquoise
+];

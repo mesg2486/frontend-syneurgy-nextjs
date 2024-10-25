@@ -60,16 +60,3 @@ export default function Highlights({
     </div>
   );
 }
-
-const highlights = [
-  {
-    time: "08:14",
-    content:
-      "Compared to your team average , your HRV is higher; you're feeling more positive and this topic is not grabbing your attention. Feeling compassionate, but not necessarily driven to action.",
-  },
-  {
-    time: "12:08",
-    content:
-      "Compared to your team average , your HRV is higher; you're feeling more positive and this topic is not grabbing your attention. Feeling compassionate, but not necessarily driven to action.",
-  },
-];

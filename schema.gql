@@ -208,6 +208,10 @@ type Meeting {
   v_result: [VResultSegment]
   rppg_result: [RppgResultSegment]
   anchor_result: [AnchorResultSegment]
+  speaker_rates: [SpeakerRate]
+  participation: [Participation]
+  speaker_rate_chunks: [SpeakerRateChunks]
+  speaker_times: [SpeakerTime]
   blink: [BlinkSegment]
   dialogue: [DialogueSegment]
   totalScore: Float
@@ -292,6 +296,11 @@ type NotificationConnection {
   nextToken: String
 }
 
+type Participation {
+  speakerId: String
+  time: Float
+}
+
 type PosNegRate {
   negative_rate_a: Float!
   negative_rate_v: Float!
@@ -319,6 +328,11 @@ type RppgResultSegment {
   user_1: Float!
 }
 
+type SpeakerChunk {
+  time: Int
+  rate: Float
+}
+
 type SpeakerData {
   speaker_id: String!
   blink_rate: Float!
@@ -326,6 +340,16 @@ type SpeakerData {
   Y: Int!
   X2: Int!
   Y2: Int!
+}
+
+type SpeakerRate {
+  speakerId: String
+  rate: Float
+}
+
+type SpeakerRateChunks {
+  speakerId: String
+  chunks: [SpeakerChunk]
 }
 
 type SpeakerSegment {
@@ -336,6 +360,11 @@ type SpeakerSegment {
   x2: Int!
   y1: Int!
   y2: Int!
+}
+
+type SpeakerTime {
+  speakerId: String
+  time: Float
 }
 
 input TableBooleanFilterInput {

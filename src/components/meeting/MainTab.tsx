@@ -57,9 +57,7 @@ export default function MainTab({ data }: { data: GetMeetingQuery }) {
           )}
         </TabsContent>
         <TabsContent value="universe">
-          <div className="h-[430px]">
-            <UniverseControl />
-          </div>
+          <div className="h-[430px]">{/* <UniverseControl /> */}</div>
         </TabsContent>
         <TabsContent value="heatmap">{/* <Heatmap /> */}</TabsContent>
         <TabsContent value="moments" className="relative">
