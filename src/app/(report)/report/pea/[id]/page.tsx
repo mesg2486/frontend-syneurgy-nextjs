@@ -1,25 +1,115 @@
-"use client";
-
-import { colors, GET_MEETING } from "@/app/(dashboard)/meetings/[id]/page";
 import ParticipationRateChart from "@/components/meeting/ParticipationRateChart";
 import SpeakerRateChart from "@/components/meeting/SpeakerRateChart";
 import { UserRow } from "@/components/meeting/TeamDetails";
-import { gql } from "@/services/clients/graphql.client";
-import { useQuery } from "@tanstack/react-query";
+import { fetchql } from "@/services/clients/fetch";
 import React from "react";
 
-export default function Report({ params }: { params: { id: string } }) {
-  const { data, isLoading, refetch } = useQuery({
-    queryKey: ["meeting", params.id],
-    queryFn: async () => {
-      return await gql.request(GET_MEETING, {
-        id: String(params.id),
-      });
-    },
-  });
+export const colors = [
+  "#FFA500", // orange
+  "#87CEFA", // light sky blue
+  "#FFD700", // gold
+  "#98FB98", // pale green
+  "#FF8C00", // dark orange
+  "#E0FFFF", // light cyan
+  "#FFB347", // light orange
+  "#F0E68C", // khaki (soft yellow-green)
+  "#FFDAB9", // peach puff
+  "#AFEEEE", // pale turquoise
+];
 
+const GET_MEETING_QUERY = `
+  query getMeeting($id: ID!) {
+    meeting: getMeeting(id: $id) {
+      createdAt
+      date
+      highlights
+      id
+      name
+      performance
+      sentiment
+      synchrony
+      teamId
+      thumbnail
+      type
+      updatedAt
+      url
+      userId
+      summary {
+        bullets
+        start
+        end
+        summary
+      }
+      team_highlights {
+        start
+        end
+        description
+      }
+      user_highlights {
+        start
+        end
+        description
+        speaker
+      }
+      dimensions {
+        absorptionOrTaskEngagement
+        enjoyment
+        equalParticipation
+        sharedGoalCommitment
+        trustAndPsychologicalSafety
+      }
+      posNegRates {
+        negative_rate_a
+        negative_rate_v
+        positive_rate_a
+        positive_rate_v
+        user
+      }
+      team {
+        bodyScore
+        brainScore
+        totalScore
+        behaviorScore
+      }
+      participation {
+        speakerId
+        time
+      }
+      speaker_rates {
+        speakerId
+        rate
+      }
+      speaker_rate_chunks {
+        speakerId
+        chunks {
+          time
+          rate
+        }
+      }
+      speaker_times {
+        speakerId
+        time
+      }
+      totalScore
+      bodyScore
+      behaviorScore
+      brainScore
+    }
+  }
+`;
+
+async function fetchMeetingData(id: string) {
+  const result = await fetchql(GET_MEETING_QUERY, { id });
+  if (result.errors) {
+    throw new Error("Failed to fetch meeting data");
+  }
+  return result.data.meeting;
+}
+
+export default async function Report({ params }: { params: { id: string } }) {
+  const meeting = await fetchMeetingData(params.id);
   const renderContent = (type: "v" | "a") =>
-    data?.meeting?.posNegRates?.map((i, index) => (
+    meeting?.posNegRates?.map((i, index) => (
       <UserRow
         key={index}
         meetingId={params.id}
@@ -43,20 +133,20 @@ export default function Report({ params }: { params: { id: string } }) {
 
   const averageRate =
     Number(
-      data?.meeting?.speaker_rates?.reduce(
-        (sum, i) => sum + Number(i?.rate),
-        0,
-      ),
-    ) / Number(data?.meeting?.speaker_rates?.length);
+      meeting?.speaker_rates?.reduce(
+        (sum: any, i: any) => sum + Number(i?.rate),
+        0
+      )
+    ) / Number(meeting?.speaker_rates?.length);
 
   const teamAvgWpm = averageRate;
-  const meetingId = data?.meeting?.id;
+  const meetingId = meeting?.id;
 
-  const participation = data?.meeting?.participation?.map((i, index) => ({
+  const participation = meeting?.participation?.map((i: any, index: any) => ({
     color: colors[index % colors.length],
     rate: i?.time,
     speaker: i?.speakerId,
-    wpm: data.meeting?.speaker_rates?.[index]?.rate,
+    wpm: meeting?.speaker_rates?.[index]?.rate,
   }));
 
   return (
@@ -75,7 +165,7 @@ export default function Report({ params }: { params: { id: string } }) {
                           className="inline-block object-cover w-6 h-6 rounded-full"
                           src={`${process.env.NEXT_PUBLIC_CDN_ENDPOINT}/out/${meetingId}/${i.speaker?.replace(
                             "speaker",
-                            "user",
+                            "user"
                           )}.jpg`}
                           alt={i?.speaker}
                         />
@@ -98,7 +188,7 @@ export default function Report({ params }: { params: { id: string } }) {
                         className="inline-block object-cover w-6 h-6 rounded-full"
                         src={`${process.env.NEXT_PUBLIC_CDN_ENDPOINT}/out/${meetingId}/${i.speaker?.replace(
                           "speaker",
-                          "user",
+                          "user"
                         )}.jpg`}
                         alt={i?.speaker}
                       />
