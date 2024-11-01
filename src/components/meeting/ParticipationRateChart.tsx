@@ -7,7 +7,7 @@ type Value = {
 };
 
 type ParticipationRateChartProps = {
-  values: Value[];
+  values: any;
 };
 
 export default function ParticipationRateChart({
@@ -25,7 +25,7 @@ export default function ParticipationRateChart({
     if (isTeamVariant) {
       let xOffset = 0;
 
-      values.forEach((item) => {
+      values.forEach((item: any) => {
         const barWidth = (item.rate / 100) * totalWidth;
         svg
           .append("rect")

@@ -120,7 +120,10 @@ export default function MeetingPage({ params }: { params: { id: string } }) {
 
   const averageRate =
     Number(
-      data?.meeting?.speaker_rates?.reduce((sum, i) => sum + Number(i?.rate), 0)
+      data?.meeting?.speaker_rates?.reduce(
+        (sum, i) => sum + Number(i?.rate),
+        0,
+      ),
     ) / Number(data?.meeting?.speaker_rates?.length);
 
   return (
@@ -224,7 +227,7 @@ export default function MeetingPage({ params }: { params: { id: string } }) {
                     rate: i?.time,
                     speaker: i?.speakerId,
                     wpm: data.meeting?.speaker_rates?.[index]?.rate,
-                  })
+                  }),
                 )}
                 teamAvgWpm={averageRate}
                 meetingId={data?.meeting?.id as string}

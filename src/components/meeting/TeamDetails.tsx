@@ -30,7 +30,7 @@ export const UserRow = ({
             className="inline-block object-cover w-5 h-5 rounded-full"
             src={`${process.env.NEXT_PUBLIC_CDN_ENDPOINT}/out/${meetingId}/${user?.replace(
               "speaker",
-              "user"
+              "user",
             )}.jpg`}
             alt={user}
           />
@@ -98,7 +98,7 @@ export default function TeamDetails({
                             className="inline-block object-cover w-6 h-6 rounded-full"
                             src={`${process.env.NEXT_PUBLIC_CDN_ENDPOINT}/out/${meetingId}/${i.speaker?.replace(
                               "speaker",
-                              "user"
+                              "user",
                             )}.jpg`}
                             alt={i?.speaker}
                           />
@@ -124,7 +124,7 @@ export default function TeamDetails({
                           className="inline-block object-cover w-6 h-6 rounded-full"
                           src={`${process.env.NEXT_PUBLIC_CDN_ENDPOINT}/out/${meetingId}/${i.speaker?.replace(
                             "speaker",
-                            "user"
+                            "user",
                           )}.jpg`}
                           alt={i?.speaker}
                         />

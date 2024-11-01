@@ -43,7 +43,10 @@ export default function Report({ params }: { params: { id: string } }) {
 
   const averageRate =
     Number(
-      data?.meeting?.speaker_rates?.reduce((sum, i) => sum + Number(i?.rate), 0)
+      data?.meeting?.speaker_rates?.reduce(
+        (sum, i) => sum + Number(i?.rate),
+        0,
+      ),
     ) / Number(data?.meeting?.speaker_rates?.length);
 
   const teamAvgWpm = averageRate;
@@ -72,7 +75,7 @@ export default function Report({ params }: { params: { id: string } }) {
                           className="inline-block object-cover w-6 h-6 rounded-full"
                           src={`${process.env.NEXT_PUBLIC_CDN_ENDPOINT}/out/${meetingId}/${i.speaker?.replace(
                             "speaker",
-                            "user"
+                            "user",
                           )}.jpg`}
                           alt={i?.speaker}
                         />
@@ -95,7 +98,7 @@ export default function Report({ params }: { params: { id: string } }) {
                         className="inline-block object-cover w-6 h-6 rounded-full"
                         src={`${process.env.NEXT_PUBLIC_CDN_ENDPOINT}/out/${meetingId}/${i.speaker?.replace(
                           "speaker",
-                          "user"
+                          "user",
                         )}.jpg`}
                         alt={i?.speaker}
                       />
