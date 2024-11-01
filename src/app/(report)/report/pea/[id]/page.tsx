@@ -109,7 +109,7 @@ async function fetchMeetingData(id: string) {
 export default async function Report({ params }: { params: { id: string } }) {
   const meeting = await fetchMeetingData(params.id);
   const renderContent = (type: "v" | "a") =>
-    meeting?.posNegRates?.map((i, index) => (
+    meeting?.posNegRates?.map((i: any, index: any) => (
       <UserRow
         key={index}
         meetingId={params.id}
