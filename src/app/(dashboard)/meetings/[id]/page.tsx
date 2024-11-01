@@ -24,7 +24,7 @@ import Summary from "@/components/meeting/Summary";
 import TeamDetails from "@/components/meeting/TeamDetails";
 import { PosNegRate } from "@/services/gql/graphql";
 
-const GET_MEETING = graphql(`
+export const GET_MEETING = graphql(`
   query getMeeting($id: ID!) {
     meeting: getMeeting(id: $id) {
       createdAt
@@ -120,10 +120,7 @@ export default function MeetingPage({ params }: { params: { id: string } }) {
 
   const averageRate =
     Number(
-      data?.meeting?.speaker_rates?.reduce(
-        (sum, i) => sum + Number(i?.rate),
-        0,
-      ),
+      data?.meeting?.speaker_rates?.reduce((sum, i) => sum + Number(i?.rate), 0)
     ) / Number(data?.meeting?.speaker_rates?.length);
 
   return (
@@ -227,7 +224,7 @@ export default function MeetingPage({ params }: { params: { id: string } }) {
                     rate: i?.time,
                     speaker: i?.speakerId,
                     wpm: data.meeting?.speaker_rates?.[index]?.rate,
-                  }),
+                  })
                 )}
                 teamAvgWpm={averageRate}
                 meetingId={data?.meeting?.id as string}
@@ -247,7 +244,7 @@ export default function MeetingPage({ params }: { params: { id: string } }) {
   );
 }
 
-const colors = [
+export const colors = [
   "#FFA500", // orange
   "#87CEFA", // light sky blue
   "#FFD700", // gold
