@@ -91,8 +91,8 @@ export default function DashMain({
   const globalSynchrony =
     Number(
       Number(
-        meetings?.reduce((acc, curr) => acc + Number(curr.totalScore), 0)
-      ) / Number(meetings?.length)
+        meetings?.reduce((acc, curr) => acc + Number(curr.totalScore), 0),
+      ) / Number(meetings?.length),
     ).toFixed(0) || 56;
 
   const globalSynchronyOld =
@@ -100,8 +100,8 @@ export default function DashMain({
       Number(
         meetings
           ?.slice(1, meetings.length)
-          ?.reduce((acc, curr) => acc + Number(curr.totalScore), 0)
-      ) / Number(meetings?.length)
+          ?.reduce((acc, curr) => acc + Number(curr.totalScore), 0),
+      ) / Number(meetings?.length),
     ).toFixed(0) || 56;
 
   const globalSynchronyDifference =

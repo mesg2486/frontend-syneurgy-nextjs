@@ -36,7 +36,7 @@ export default function DimensionsRadar({
       subject: dimensionLabels[key],
       A: value,
       fullMark: 1,
-    })
+    }),
   );
 
   console.log(radarData);

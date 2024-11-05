@@ -128,19 +128,24 @@ export default function Meetings() {
           </div>
           <div className="pt-10 space-y-6">
             <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3">
-              {(isLoading || status === "loading") &&
-                Array.from(Array(10)).map((i) => <TeamCardSkeleton key={i} />)}
-              {Number(data?.meetings?.items?.length) > 0 &&
-                data?.meetings?.items?.map((meeting) => (
-                  <MeetingCard meeting={meeting as Meeting} key={meeting?.id} />
+              {isLoading &&
+                Array.from(Array(10)).map((_, index) => (
+                  <TeamCardSkeleton key={index} />
                 ))}
-              {!(isLoading || status === "loading") &&
-                Number(data?.meetings?.items?.length) === 0 && (
-                  <div className="flex items-center justify-center col-span-5 py-40">
-                    No meetings uploaded!
-                  </div>
-                )}
+              {Number(data?.meetings?.items?.length) > 0
+                ? data?.meetings?.items?.map((meeting) => (
+                    <MeetingCard
+                      meeting={meeting as Meeting}
+                      key={meeting?.id}
+                    />
+                  ))
+                : !isLoading && (
+                    <div className="flex items-center justify-center col-span-5 py-40">
+                      No meetings uploaded!
+                    </div>
+                  )}
             </div>
+
             <div className="flex items-center justify-between pt-6">
               <p className="opacity-70">Show 8 from 120 products</p>
               <Pagination>
