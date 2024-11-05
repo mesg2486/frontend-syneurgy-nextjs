@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useEffect, useRef } from "react";
 import * as d3 from "d3";
 // import logoSvg from "./logo.png"; // Import the SVG file
@@ -170,7 +172,7 @@ const CircularDashboard = ({
             ? "#44C5AE"
             : team.label === "BODY"
               ? "#f8d864"
-              : "#2e6cfb",
+              : "#2e6cfb"
         );
 
       startAngle = endAngle;

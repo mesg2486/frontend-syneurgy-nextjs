@@ -1,31 +1,9 @@
 import React from "react";
-import {
-  Radar,
-  RadarChart,
-  PolarGrid,
-  PolarAngleAxis,
-  ResponsiveContainer,
-} from "recharts";
 import { FaInfoCircle } from "react-icons/fa";
 import CircleProgressWithIcon from "../fragments/CircleProgressWithIcon";
 import CircularDashboard, { ICircularDashboardScores } from "./MeetingScore";
 import { Dimensions } from "@/services/gql/graphql";
-
-const dimensionLabels: Record<string, string> = {
-  absorptionOrTaskEngagement: "Engagement",
-  enjoyment: "Enjoyment",
-  equalParticipation: "Participation",
-  sharedGoalCommitment: "Shared goal",
-  trustAndPsychologicalSafety: "Trust",
-};
-
-const defaultDimensions = {
-  absorptionOrTaskEngagement: 0,
-  enjoyment: 0,
-  equalParticipation: 0,
-  sharedGoalCommitment: 0,
-  trustAndPsychologicalSafety: 0,
-};
+import DimensionsRadar from "@/components/meeting/Dimensions";
 
 interface ITeamScores {
   bodyScore: number;
@@ -43,14 +21,6 @@ export default function Data({
   scores: ICircularDashboardScores;
   teamScores: ITeamScores;
 }) {
-  const radarData = Object.entries(dimensions || defaultDimensions).map(
-    ([key, value]) => ({
-      subject: dimensionLabels[key],
-      A: value,
-      fullMark: 1,
-    }),
-  );
-
   return (
     <div className="flex flex-col space-y-6">
       <div className="w-full p-3 bg-slate-800 rounded-xl">
@@ -81,19 +51,7 @@ export default function Data({
           Dimensions <FaInfoCircle />
         </h2>
         <div className="w-full h-48 text-xs">
-          <ResponsiveContainer width="100%" height="100%">
-            <RadarChart
-              cx="50%"
-              barGap={12}
-              cy="50%"
-              outerRadius="80%"
-              data={radarData}
-            >
-              <PolarGrid />
-              <PolarAngleAxis dataKey="subject" />
-              <Radar name="Mike" dataKey="A" fill="#6ae338" fillOpacity={0.6} />
-            </RadarChart>
-          </ResponsiveContainer>
+          <DimensionsRadar dimensions={dimensions} />
         </div>
       </div>
       {/* <div className="w-full p-3 bg-slate-800 rounded-xl">
