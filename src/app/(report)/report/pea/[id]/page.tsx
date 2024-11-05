@@ -135,8 +135,8 @@ export default async function Report({ params }: { params: { id: string } }) {
     Number(
       meeting?.speaker_rates?.reduce(
         (sum: any, i: any) => sum + Number(i?.rate),
-        0
-      )
+        0,
+      ),
     ) / Number(meeting?.speaker_rates?.length);
 
   const teamAvgWpm = averageRate;
@@ -165,7 +165,7 @@ export default async function Report({ params }: { params: { id: string } }) {
                           className="inline-block object-cover w-6 h-6 rounded-full"
                           src={`${process.env.NEXT_PUBLIC_CDN_ENDPOINT}/out/${meetingId}/${i.speaker?.replace(
                             "speaker",
-                            "user"
+                            "user",
                           )}.jpg`}
                           alt={i?.speaker}
                         />
@@ -188,7 +188,7 @@ export default async function Report({ params }: { params: { id: string } }) {
                         className="inline-block object-cover w-6 h-6 rounded-full"
                         src={`${process.env.NEXT_PUBLIC_CDN_ENDPOINT}/out/${meetingId}/${i.speaker?.replace(
                           "speaker",
-                          "user"
+                          "user",
                         )}.jpg`}
                         alt={i?.speaker}
                       />
