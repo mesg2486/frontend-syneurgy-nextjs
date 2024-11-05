@@ -31,6 +31,7 @@ import { gql } from "@/services/clients/graphql.client";
 import { graphql } from "@/services/gql";
 import TeamCardSkeleton from "../placeholders/TeamCard.skeleton";
 import { Meeting } from "@/services/gql/graphql";
+import Dashmain from "../loaders/Dashmain.loader";
 
 export const LIST_MEETINGS_BY_USERID = graphql(`
   query listMeetingsByUserId($userId: ID!) {
@@ -69,8 +70,12 @@ export default function Meetings() {
     enabled: !!session?.user,
   });
 
+  if (isLoading || status === "loading") {
+    return <Dashmain />;
+  }
+
   return (
-    <div className="w-full pt-6 pb-20 bg-secondary">
+    <div className="w-full pt-6 pb-20 bg-secondary c-container">
       <Tabs defaultValue="meetings" className="w-full min-h-[600px]">
         <TabsList>
           <TabsTrigger value="meetings">Meetings</TabsTrigger>
@@ -122,7 +127,7 @@ export default function Meetings() {
             </div>
           </div>
           <div className="pt-10 space-y-6">
-            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3">
               {(isLoading || status === "loading") &&
                 Array.from(Array(10)).map((i) => <TeamCardSkeleton key={i} />)}
               {Number(data?.meetings?.items?.length) > 0 &&

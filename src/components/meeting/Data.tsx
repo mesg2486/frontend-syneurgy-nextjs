@@ -4,13 +4,7 @@ import CircleProgressWithIcon from "../fragments/CircleProgressWithIcon";
 import CircularDashboard, { ICircularDashboardScores } from "./MeetingScore";
 import { Dimensions } from "@/services/gql/graphql";
 import DimensionsRadar from "@/components/meeting/Dimensions";
-
-interface ITeamScores {
-  bodyScore: number;
-  brainScore: number;
-  totalScore: number;
-  behaviorScore: number;
-}
+import TeamPerformance, { ITeamScores } from "./TeamPerformance";
 
 export default function Data({
   dimensions,
@@ -64,12 +58,10 @@ export default function Data({
             <p className="text-sm">Brain</p>
           </div>
           <div className="flex flex-col items-center justify-center gap-2">
-            {" "}
             <CircleProgressWithIcon />
             <p className="text-sm">Body</p>
           </div>
           <div className="flex flex-col items-center justify-center gap-2">
-            {" "}
             <CircleProgressWithIcon />
             <p className="text-sm">Behavior</p>
           </div>
@@ -79,20 +71,7 @@ export default function Data({
         <h2 className="flex items-center mb-4 font-medium text-md gap-x-1">
           Team Performance <FaInfoCircle />
         </h2>
-        <div className="grid grid-flow-row grid-cols-3 gap-x-4">
-          <div className="flex flex-col items-center justify-center gap-2">
-            <CircleProgressWithIcon progress={teamScores.brainScore} />
-            <p className="text-sm">Brain</p>
-          </div>
-          <div className="flex flex-col items-center justify-center gap-2">
-            <CircleProgressWithIcon progress={teamScores.bodyScore} />
-            <p className="text-sm">Body</p>
-          </div>
-          <div className="flex flex-col items-center justify-center gap-2">
-            <CircleProgressWithIcon progress={teamScores.behaviorScore} />
-            <p className="text-sm">Behavior</p>
-          </div>
-        </div>
+        <TeamPerformance teamScores={teamScores} />
       </div>
     </div>
   );

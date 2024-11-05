@@ -68,15 +68,15 @@ export default function Meetings() {
 
   return (
     <div className="py-6 space-y-5">
-      <div className="flex justify-between items-center">
+      <div className="flex items-center justify-between">
         <h2 className="md:text-xl">Team Console</h2>
         <div className="flex flex-row gap-x-3">
           <div className="relative">
             <Input
               placeholder="Search"
-              className="h-full border w-32 md:w-40 px-6 rounded-full"
+              className="w-32 h-full px-6 border rounded-full md:w-40"
             />
-            <div className="absolute right-6 top-1/2 -translate-y-1/2">
+            <div className="absolute -translate-y-1/2 right-6 top-1/2">
               <HiOutlineSearch />
             </div>
           </div>
@@ -86,7 +86,7 @@ export default function Meetings() {
           </Button>
         </div>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 md:grid-cols-4 lg:grid-cols-5">
+      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5">
         {(isLoading || status === "loading") &&
           Array.from(Array(10)).map((i) => <TeamCardSkeleton key={i} />)}
         {Number(data?.teams?.items?.length) > 0 &&
@@ -95,7 +95,7 @@ export default function Meetings() {
           ))}
         {!(isLoading || status === "loading") &&
           Number(data?.teams?.items?.length) === 0 && (
-            <div className="col-span-5 py-40 flex justify-center items-center">
+            <div className="flex items-center justify-center col-span-5 py-40">
               No teams found!
             </div>
           )}

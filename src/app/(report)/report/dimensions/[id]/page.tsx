@@ -31,8 +31,10 @@ export default async function Report({ params }: { params: { id: string } }) {
     <div className="bg-secondary text-secondary-foreground">
       <div className="max-w-[600px] w-full mx-auto flex justify-center items-center min-h-screen">
         <div className="py-5 scale-150">
-          <div className="overflow-hidden rounded-lg h-96 bg-white/10">
-            <DimensionsRadar dimensions={meeting?.dimensions} />
+          <div className="overflow-hidden rounded-lg w-96 h-96 bg-white/10">
+            {meeting?.dimensions && (
+              <DimensionsRadar dimensions={meeting?.dimensions} />
+            )}
           </div>
         </div>
       </div>

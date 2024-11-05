@@ -7,12 +7,14 @@ interface ICircleProgressProps {
   color?: string;
   children?: React.ReactNode;
   progress?: number;
+  fill?: "number" | "icon";
 }
 
 export default function CircleProgressWithIcon({
   className,
   color = "text-primary",
   children,
+  fill = "icon",
   progress = 80,
 }: ICircleProgressProps) {
   const radius = 16;
@@ -50,10 +52,14 @@ export default function CircleProgressWithIcon({
         </g>
       </svg>
       <div className="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 start-1/2">
-        {children || (
-          <span className="text-xl text-center">
-            <FaFaceSmile />
-          </span>
+        {fill === "icon" ? (
+          children || (
+            <span className="text-xl text-center">
+              <FaFaceSmile />
+            </span>
+          )
+        ) : (
+          <span className="text-sm text-center">{progress.toFixed(0)}</span>
         )}
       </div>
     </div>

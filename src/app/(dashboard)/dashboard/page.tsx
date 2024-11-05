@@ -1,13 +1,5 @@
-import DashMain from "@/components/dashboard/DashMain";
-import DetailedData from "@/components/dashboard/DetailedData";
-import Meetings from "@/components/dashboard/Meetings";
+import Dashboard from "@/components/dashboard";
 
 export default function Home() {
-  return (
-    <>
-      <DashMain />
-      <DetailedData />
-      <Meetings />
-    </>
-  );
+  return <Dashboard />;
 }

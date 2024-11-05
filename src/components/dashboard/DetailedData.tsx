@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import {
   Select,
@@ -11,14 +13,22 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/tabs";
 import CircleProgress from "../fragments/CircleProgressWithIcon";
 import { MdOutlineSsidChart } from "react-icons/md";
 import { Progress } from "../ui/progress";
+import Dashmain from "../loaders/Dashmain.loader";
+import { useSession } from "next-auth/react";
 
 export default function DetailedData() {
+  const { data: session, status } = useSession();
+
+  if (status === "loading") {
+    return <Dashmain />;
+  }
+
   return (
-    <section className="py-8 ">
-      <div className="flex w-full justify-end">
+    <section className="py-8 c-container">
+      <div className="flex justify-end w-full">
         <div className="w-max">
           <Select>
-            <SelectTrigger className="rounded-2xl hidden md:flex bg-tertiary px-5 gap-1 border-0">
+            <SelectTrigger className="hidden gap-1 px-5 border-0 rounded-2xl md:flex bg-tertiary">
               <SelectValue placeholder="All Dates" />
             </SelectTrigger>
             <SelectContent>
@@ -58,40 +68,40 @@ export default function DetailedData() {
             <div className="space-y-2">
               <div className="grid grid-cols-12 gap-2 mb-1 text-xs">
                 <div className="flex flex-col items-center">
-                  <h3 className="bg-tertiary py-2 font-medium w-full flex justify-center rounded-t-xl">
+                  <h3 className="flex justify-center w-full py-2 font-medium bg-tertiary rounded-t-xl">
                     Teams
                   </h3>
-                  <h3 className="bg-gray-700 py-3 font-medium text-white w-full flex justify-center rounded-b-xl">
+                  <h3 className="flex justify-center w-full py-3 font-medium text-white bg-gray-700 rounded-b-xl">
                     Name
                   </h3>
                 </div>
                 <div className="flex flex-col items-center">
-                  <h3 className="bg-tertiary py-2 font-medium w-full flex justify-center rounded-t-xl">
+                  <h3 className="flex justify-center w-full py-2 font-medium bg-tertiary rounded-t-xl">
                     Synchrony
                   </h3>
-                  <h3 className="bg-gray-700 py-3 font-medium text-white w-full flex justify-center rounded-b-xl">
+                  <h3 className="flex justify-center w-full py-3 font-medium text-white bg-gray-700 rounded-b-xl">
                     Global
                   </h3>
                 </div>
                 <div className="col-span-5">
-                  <div className=" flex flex-col items-center">
-                    <h3 className="bg-tertiary py-2 font-medium w-full flex justify-center rounded-t-xl">
+                  <div className="flex flex-col items-center ">
+                    <h3 className="flex justify-center w-full py-2 font-medium bg-tertiary rounded-t-xl">
                       Status
                     </h3>
-                    <ul className="grid grid-cols-5 gap-2 rounded-b-xl bg-gray-700 py-3 w-full">
-                      <li className="font-medium text-xs text-white flex justify-center">
+                    <ul className="grid w-full grid-cols-5 gap-2 py-3 bg-gray-700 rounded-b-xl">
+                      <li className="flex justify-center text-xs font-medium text-white">
                         Engage
                       </li>
-                      <li className="font-medium text-xs text-white flex justify-center">
+                      <li className="flex justify-center text-xs font-medium text-white">
                         Alignment
                       </li>
-                      <li className="font-medium text-xs text-white flex justify-center">
+                      <li className="flex justify-center text-xs font-medium text-white">
                         Agency
                       </li>
-                      <li className="font-medium text-xs text-white flex justify-center">
+                      <li className="flex justify-center text-xs font-medium text-white">
                         Stress
                       </li>
-                      <li className="font-medium text-xs text-white flex justify-center">
+                      <li className="flex justify-center text-xs font-medium text-white">
                         Burnout
                       </li>
                     </ul>
@@ -100,33 +110,33 @@ export default function DetailedData() {
                 <div className="col-span-5">
                   <div className="grid grid-cols-2 gap-2">
                     <div className="flex flex-col items-center">
-                      <h3 className="bg-tertiary py-2 font-medium text-xs w-full flex justify-center rounded-t-xl">
+                      <h3 className="flex justify-center w-full py-2 text-xs font-medium bg-tertiary rounded-t-xl">
                         Performance
                       </h3>
-                      <ul className="grid grid-cols-3 gap-2 rounded-b-xl bg-gray-700 py-3 w-full">
-                        <li className="font-medium text-xs  flex justify-center">
+                      <ul className="grid w-full grid-cols-3 gap-2 py-3 bg-gray-700 rounded-b-xl">
+                        <li className="flex justify-center text-xs font-medium">
                           Brain
                         </li>
-                        <li className="font-medium text-xs  flex justify-center">
+                        <li className="flex justify-center text-xs font-medium">
                           Body
                         </li>
-                        <li className="font-medium text-xs  flex justify-center">
+                        <li className="flex justify-center text-xs font-medium">
                           Behaviour
                         </li>
                       </ul>
                     </div>
                     <div className="flex flex-col items-center">
-                      <h3 className="bg-tertiary py-2 font-medium text-xs w-full flex justify-center rounded-t-xl">
+                      <h3 className="flex justify-center w-full py-2 text-xs font-medium bg-tertiary rounded-t-xl">
                         Sentiment
                       </h3>
-                      <ul className="grid grid-cols-3 gap-2 rounded-b-xl bg-gray-700 py-3 w-full">
-                        <li className="font-medium text-xs text-white flex justify-center">
+                      <ul className="grid w-full grid-cols-3 gap-2 py-3 bg-gray-700 rounded-b-xl">
+                        <li className="flex justify-center text-xs font-medium text-white">
                           Negative
                         </li>
-                        <li className="font-medium text-xs text-white flex justify-center">
+                        <li className="flex justify-center text-xs font-medium text-white">
                           Neutral
                         </li>
-                        <li className="font-medium text-xs text-white flex justify-center">
+                        <li className="flex justify-center text-xs font-medium text-white">
                           Positive
                         </li>
                       </ul>
@@ -134,36 +144,36 @@ export default function DetailedData() {
                   </div>
                 </div>
               </div>
-              <div className="grid grid-cols-12 gap-2 my-1 bg-tertiary rounded-lg py-2 px-1">
-                <h2 className="font-medium text-xs  w-full flex justify-center items-center px-1 text-ellipsis overflow-style">
+              <div className="grid grid-cols-12 gap-2 px-1 py-2 my-1 rounded-lg bg-tertiary">
+                <h2 className="flex items-center justify-center w-full px-1 text-xs font-medium text-ellipsis overflow-style">
                   Devlopment Team
                 </h2>
-                <div className="bg-gray-700 font-medium text-xs w-full flex justify-center items-center rounded-xl">
+                <div className="flex items-center justify-center w-full text-xs font-medium bg-gray-700 rounded-xl">
                   <CircleProgress
                     color="text-yellow-500"
                     className="size-8"
                   ></CircleProgress>
                   <p className="flex">43.4%</p>
                 </div>
-                <div className="col-span-5 flex items-center">
-                  <ul className="grid grid-cols-5 gap-2 w-full">
-                    <li className="flex flex-row gap-x-1 font-medium text-xs justify-center rounded-xl bg-gray-700 py-3 items-center">
+                <div className="flex items-center col-span-5">
+                  <ul className="grid w-full grid-cols-5 gap-2">
+                    <li className="flex flex-row items-center justify-center py-3 text-xs font-medium bg-gray-700 gap-x-1 rounded-xl">
                       <MdOutlineSsidChart className="text-red-500" />
                       20.8%
                     </li>
-                    <li className="flex flex-row gap-x-1 font-medium text-xs justify-center rounded-xl bg-gray-700 py-3 items-center">
+                    <li className="flex flex-row items-center justify-center py-3 text-xs font-medium bg-gray-700 gap-x-1 rounded-xl">
                       <MdOutlineSsidChart className="text-red-500" />
                       83.23%
                     </li>
-                    <li className="flex flex-row gap-x-1 font-medium text-xs justify-center rounded-xl bg-gray-700 py-3 items-center">
+                    <li className="flex flex-row items-center justify-center py-3 text-xs font-medium bg-gray-700 gap-x-1 rounded-xl">
                       <MdOutlineSsidChart className="text-red-500" />
                       13.84%
                     </li>
-                    <li className="flex flex-row gap-x-1 font-medium text-xs justify-center rounded-xl bg-gray-700 py-3 items-center">
+                    <li className="flex flex-row items-center justify-center py-3 text-xs font-medium bg-gray-700 gap-x-1 rounded-xl">
                       <MdOutlineSsidChart className="text-red-500" />
                       208.24%
                     </li>
-                    <li className="flex flex-row gap-x-1 font-medium text-xs justify-center rounded-xl bg-gray-700 py-3 items-center">
+                    <li className="flex flex-row items-center justify-center py-3 text-xs font-medium bg-gray-700 gap-x-1 rounded-xl">
                       <MdOutlineSsidChart className="text-red-500" />
                       21.57%
                     </li>
@@ -171,71 +181,71 @@ export default function DetailedData() {
                 </div>
                 <div className="col-span-5">
                   <div className="grid grid-cols-2 gap-2">
-                    <div className="flex flex-col justify-center items-center">
-                      <ul className="grid grid-cols-3 gap-2 rounded-xl bg-gray-700 py-3 w-full ">
-                        <li className="flex flex-col gap-y-1 font-medium text-xs justify-center px-2 text-center">
+                    <div className="flex flex-col items-center justify-center">
+                      <ul className="grid w-full grid-cols-3 gap-2 py-3 bg-gray-700 rounded-xl ">
+                        <li className="flex flex-col justify-center px-2 text-xs font-medium text-center gap-y-1">
                           40.31
-                          <Progress value={40} className="bg-white h-1" />
+                          <Progress value={40} className="h-1 bg-white" />
                         </li>
-                        <li className="flex flex-col gap-y-1 font-medium text-xs justify-center px-2 text-center">
+                        <li className="flex flex-col justify-center px-2 text-xs font-medium text-center gap-y-1">
                           40.31
-                          <Progress value={40} className="bg-white h-1" />
+                          <Progress value={40} className="h-1 bg-white" />
                         </li>
-                        <li className="flex flex-col gap-y-1 font-medium text-xs justify-center px-2 text-center">
+                        <li className="flex flex-col justify-center px-2 text-xs font-medium text-center gap-y-1">
                           40.31
-                          <Progress value={40} className="bg-white h-1" />
+                          <Progress value={40} className="h-1 bg-white" />
                         </li>
                       </ul>
                     </div>
-                    <div className="flex flex-col justify-center items-center">
-                      <ul className="grid grid-cols-3 gap-2 rounded-xl bg-gray-700 py-3 w-full ">
-                        <li className="flex flex-col gap-y-1 font-medium text-xs justify-center px-2 text-center">
+                    <div className="flex flex-col items-center justify-center">
+                      <ul className="grid w-full grid-cols-3 gap-2 py-3 bg-gray-700 rounded-xl ">
+                        <li className="flex flex-col justify-center px-2 text-xs font-medium text-center gap-y-1">
                           40.31
-                          <Progress value={40} className="bg-white h-1" />
+                          <Progress value={40} className="h-1 bg-white" />
                         </li>
-                        <li className="flex flex-col gap-y-1 font-medium text-xs justify-center px-2 text-center">
+                        <li className="flex flex-col justify-center px-2 text-xs font-medium text-center gap-y-1">
                           40.31
-                          <Progress value={40} className="bg-white h-1" />
+                          <Progress value={40} className="h-1 bg-white" />
                         </li>
-                        <li className="flex flex-col gap-y-1 font-medium text-xs justify-center px-2 text-center">
+                        <li className="flex flex-col justify-center px-2 text-xs font-medium text-center gap-y-1">
                           40.31
-                          <Progress value={40} className="bg-white h-1" />
+                          <Progress value={40} className="h-1 bg-white" />
                         </li>
                       </ul>
                     </div>
                   </div>
                 </div>
               </div>
-              <div className="grid grid-cols-12 gap-2 my-1 bg-tertiary rounded-lg py-2 px-1">
-                <h2 className="font-medium text-xs  w-full flex justify-center items-center px-1 text-ellipsis overflow-style">
+              <div className="grid grid-cols-12 gap-2 px-1 py-2 my-1 rounded-lg bg-tertiary">
+                <h2 className="flex items-center justify-center w-full px-1 text-xs font-medium text-ellipsis overflow-style">
                   SNRG baseline
                 </h2>
-                <div className="bg-gray-700 font-medium text-xs w-full flex justify-center items-center rounded-xl">
+                <div className="flex items-center justify-center w-full text-xs font-medium bg-gray-700 rounded-xl">
                   <CircleProgress
                     color="text-yellow-500"
                     className="size-8"
                   ></CircleProgress>
                   <p>43.4%</p>
                 </div>
-                <div className="col-span-5 flex items-center">
-                  <ul className="grid grid-cols-5 gap-2 w-full">
-                    <li className="flex flex-row gap-x-1 font-medium text-xs justify-center rounded-xl bg-gray-700 py-3 items-center">
+                <div className="flex items-center col-span-5">
+                  <ul className="grid w-full grid-cols-5 gap-2">
+                    <li className="flex flex-row items-center justify-center py-3 text-xs font-medium bg-gray-700 gap-x-1 rounded-xl">
                       <MdOutlineSsidChart className="text-red-500" />
                       20.8%
                     </li>
-                    <li className="flex flex-row gap-x-1 font-medium text-xs justify-center rounded-xl bg-gray-700 py-3 items-center">
+                    <li className="flex flex-row items-center justify-center py-3 text-xs font-medium bg-gray-700 gap-x-1 rounded-xl">
                       <MdOutlineSsidChart className="text-red-500" />
                       83.23%
                     </li>
-                    <li className="flex flex-row gap-x-1 font-medium text-xs justify-center rounded-xl bg-gray-700 py-3 items-center">
+                    <li className="flex flex-row items-center justify-center py-3 text-xs font-medium bg-gray-700 gap-x-1 rounded-xl">
                       <MdOutlineSsidChart className="text-red-500" />
                       13.84%
                     </li>
-                    <li className="flex flex-row gap-x-1 font-medium text-xs justify-center rounded-xl bg-gray-700 py-3 items-center">
+                    <li className="flex flex-row items-center justify-center py-3 text-xs font-medium bg-gray-700 gap-x-1 rounded-xl">
                       <MdOutlineSsidChart className="text-red-500" />
                       208.24%
                     </li>
-                    <li className="flex flex-row gap-x-1 font-medium text-xs justify-center rounded-xl bg-gray-700 py-3 items-center">
+                    <li className="flex flex-row items-center justify-center py-3 text-xs font-medium bg-gray-700 gap-x-1 rounded-xl">
                       <MdOutlineSsidChart className="text-red-500" />
                       21.57%
                     </li>
@@ -243,71 +253,71 @@ export default function DetailedData() {
                 </div>
                 <div className="col-span-5">
                   <div className="grid grid-cols-2 gap-2">
-                    <div className="flex flex-col justify-center items-center">
-                      <ul className="grid grid-cols-3 gap-2 rounded-xl bg-gray-700 py-3 w-full ">
-                        <li className="flex flex-col gap-y-1 font-medium text-xs justify-center px-2 text-center">
+                    <div className="flex flex-col items-center justify-center">
+                      <ul className="grid w-full grid-cols-3 gap-2 py-3 bg-gray-700 rounded-xl ">
+                        <li className="flex flex-col justify-center px-2 text-xs font-medium text-center gap-y-1">
                           40.31
-                          <Progress value={40} className="bg-white h-1" />
+                          <Progress value={40} className="h-1 bg-white" />
                         </li>
-                        <li className="flex flex-col gap-y-1 font-medium text-xs justify-center px-2 text-center">
+                        <li className="flex flex-col justify-center px-2 text-xs font-medium text-center gap-y-1">
                           40.31
-                          <Progress value={40} className="bg-white h-1" />
+                          <Progress value={40} className="h-1 bg-white" />
                         </li>
-                        <li className="flex flex-col gap-y-1 font-medium text-xs justify-center px-2 text-center">
+                        <li className="flex flex-col justify-center px-2 text-xs font-medium text-center gap-y-1">
                           40.31
-                          <Progress value={40} className="bg-white h-1" />
+                          <Progress value={40} className="h-1 bg-white" />
                         </li>
                       </ul>
                     </div>
-                    <div className="flex flex-col justify-center items-center">
-                      <ul className="grid grid-cols-3 gap-2 rounded-xl bg-gray-700 py-3 w-full ">
-                        <li className="flex flex-col gap-y-1 font-medium text-xs justify-center px-2 text-center">
+                    <div className="flex flex-col items-center justify-center">
+                      <ul className="grid w-full grid-cols-3 gap-2 py-3 bg-gray-700 rounded-xl ">
+                        <li className="flex flex-col justify-center px-2 text-xs font-medium text-center gap-y-1">
                           40.31
-                          <Progress value={40} className="bg-white h-1" />
+                          <Progress value={40} className="h-1 bg-white" />
                         </li>
-                        <li className="flex flex-col gap-y-1 font-medium text-xs justify-center px-2 text-center">
+                        <li className="flex flex-col justify-center px-2 text-xs font-medium text-center gap-y-1">
                           40.31
-                          <Progress value={40} className="bg-white h-1" />
+                          <Progress value={40} className="h-1 bg-white" />
                         </li>
-                        <li className="flex flex-col gap-y-1 font-medium text-xs justify-center px-2 text-center">
+                        <li className="flex flex-col justify-center px-2 text-xs font-medium text-center gap-y-1">
                           40.31
-                          <Progress value={40} className="bg-white h-1" />
+                          <Progress value={40} className="h-1 bg-white" />
                         </li>
                       </ul>
                     </div>
                   </div>
                 </div>
               </div>
-              <div className="grid grid-cols-12 gap-2 my-1 bg-tertiary rounded-lg py-2 px-1">
-                <h2 className="font-medium text-xs  w-full flex justify-center items-center px-1 text-ellipsis overflow-style">
+              <div className="grid grid-cols-12 gap-2 px-1 py-2 my-1 rounded-lg bg-tertiary">
+                <h2 className="flex items-center justify-center w-full px-1 text-xs font-medium text-ellipsis overflow-style">
                   GitLab PMM
                 </h2>
-                <div className="bg-gray-700 font-medium text-xs w-full flex justify-center items-center rounded-xl">
+                <div className="flex items-center justify-center w-full text-xs font-medium bg-gray-700 rounded-xl">
                   <CircleProgress
                     color="text-yellow-500"
                     className="size-8"
                   ></CircleProgress>
                   <p>43.4%</p>
                 </div>
-                <div className="col-span-5 flex items-center">
-                  <ul className="grid grid-cols-5 gap-2 w-full">
-                    <li className="flex flex-row gap-x-1 font-medium text-xs justify-center rounded-xl bg-gray-700 py-3 items-center">
+                <div className="flex items-center col-span-5">
+                  <ul className="grid w-full grid-cols-5 gap-2">
+                    <li className="flex flex-row items-center justify-center py-3 text-xs font-medium bg-gray-700 gap-x-1 rounded-xl">
                       <MdOutlineSsidChart className="text-red-500" />
                       20.8%
                     </li>
-                    <li className="flex flex-row gap-x-1 font-medium text-xs justify-center rounded-xl bg-gray-700 py-3 items-center">
+                    <li className="flex flex-row items-center justify-center py-3 text-xs font-medium bg-gray-700 gap-x-1 rounded-xl">
                       <MdOutlineSsidChart className="text-red-500" />
                       83.23%
                     </li>
-                    <li className="flex flex-row gap-x-1 font-medium text-xs justify-center rounded-xl bg-gray-700 py-3 items-center">
+                    <li className="flex flex-row items-center justify-center py-3 text-xs font-medium bg-gray-700 gap-x-1 rounded-xl">
                       <MdOutlineSsidChart className="text-red-500" />
                       13.84%
                     </li>
-                    <li className="flex flex-row gap-x-1 font-medium text-xs justify-center rounded-xl bg-gray-700 py-3 items-center">
+                    <li className="flex flex-row items-center justify-center py-3 text-xs font-medium bg-gray-700 gap-x-1 rounded-xl">
                       <MdOutlineSsidChart className="text-red-500" />
                       208.24%
                     </li>
-                    <li className="flex flex-row gap-x-1 font-medium text-xs justify-center rounded-xl bg-gray-700 py-3 items-center">
+                    <li className="flex flex-row items-center justify-center py-3 text-xs font-medium bg-gray-700 gap-x-1 rounded-xl">
                       <MdOutlineSsidChart className="text-red-500" />
                       21.57%
                     </li>
@@ -315,35 +325,35 @@ export default function DetailedData() {
                 </div>
                 <div className="col-span-5">
                   <div className="grid grid-cols-2 gap-2">
-                    <div className="flex flex-col justify-center items-center">
-                      <ul className="grid grid-cols-3 gap-2 rounded-xl bg-gray-700 py-3 w-full ">
-                        <li className="flex flex-col gap-y-1 font-medium text-xs justify-center px-2 text-center">
+                    <div className="flex flex-col items-center justify-center">
+                      <ul className="grid w-full grid-cols-3 gap-2 py-3 bg-gray-700 rounded-xl ">
+                        <li className="flex flex-col justify-center px-2 text-xs font-medium text-center gap-y-1">
                           40.31
-                          <Progress value={40} className="bg-white h-1" />
+                          <Progress value={40} className="h-1 bg-white" />
                         </li>
-                        <li className="flex flex-col gap-y-1 font-medium text-xs justify-center px-2 text-center">
+                        <li className="flex flex-col justify-center px-2 text-xs font-medium text-center gap-y-1">
                           40.31
-                          <Progress value={40} className="bg-white h-1" />
+                          <Progress value={40} className="h-1 bg-white" />
                         </li>
-                        <li className="flex flex-col gap-y-1 font-medium text-xs justify-center px-2 text-center">
+                        <li className="flex flex-col justify-center px-2 text-xs font-medium text-center gap-y-1">
                           40.31
-                          <Progress value={40} className="bg-white h-1" />
+                          <Progress value={40} className="h-1 bg-white" />
                         </li>
                       </ul>
                     </div>
-                    <div className="flex flex-col justify-center items-center">
-                      <ul className="grid grid-cols-3 gap-2 rounded-xl bg-gray-700 py-3 w-full ">
-                        <li className="flex flex-col gap-y-1 font-medium text-xs justify-center px-2 text-center">
+                    <div className="flex flex-col items-center justify-center">
+                      <ul className="grid w-full grid-cols-3 gap-2 py-3 bg-gray-700 rounded-xl ">
+                        <li className="flex flex-col justify-center px-2 text-xs font-medium text-center gap-y-1">
                           40.31
-                          <Progress value={40} className="bg-white h-1" />
+                          <Progress value={40} className="h-1 bg-white" />
                         </li>
-                        <li className="flex flex-col gap-y-1 font-medium text-xs justify-center px-2 text-center">
+                        <li className="flex flex-col justify-center px-2 text-xs font-medium text-center gap-y-1">
                           40.31
-                          <Progress value={40} className="bg-white h-1" />
+                          <Progress value={40} className="h-1 bg-white" />
                         </li>
-                        <li className="flex flex-col gap-y-1 font-medium text-xs justify-center px-2 text-center">
+                        <li className="flex flex-col justify-center px-2 text-xs font-medium text-center gap-y-1">
                           40.31
-                          <Progress value={40} className="bg-white h-1" />
+                          <Progress value={40} className="h-1 bg-white" />
                         </li>
                       </ul>
                     </div>
@@ -356,43 +366,43 @@ export default function DetailedData() {
             <div className="space-y-2">
               <div className="grid grid-cols-12 gap-2 mb-1 text-xs">
                 <div className="flex flex-col items-center">
-                  <h3 className="bg-tertiary py-2 font-medium w-full flex justify-center rounded-t-xl">
+                  <h3 className="flex justify-center w-full py-2 font-medium bg-tertiary rounded-t-xl">
                     Teams
                   </h3>
-                  <h3 className="bg-gray-700 py-3 font-medium text-white w-full flex justify-center rounded-b-xl">
+                  <h3 className="flex justify-center w-full py-3 font-medium text-white bg-gray-700 rounded-b-xl">
                     Name
                   </h3>
                 </div>
                 <div className="flex flex-col items-center">
-                  <h3 className="bg-tertiary py-2 font-medium w-full flex justify-center rounded-t-xl">
+                  <h3 className="flex justify-center w-full py-2 font-medium bg-tertiary rounded-t-xl">
                     Synchrony
                   </h3>
-                  <h3 className="bg-gray-700 py-3 font-medium text-white w-full flex justify-center rounded-b-xl">
+                  <h3 className="flex justify-center w-full py-3 font-medium text-white bg-gray-700 rounded-b-xl">
                     Global
                   </h3>
                 </div>
                 <div className="col-span-5">
-                  <div className=" flex flex-col items-center">
-                    <h3 className="bg-tertiary py-2 font-medium w-full flex justify-center rounded-t-xl">
+                  <div className="flex flex-col items-center ">
+                    <h3 className="flex justify-center w-full py-2 font-medium bg-tertiary rounded-t-xl">
                       Dimension
                     </h3>
-                    <ul className="grid grid-cols-6 gap-2 rounded-b-xl bg-gray-700 py-3 w-full">
-                      <li className="font-medium text-xs text-white flex justify-center">
+                    <ul className="grid w-full grid-cols-6 gap-2 py-3 bg-gray-700 rounded-b-xl">
+                      <li className="flex justify-center text-xs font-medium text-white">
                         Trust
                       </li>
-                      <li className="font-medium text-xs text-white flex justify-center">
+                      <li className="flex justify-center text-xs font-medium text-white">
                         Safety
                       </li>
-                      <li className="font-medium text-xs text-white flex justify-center">
+                      <li className="flex justify-center text-xs font-medium text-white">
                         Participate
                       </li>
-                      <li className="font-medium text-xs text-white flex justify-center">
+                      <li className="flex justify-center text-xs font-medium text-white">
                         Enjoy
                       </li>
-                      <li className="font-medium text-xs text-white flex justify-center">
+                      <li className="flex justify-center text-xs font-medium text-white">
                         Goal
                       </li>
-                      <li className="font-medium text-xs text-white flex justify-center">
+                      <li className="flex justify-center text-xs font-medium text-white">
                         Engage
                       </li>
                     </ul>
@@ -401,33 +411,33 @@ export default function DetailedData() {
                 <div className="col-span-5">
                   <div className="grid grid-cols-2 gap-2">
                     <div className="flex flex-col items-center">
-                      <h3 className="bg-tertiary py-2 font-medium text-xs w-full flex justify-center rounded-t-xl">
+                      <h3 className="flex justify-center w-full py-2 text-xs font-medium bg-tertiary rounded-t-xl">
                         Performance
                       </h3>
-                      <ul className="grid grid-cols-3 gap-2 rounded-b-xl bg-gray-700 py-3 w-full">
-                        <li className="font-medium text-xs  flex justify-center">
+                      <ul className="grid w-full grid-cols-3 gap-2 py-3 bg-gray-700 rounded-b-xl">
+                        <li className="flex justify-center text-xs font-medium">
                           Brain
                         </li>
-                        <li className="font-medium text-xs  flex justify-center">
+                        <li className="flex justify-center text-xs font-medium">
                           Body
                         </li>
-                        <li className="font-medium text-xs  flex justify-center">
+                        <li className="flex justify-center text-xs font-medium">
                           Behaviour
                         </li>
                       </ul>
                     </div>
                     <div className="flex flex-col items-center">
-                      <h3 className="bg-tertiary py-2 font-medium text-xs w-full flex justify-center rounded-t-xl">
+                      <h3 className="flex justify-center w-full py-2 text-xs font-medium bg-tertiary rounded-t-xl">
                         Sentiment
                       </h3>
-                      <ul className="grid grid-cols-3 gap-2 rounded-b-xl bg-gray-700 py-3 w-full">
-                        <li className="font-medium text-xs text-white flex justify-center">
+                      <ul className="grid w-full grid-cols-3 gap-2 py-3 bg-gray-700 rounded-b-xl">
+                        <li className="flex justify-center text-xs font-medium text-white">
                           Negative
                         </li>
-                        <li className="font-medium text-xs text-white flex justify-center">
+                        <li className="flex justify-center text-xs font-medium text-white">
                           Neutral
                         </li>
-                        <li className="font-medium text-xs text-white flex justify-center">
+                        <li className="flex justify-center text-xs font-medium text-white">
                           Positive
                         </li>
                       </ul>
@@ -435,40 +445,40 @@ export default function DetailedData() {
                   </div>
                 </div>
               </div>
-              <div className="grid grid-cols-12 gap-2 my-1 bg-tertiary rounded-lg py-2 px-1">
-                <h2 className="font-medium text-xs  w-full flex justify-center items-center px-1 text-ellipsis overflow-style">
+              <div className="grid grid-cols-12 gap-2 px-1 py-2 my-1 rounded-lg bg-tertiary">
+                <h2 className="flex items-center justify-center w-full px-1 text-xs font-medium text-ellipsis overflow-style">
                   Devlopment Team
                 </h2>
-                <div className="bg-gray-700 font-medium text-xs w-full flex justify-center items-center rounded-xl">
+                <div className="flex items-center justify-center w-full text-xs font-medium bg-gray-700 rounded-xl">
                   <CircleProgress
                     color="text-yellow-500"
                     className="size-8"
                   ></CircleProgress>
                   <p className="flex">43.4%</p>
                 </div>
-                <div className="col-span-5 flex items-center">
-                  <ul className="grid grid-cols-6 gap-2 w-full">
-                    <li className="flex flex-row gap-x-1 font-medium text-xs justify-center rounded-xl bg-gray-700 py-3 items-center">
+                <div className="flex items-center col-span-5">
+                  <ul className="grid w-full grid-cols-6 gap-2">
+                    <li className="flex flex-row items-center justify-center py-3 text-xs font-medium bg-gray-700 gap-x-1 rounded-xl">
                       <MdOutlineSsidChart className="text-red-500" />
                       20.8%
                     </li>
-                    <li className="flex flex-row gap-x-1 font-medium text-xs justify-center rounded-xl bg-gray-700 py-3 items-center">
+                    <li className="flex flex-row items-center justify-center py-3 text-xs font-medium bg-gray-700 gap-x-1 rounded-xl">
                       <MdOutlineSsidChart className="text-red-500" />
                       83.23%
                     </li>
-                    <li className="flex flex-row gap-x-1 font-medium text-xs justify-center rounded-xl bg-gray-700 py-3 items-center">
+                    <li className="flex flex-row items-center justify-center py-3 text-xs font-medium bg-gray-700 gap-x-1 rounded-xl">
                       <MdOutlineSsidChart className="text-red-500" />
                       13.84%
                     </li>
-                    <li className="flex flex-row gap-x-1 font-medium text-xs justify-center rounded-xl bg-gray-700 py-3 items-center">
+                    <li className="flex flex-row items-center justify-center py-3 text-xs font-medium bg-gray-700 gap-x-1 rounded-xl">
                       <MdOutlineSsidChart className="text-red-500" />
                       208.24%
                     </li>
-                    <li className="flex flex-row gap-x-1 font-medium text-xs justify-center rounded-xl bg-gray-700 py-3 items-center">
+                    <li className="flex flex-row items-center justify-center py-3 text-xs font-medium bg-gray-700 gap-x-1 rounded-xl">
                       <MdOutlineSsidChart className="text-red-500" />
                       21.57%
                     </li>
-                    <li className="flex flex-row gap-x-1 font-medium text-xs justify-center rounded-xl bg-gray-700 py-3 items-center">
+                    <li className="flex flex-row items-center justify-center py-3 text-xs font-medium bg-gray-700 gap-x-1 rounded-xl">
                       <MdOutlineSsidChart className="text-red-500" />
                       8.57%
                     </li>
@@ -476,75 +486,75 @@ export default function DetailedData() {
                 </div>
                 <div className="col-span-5">
                   <div className="grid grid-cols-2 gap-2">
-                    <div className="flex flex-col justify-center items-center">
-                      <ul className="grid grid-cols-3 gap-2 rounded-xl bg-gray-700 py-3 w-full ">
-                        <li className="flex flex-col gap-y-1 font-medium text-xs justify-center px-2 text-center">
+                    <div className="flex flex-col items-center justify-center">
+                      <ul className="grid w-full grid-cols-3 gap-2 py-3 bg-gray-700 rounded-xl ">
+                        <li className="flex flex-col justify-center px-2 text-xs font-medium text-center gap-y-1">
                           40.31
-                          <Progress value={40} className="bg-white h-1" />
+                          <Progress value={40} className="h-1 bg-white" />
                         </li>
-                        <li className="flex flex-col gap-y-1 font-medium text-xs justify-center px-2 text-center">
+                        <li className="flex flex-col justify-center px-2 text-xs font-medium text-center gap-y-1">
                           40.31
-                          <Progress value={40} className="bg-white h-1" />
+                          <Progress value={40} className="h-1 bg-white" />
                         </li>
-                        <li className="flex flex-col gap-y-1 font-medium text-xs justify-center px-2 text-center">
+                        <li className="flex flex-col justify-center px-2 text-xs font-medium text-center gap-y-1">
                           40.31
-                          <Progress value={40} className="bg-white h-1" />
+                          <Progress value={40} className="h-1 bg-white" />
                         </li>
                       </ul>
                     </div>
-                    <div className="flex flex-col justify-center items-center">
-                      <ul className="grid grid-cols-3 gap-2 rounded-xl bg-gray-700 py-3 w-full ">
-                        <li className="flex flex-col gap-y-1 font-medium text-xs justify-center px-2 text-center">
+                    <div className="flex flex-col items-center justify-center">
+                      <ul className="grid w-full grid-cols-3 gap-2 py-3 bg-gray-700 rounded-xl ">
+                        <li className="flex flex-col justify-center px-2 text-xs font-medium text-center gap-y-1">
                           40.31
-                          <Progress value={40} className="bg-white h-1" />
+                          <Progress value={40} className="h-1 bg-white" />
                         </li>
-                        <li className="flex flex-col gap-y-1 font-medium text-xs justify-center px-2 text-center">
+                        <li className="flex flex-col justify-center px-2 text-xs font-medium text-center gap-y-1">
                           40.31
-                          <Progress value={40} className="bg-white h-1" />
+                          <Progress value={40} className="h-1 bg-white" />
                         </li>
-                        <li className="flex flex-col gap-y-1 font-medium text-xs justify-center px-2 text-center">
+                        <li className="flex flex-col justify-center px-2 text-xs font-medium text-center gap-y-1">
                           40.31
-                          <Progress value={40} className="bg-white h-1" />
+                          <Progress value={40} className="h-1 bg-white" />
                         </li>
                       </ul>
                     </div>
                   </div>
                 </div>
               </div>
-              <div className="grid grid-cols-12 gap-2 my-1 bg-tertiary rounded-lg py-2 px-1">
-                <h2 className="font-medium text-xs  w-full flex justify-center items-center px-1 text-ellipsis overflow-style">
+              <div className="grid grid-cols-12 gap-2 px-1 py-2 my-1 rounded-lg bg-tertiary">
+                <h2 className="flex items-center justify-center w-full px-1 text-xs font-medium text-ellipsis overflow-style">
                   SNRG baseline
                 </h2>
-                <div className="bg-gray-700 font-medium text-xs w-full flex justify-center items-center rounded-xl">
+                <div className="flex items-center justify-center w-full text-xs font-medium bg-gray-700 rounded-xl">
                   <CircleProgress
                     color="text-yellow-500"
                     className="size-8"
                   ></CircleProgress>
                   <p>43.4%</p>
                 </div>
-                <div className="col-span-5 flex items-center">
-                  <ul className="grid grid-cols-6 gap-2 w-full">
-                    <li className="flex flex-row gap-x-1 font-medium text-xs justify-center rounded-xl bg-gray-700 py-3 items-center">
+                <div className="flex items-center col-span-5">
+                  <ul className="grid w-full grid-cols-6 gap-2">
+                    <li className="flex flex-row items-center justify-center py-3 text-xs font-medium bg-gray-700 gap-x-1 rounded-xl">
                       <MdOutlineSsidChart className="text-red-500" />
                       20.8%
                     </li>
-                    <li className="flex flex-row gap-x-1 font-medium text-xs justify-center rounded-xl bg-gray-700 py-3 items-center">
+                    <li className="flex flex-row items-center justify-center py-3 text-xs font-medium bg-gray-700 gap-x-1 rounded-xl">
                       <MdOutlineSsidChart className="text-red-500" />
                       83.23%
                     </li>
-                    <li className="flex flex-row gap-x-1 font-medium text-xs justify-center rounded-xl bg-gray-700 py-3 items-center">
+                    <li className="flex flex-row items-center justify-center py-3 text-xs font-medium bg-gray-700 gap-x-1 rounded-xl">
                       <MdOutlineSsidChart className="text-red-500" />
                       13.84%
                     </li>
-                    <li className="flex flex-row gap-x-1 font-medium text-xs justify-center rounded-xl bg-gray-700 py-3 items-center">
+                    <li className="flex flex-row items-center justify-center py-3 text-xs font-medium bg-gray-700 gap-x-1 rounded-xl">
                       <MdOutlineSsidChart className="text-red-500" />
                       208.24%
                     </li>
-                    <li className="flex flex-row gap-x-1 font-medium text-xs justify-center rounded-xl bg-gray-700 py-3 items-center">
+                    <li className="flex flex-row items-center justify-center py-3 text-xs font-medium bg-gray-700 gap-x-1 rounded-xl">
                       <MdOutlineSsidChart className="text-red-500" />
                       21.57%
                     </li>
-                    <li className="flex flex-row gap-x-1 font-medium text-xs justify-center rounded-xl bg-gray-700 py-3 items-center">
+                    <li className="flex flex-row items-center justify-center py-3 text-xs font-medium bg-gray-700 gap-x-1 rounded-xl">
                       <MdOutlineSsidChart className="text-red-500" />
                       8.57%
                     </li>
@@ -552,75 +562,75 @@ export default function DetailedData() {
                 </div>
                 <div className="col-span-5">
                   <div className="grid grid-cols-2 gap-2">
-                    <div className="flex flex-col justify-center items-center">
-                      <ul className="grid grid-cols-3 gap-2 rounded-xl bg-gray-700 py-3 w-full ">
-                        <li className="flex flex-col gap-y-1 font-medium text-xs justify-center px-2 text-center">
+                    <div className="flex flex-col items-center justify-center">
+                      <ul className="grid w-full grid-cols-3 gap-2 py-3 bg-gray-700 rounded-xl ">
+                        <li className="flex flex-col justify-center px-2 text-xs font-medium text-center gap-y-1">
                           40.31
-                          <Progress value={40} className="bg-white h-1" />
+                          <Progress value={40} className="h-1 bg-white" />
                         </li>
-                        <li className="flex flex-col gap-y-1 font-medium text-xs justify-center px-2 text-center">
+                        <li className="flex flex-col justify-center px-2 text-xs font-medium text-center gap-y-1">
                           40.31
-                          <Progress value={40} className="bg-white h-1" />
+                          <Progress value={40} className="h-1 bg-white" />
                         </li>
-                        <li className="flex flex-col gap-y-1 font-medium text-xs justify-center px-2 text-center">
+                        <li className="flex flex-col justify-center px-2 text-xs font-medium text-center gap-y-1">
                           40.31
-                          <Progress value={40} className="bg-white h-1" />
+                          <Progress value={40} className="h-1 bg-white" />
                         </li>
                       </ul>
                     </div>
-                    <div className="flex flex-col justify-center items-center">
-                      <ul className="grid grid-cols-3 gap-2 rounded-xl bg-gray-700 py-3 w-full ">
-                        <li className="flex flex-col gap-y-1 font-medium text-xs justify-center px-2 text-center">
+                    <div className="flex flex-col items-center justify-center">
+                      <ul className="grid w-full grid-cols-3 gap-2 py-3 bg-gray-700 rounded-xl ">
+                        <li className="flex flex-col justify-center px-2 text-xs font-medium text-center gap-y-1">
                           40.31
-                          <Progress value={40} className="bg-white h-1" />
+                          <Progress value={40} className="h-1 bg-white" />
                         </li>
-                        <li className="flex flex-col gap-y-1 font-medium text-xs justify-center px-2 text-center">
+                        <li className="flex flex-col justify-center px-2 text-xs font-medium text-center gap-y-1">
                           40.31
-                          <Progress value={40} className="bg-white h-1" />
+                          <Progress value={40} className="h-1 bg-white" />
                         </li>
-                        <li className="flex flex-col gap-y-1 font-medium text-xs justify-center px-2 text-center">
+                        <li className="flex flex-col justify-center px-2 text-xs font-medium text-center gap-y-1">
                           40.31
-                          <Progress value={40} className="bg-white h-1" />
+                          <Progress value={40} className="h-1 bg-white" />
                         </li>
                       </ul>
                     </div>
                   </div>
                 </div>
               </div>
-              <div className="grid grid-cols-12 gap-2 my-1 bg-tertiary rounded-lg py-2 px-1">
-                <h2 className="font-medium text-xs  w-full flex justify-center items-center px-1 text-ellipsis overflow-style">
+              <div className="grid grid-cols-12 gap-2 px-1 py-2 my-1 rounded-lg bg-tertiary">
+                <h2 className="flex items-center justify-center w-full px-1 text-xs font-medium text-ellipsis overflow-style">
                   GitLab PMM
                 </h2>
-                <div className="bg-gray-700 font-medium text-xs w-full flex justify-center items-center rounded-xl">
+                <div className="flex items-center justify-center w-full text-xs font-medium bg-gray-700 rounded-xl">
                   <CircleProgress
                     color="text-yellow-500"
                     className="size-8"
                   ></CircleProgress>
                   <p>43.4%</p>
                 </div>
-                <div className="col-span-5 flex items-center">
-                  <ul className="grid grid-cols-6 gap-2 w-full">
-                    <li className="flex flex-row gap-x-1 font-medium text-xs justify-center rounded-xl bg-gray-700 py-3 items-center">
+                <div className="flex items-center col-span-5">
+                  <ul className="grid w-full grid-cols-6 gap-2">
+                    <li className="flex flex-row items-center justify-center py-3 text-xs font-medium bg-gray-700 gap-x-1 rounded-xl">
                       <MdOutlineSsidChart className="text-red-500" />
                       20.8%
                     </li>
-                    <li className="flex flex-row gap-x-1 font-medium text-xs justify-center rounded-xl bg-gray-700 py-3 items-center">
+                    <li className="flex flex-row items-center justify-center py-3 text-xs font-medium bg-gray-700 gap-x-1 rounded-xl">
                       <MdOutlineSsidChart className="text-red-500" />
                       83.23%
                     </li>
-                    <li className="flex flex-row gap-x-1 font-medium text-xs justify-center rounded-xl bg-gray-700 py-3 items-center">
+                    <li className="flex flex-row items-center justify-center py-3 text-xs font-medium bg-gray-700 gap-x-1 rounded-xl">
                       <MdOutlineSsidChart className="text-red-500" />
                       13.84%
                     </li>
-                    <li className="flex flex-row gap-x-1 font-medium text-xs justify-center rounded-xl bg-gray-700 py-3 items-center">
+                    <li className="flex flex-row items-center justify-center py-3 text-xs font-medium bg-gray-700 gap-x-1 rounded-xl">
                       <MdOutlineSsidChart className="text-red-500" />
                       208.24%
                     </li>
-                    <li className="flex flex-row gap-x-1 font-medium text-xs justify-center rounded-xl bg-gray-700 py-3 items-center">
+                    <li className="flex flex-row items-center justify-center py-3 text-xs font-medium bg-gray-700 gap-x-1 rounded-xl">
                       <MdOutlineSsidChart className="text-red-500" />
                       21.57%
                     </li>
-                    <li className="flex flex-row gap-x-1 font-medium text-xs justify-center rounded-xl bg-gray-700 py-3 items-center">
+                    <li className="flex flex-row items-center justify-center py-3 text-xs font-medium bg-gray-700 gap-x-1 rounded-xl">
                       <MdOutlineSsidChart className="text-red-500" />
                       8.57%
                     </li>
@@ -628,35 +638,35 @@ export default function DetailedData() {
                 </div>
                 <div className="col-span-5">
                   <div className="grid grid-cols-2 gap-2">
-                    <div className="flex flex-col justify-center items-center">
-                      <ul className="grid grid-cols-3 gap-2 rounded-xl bg-gray-700 py-3 w-full ">
-                        <li className="flex flex-col gap-y-1 font-medium text-xs justify-center px-2 text-center">
+                    <div className="flex flex-col items-center justify-center">
+                      <ul className="grid w-full grid-cols-3 gap-2 py-3 bg-gray-700 rounded-xl ">
+                        <li className="flex flex-col justify-center px-2 text-xs font-medium text-center gap-y-1">
                           40.31
-                          <Progress value={40} className="bg-white h-1" />
+                          <Progress value={40} className="h-1 bg-white" />
                         </li>
-                        <li className="flex flex-col gap-y-1 font-medium text-xs justify-center px-2 text-center">
+                        <li className="flex flex-col justify-center px-2 text-xs font-medium text-center gap-y-1">
                           40.31
-                          <Progress value={40} className="bg-white h-1" />
+                          <Progress value={40} className="h-1 bg-white" />
                         </li>
-                        <li className="flex flex-col gap-y-1 font-medium text-xs justify-center px-2 text-center">
+                        <li className="flex flex-col justify-center px-2 text-xs font-medium text-center gap-y-1">
                           40.31
-                          <Progress value={40} className="bg-white h-1" />
+                          <Progress value={40} className="h-1 bg-white" />
                         </li>
                       </ul>
                     </div>
-                    <div className="flex flex-col justify-center items-center">
-                      <ul className="grid grid-cols-3 gap-2 rounded-xl bg-gray-700 py-3 w-full ">
-                        <li className="flex flex-col gap-y-1 font-medium text-xs justify-center px-2 text-center">
+                    <div className="flex flex-col items-center justify-center">
+                      <ul className="grid w-full grid-cols-3 gap-2 py-3 bg-gray-700 rounded-xl ">
+                        <li className="flex flex-col justify-center px-2 text-xs font-medium text-center gap-y-1">
                           40.31
-                          <Progress value={40} className="bg-white h-1" />
+                          <Progress value={40} className="h-1 bg-white" />
                         </li>
-                        <li className="flex flex-col gap-y-1 font-medium text-xs justify-center px-2 text-center">
+                        <li className="flex flex-col justify-center px-2 text-xs font-medium text-center gap-y-1">
                           40.31
-                          <Progress value={40} className="bg-white h-1" />
+                          <Progress value={40} className="h-1 bg-white" />
                         </li>
-                        <li className="flex flex-col gap-y-1 font-medium text-xs justify-center px-2 text-center">
+                        <li className="flex flex-col justify-center px-2 text-xs font-medium text-center gap-y-1">
                           40.31
-                          <Progress value={40} className="bg-white h-1" />
+                          <Progress value={40} className="h-1 bg-white" />
                         </li>
                       </ul>
                     </div>
@@ -669,40 +679,40 @@ export default function DetailedData() {
             <div className="space-y-2">
               <div className="grid grid-cols-12 gap-2 mb-1 text-xs">
                 <div className="flex flex-col items-center">
-                  <h3 className="bg-tertiary py-2 font-medium w-full flex justify-center rounded-t-xl">
+                  <h3 className="flex justify-center w-full py-2 font-medium bg-tertiary rounded-t-xl">
                     Teams
                   </h3>
-                  <h3 className="bg-gray-700 py-3 font-medium text-white w-full flex justify-center rounded-b-xl">
+                  <h3 className="flex justify-center w-full py-3 font-medium text-white bg-gray-700 rounded-b-xl">
                     Name
                   </h3>
                 </div>
                 <div className="flex flex-col items-center">
-                  <h3 className="bg-tertiary py-2 font-medium w-full flex justify-center rounded-t-xl">
+                  <h3 className="flex justify-center w-full py-2 font-medium bg-tertiary rounded-t-xl">
                     Synchrony
                   </h3>
-                  <h3 className="bg-gray-700 py-3 font-medium text-white w-full flex justify-center rounded-b-xl">
+                  <h3 className="flex justify-center w-full py-3 font-medium text-white bg-gray-700 rounded-b-xl">
                     Global
                   </h3>
                 </div>
                 <div className="col-span-5">
-                  <div className=" flex flex-col items-center">
-                    <h3 className="bg-tertiary py-2 font-medium w-full flex justify-center rounded-t-xl">
+                  <div className="flex flex-col items-center ">
+                    <h3 className="flex justify-center w-full py-2 font-medium bg-tertiary rounded-t-xl">
                       Status
                     </h3>
-                    <ul className="grid grid-cols-5 gap-2 rounded-b-xl bg-gray-700 py-3 w-full">
-                      <li className="font-medium text-xs text-white flex justify-center">
+                    <ul className="grid w-full grid-cols-5 gap-2 py-3 bg-gray-700 rounded-b-xl">
+                      <li className="flex justify-center text-xs font-medium text-white">
                         Engage
                       </li>
-                      <li className="font-medium text-xs text-white flex justify-center">
+                      <li className="flex justify-center text-xs font-medium text-white">
                         Alignment
                       </li>
-                      <li className="font-medium text-xs text-white flex justify-center">
+                      <li className="flex justify-center text-xs font-medium text-white">
                         Agency
                       </li>
-                      <li className="font-medium text-xs text-white flex justify-center">
+                      <li className="flex justify-center text-xs font-medium text-white">
                         Stress
                       </li>
-                      <li className="font-medium text-xs text-white flex justify-center">
+                      <li className="flex justify-center text-xs font-medium text-white">
                         Burnout
                       </li>
                     </ul>
@@ -711,26 +721,26 @@ export default function DetailedData() {
                 <div className="col-span-5">
                   <div className="grid grid-cols-1">
                     <div className="flex flex-col items-center">
-                      <h3 className="bg-tertiary py-2 font-medium text-xs w-full flex justify-center rounded-t-xl">
+                      <h3 className="flex justify-center w-full py-2 text-xs font-medium bg-tertiary rounded-t-xl">
                         Dimensions
                       </h3>
-                      <ul className="grid grid-cols-6 gap-2 rounded-b-xl bg-gray-700 py-3 w-full">
-                        <li className="font-medium text-xs  flex justify-center">
+                      <ul className="grid w-full grid-cols-6 gap-2 py-3 bg-gray-700 rounded-b-xl">
+                        <li className="flex justify-center text-xs font-medium">
                           Trust
                         </li>
-                        <li className="font-medium text-xs  flex justify-center">
+                        <li className="flex justify-center text-xs font-medium">
                           Safety
                         </li>
-                        <li className="font-medium text-xs  flex justify-center">
+                        <li className="flex justify-center text-xs font-medium">
                           Participate
                         </li>
-                        <li className="font-medium text-xs  flex justify-center">
+                        <li className="flex justify-center text-xs font-medium">
                           Enjoy
                         </li>
-                        <li className="font-medium text-xs  flex justify-center">
+                        <li className="flex justify-center text-xs font-medium">
                           Goal
                         </li>
-                        <li className="font-medium text-xs  flex justify-center">
+                        <li className="flex justify-center text-xs font-medium">
                           Engage
                         </li>
                       </ul>
@@ -738,36 +748,36 @@ export default function DetailedData() {
                   </div>
                 </div>
               </div>
-              <div className="grid grid-cols-12 gap-2 my-1 bg-tertiary rounded-lg py-2 px-1">
-                <h2 className="font-medium text-xs  w-full flex justify-center items-center px-1 text-ellipsis overflow-style">
+              <div className="grid grid-cols-12 gap-2 px-1 py-2 my-1 rounded-lg bg-tertiary">
+                <h2 className="flex items-center justify-center w-full px-1 text-xs font-medium text-ellipsis overflow-style">
                   Devlopment Team
                 </h2>
-                <div className="bg-gray-700 font-medium text-xs w-full flex justify-center items-center rounded-xl">
+                <div className="flex items-center justify-center w-full text-xs font-medium bg-gray-700 rounded-xl">
                   <CircleProgress
                     color="text-yellow-500"
                     className="size-8"
                   ></CircleProgress>
                   <p className="flex">43.4%</p>
                 </div>
-                <div className="col-span-5 flex items-center">
-                  <ul className="grid grid-cols-5 gap-2 w-full">
-                    <li className="flex flex-row gap-x-1 font-medium text-xs justify-center rounded-xl bg-gray-700 py-3 items-center">
+                <div className="flex items-center col-span-5">
+                  <ul className="grid w-full grid-cols-5 gap-2">
+                    <li className="flex flex-row items-center justify-center py-3 text-xs font-medium bg-gray-700 gap-x-1 rounded-xl">
                       <MdOutlineSsidChart className="text-red-500" />
                       20.8%
                     </li>
-                    <li className="flex flex-row gap-x-1 font-medium text-xs justify-center rounded-xl bg-gray-700 py-3 items-center">
+                    <li className="flex flex-row items-center justify-center py-3 text-xs font-medium bg-gray-700 gap-x-1 rounded-xl">
                       <MdOutlineSsidChart className="text-red-500" />
                       83.23%
                     </li>
-                    <li className="flex flex-row gap-x-1 font-medium text-xs justify-center rounded-xl bg-gray-700 py-3 items-center">
+                    <li className="flex flex-row items-center justify-center py-3 text-xs font-medium bg-gray-700 gap-x-1 rounded-xl">
                       <MdOutlineSsidChart className="text-red-500" />
                       13.84%
                     </li>
-                    <li className="flex flex-row gap-x-1 font-medium text-xs justify-center rounded-xl bg-gray-700 py-3 items-center">
+                    <li className="flex flex-row items-center justify-center py-3 text-xs font-medium bg-gray-700 gap-x-1 rounded-xl">
                       <MdOutlineSsidChart className="text-red-500" />
                       208.24%
                     </li>
-                    <li className="flex flex-row gap-x-1 font-medium text-xs justify-center rounded-xl bg-gray-700 py-3 items-center">
+                    <li className="flex flex-row items-center justify-center py-3 text-xs font-medium bg-gray-700 gap-x-1 rounded-xl">
                       <MdOutlineSsidChart className="text-red-500" />
                       21.57%
                     </li>
@@ -775,29 +785,29 @@ export default function DetailedData() {
                 </div>
                 <div className="col-span-5">
                   <div className="grid grid-cols-1">
-                    <div className="flex flex-col justify-center items-center">
-                      <ul className="grid grid-cols-6 gap-2 rounded-xl bg-gray-700 py-3 w-full ">
-                        <li className="flex flex-row gap-x-1 font-medium text-xs justify-center px-2 text-center">
+                    <div className="flex flex-col items-center justify-center">
+                      <ul className="grid w-full grid-cols-6 gap-2 py-3 bg-gray-700 rounded-xl ">
+                        <li className="flex flex-row justify-center px-2 text-xs font-medium text-center gap-x-1">
                           <MdOutlineSsidChart className="text-red-500" />
                           40.31
                         </li>
-                        <li className="flex justify-center flex-row gap-x-1 font-medium text-xs px-2 text-center">
+                        <li className="flex flex-row justify-center px-2 text-xs font-medium text-center gap-x-1">
                           <MdOutlineSsidChart className="text-red-500" />
                           40.31
                         </li>
-                        <li className="flex justify-center flex-row gap-x-1 font-medium text-xs  px-2 text-center">
+                        <li className="flex flex-row justify-center px-2 text-xs font-medium text-center gap-x-1">
                           <MdOutlineSsidChart className="text-red-500" />
                           40.31
                         </li>
-                        <li className="flex justify-center flex-row gap-x-1 font-medium text-xs  px-2 text-center">
+                        <li className="flex flex-row justify-center px-2 text-xs font-medium text-center gap-x-1">
                           <MdOutlineSsidChart className="text-red-500" />
                           40.31
                         </li>
-                        <li className="flex justify-center flex-row gap-x-1 font-medium text-xs  px-2 text-center">
+                        <li className="flex flex-row justify-center px-2 text-xs font-medium text-center gap-x-1">
                           <MdOutlineSsidChart className="text-red-500" />
                           40.31
                         </li>
-                        <li className="flex justify-center flex-row gap-x-1 font-medium text-xs  px-2 text-center">
+                        <li className="flex flex-row justify-center px-2 text-xs font-medium text-center gap-x-1">
                           <MdOutlineSsidChart className="text-red-500" />
                           40.31
                         </li>
@@ -806,36 +816,36 @@ export default function DetailedData() {
                   </div>
                 </div>
               </div>
-              <div className="grid grid-cols-12 gap-2 my-1 bg-tertiary rounded-lg py-2 px-1">
-                <h2 className="font-medium text-xs  w-full flex justify-center items-center px-1 text-ellipsis overflow-style">
+              <div className="grid grid-cols-12 gap-2 px-1 py-2 my-1 rounded-lg bg-tertiary">
+                <h2 className="flex items-center justify-center w-full px-1 text-xs font-medium text-ellipsis overflow-style">
                   SNRG baseline
                 </h2>
-                <div className="bg-gray-700 font-medium text-xs w-full flex justify-center items-center rounded-xl">
+                <div className="flex items-center justify-center w-full text-xs font-medium bg-gray-700 rounded-xl">
                   <CircleProgress
                     color="text-yellow-500"
                     className="size-8"
                   ></CircleProgress>
                   <p>43.4%</p>
                 </div>
-                <div className="col-span-5 flex items-center">
-                  <ul className="grid grid-cols-5 gap-2 w-full">
-                    <li className="flex flex-row gap-x-1 font-medium text-xs justify-center rounded-xl bg-gray-700 py-3 items-center">
+                <div className="flex items-center col-span-5">
+                  <ul className="grid w-full grid-cols-5 gap-2">
+                    <li className="flex flex-row items-center justify-center py-3 text-xs font-medium bg-gray-700 gap-x-1 rounded-xl">
                       <MdOutlineSsidChart className="text-red-500" />
                       20.8%
                     </li>
-                    <li className="flex flex-row gap-x-1 font-medium text-xs justify-center rounded-xl bg-gray-700 py-3 items-center">
+                    <li className="flex flex-row items-center justify-center py-3 text-xs font-medium bg-gray-700 gap-x-1 rounded-xl">
                       <MdOutlineSsidChart className="text-red-500" />
                       83.23%
                     </li>
-                    <li className="flex flex-row gap-x-1 font-medium text-xs justify-center rounded-xl bg-gray-700 py-3 items-center">
+                    <li className="flex flex-row items-center justify-center py-3 text-xs font-medium bg-gray-700 gap-x-1 rounded-xl">
                       <MdOutlineSsidChart className="text-red-500" />
                       13.84%
                     </li>
-                    <li className="flex flex-row gap-x-1 font-medium text-xs justify-center rounded-xl bg-gray-700 py-3 items-center">
+                    <li className="flex flex-row items-center justify-center py-3 text-xs font-medium bg-gray-700 gap-x-1 rounded-xl">
                       <MdOutlineSsidChart className="text-red-500" />
                       208.24%
                     </li>
-                    <li className="flex flex-row gap-x-1 font-medium text-xs justify-center rounded-xl bg-gray-700 py-3 items-center">
+                    <li className="flex flex-row items-center justify-center py-3 text-xs font-medium bg-gray-700 gap-x-1 rounded-xl">
                       <MdOutlineSsidChart className="text-red-500" />
                       21.57%
                     </li>
@@ -843,29 +853,29 @@ export default function DetailedData() {
                 </div>
                 <div className="col-span-5">
                   <div className="grid grid-cols-1">
-                    <div className="flex flex-col justify-center items-center">
-                      <ul className="grid grid-cols-6 gap-2 rounded-xl bg-gray-700 py-3 w-full ">
-                        <li className="flex flex-row gap-x-1 font-medium text-xs justify-center px-2 text-center">
+                    <div className="flex flex-col items-center justify-center">
+                      <ul className="grid w-full grid-cols-6 gap-2 py-3 bg-gray-700 rounded-xl ">
+                        <li className="flex flex-row justify-center px-2 text-xs font-medium text-center gap-x-1">
                           <MdOutlineSsidChart className="text-red-500" />
                           40.31
                         </li>
-                        <li className="flex flex-row gap-x-1 font-medium text-xs justify-center px-2 text-center">
+                        <li className="flex flex-row justify-center px-2 text-xs font-medium text-center gap-x-1">
                           <MdOutlineSsidChart className="text-red-500" />
                           40.31
                         </li>
-                        <li className="flex flex-row gap-x-1 font-medium text-xs justify-center  px-2 text-center">
+                        <li className="flex flex-row justify-center px-2 text-xs font-medium text-center gap-x-1">
                           <MdOutlineSsidChart className="text-red-500" />
                           40.31
                         </li>
-                        <li className="flex flex-row gap-x-1 font-medium text-xs justify-center  px-2 text-center">
+                        <li className="flex flex-row justify-center px-2 text-xs font-medium text-center gap-x-1">
                           <MdOutlineSsidChart className="text-red-500" />
                           40.31
                         </li>
-                        <li className="flex flex-row gap-x-1 font-medium text-xs justify-center  px-2 text-center">
+                        <li className="flex flex-row justify-center px-2 text-xs font-medium text-center gap-x-1">
                           <MdOutlineSsidChart className="text-red-500" />
                           40.31
                         </li>
-                        <li className="flex flex-row gap-x-1 font-medium text-xs justify-center  px-2 text-center">
+                        <li className="flex flex-row justify-center px-2 text-xs font-medium text-center gap-x-1">
                           <MdOutlineSsidChart className="text-red-500" />
                           40.31
                         </li>
@@ -874,36 +884,36 @@ export default function DetailedData() {
                   </div>
                 </div>
               </div>
-              <div className="grid grid-cols-12 gap-2 my-1 bg-tertiary rounded-lg py-2 px-1">
-                <h2 className="font-medium text-xs  w-full flex justify-center items-center px-1 text-ellipsis overflow-style">
+              <div className="grid grid-cols-12 gap-2 px-1 py-2 my-1 rounded-lg bg-tertiary">
+                <h2 className="flex items-center justify-center w-full px-1 text-xs font-medium text-ellipsis overflow-style">
                   GitLab PMM
                 </h2>
-                <div className="bg-gray-700 font-medium text-xs w-full flex justify-center items-center rounded-xl">
+                <div className="flex items-center justify-center w-full text-xs font-medium bg-gray-700 rounded-xl">
                   <CircleProgress
                     color="text-yellow-500"
                     className="size-8"
                   ></CircleProgress>
                   <p>43.4%</p>
                 </div>
-                <div className="col-span-5 flex items-center">
-                  <ul className="grid grid-cols-5 gap-2 w-full">
-                    <li className="flex flex-row gap-x-1 font-medium text-xs justify-center rounded-xl bg-gray-700 py-3 items-center">
+                <div className="flex items-center col-span-5">
+                  <ul className="grid w-full grid-cols-5 gap-2">
+                    <li className="flex flex-row items-center justify-center py-3 text-xs font-medium bg-gray-700 gap-x-1 rounded-xl">
                       <MdOutlineSsidChart className="text-red-500" />
                       20.8%
                     </li>
-                    <li className="flex flex-row gap-x-1 font-medium text-xs justify-center rounded-xl bg-gray-700 py-3 items-center">
+                    <li className="flex flex-row items-center justify-center py-3 text-xs font-medium bg-gray-700 gap-x-1 rounded-xl">
                       <MdOutlineSsidChart className="text-red-500" />
                       83.23%
                     </li>
-                    <li className="flex flex-row gap-x-1 font-medium text-xs justify-center rounded-xl bg-gray-700 py-3 items-center">
+                    <li className="flex flex-row items-center justify-center py-3 text-xs font-medium bg-gray-700 gap-x-1 rounded-xl">
                       <MdOutlineSsidChart className="text-red-500" />
                       13.84%
                     </li>
-                    <li className="flex flex-row gap-x-1 font-medium text-xs justify-center rounded-xl bg-gray-700 py-3 items-center">
+                    <li className="flex flex-row items-center justify-center py-3 text-xs font-medium bg-gray-700 gap-x-1 rounded-xl">
                       <MdOutlineSsidChart className="text-red-500" />
                       208.24%
                     </li>
-                    <li className="flex flex-row gap-x-1 font-medium text-xs justify-center rounded-xl bg-gray-700 py-3 items-center">
+                    <li className="flex flex-row items-center justify-center py-3 text-xs font-medium bg-gray-700 gap-x-1 rounded-xl">
                       <MdOutlineSsidChart className="text-red-500" />
                       21.57%
                     </li>
@@ -911,29 +921,29 @@ export default function DetailedData() {
                 </div>
                 <div className="col-span-5">
                   <div className="grid grid-cols-1">
-                    <div className="flex flex-col justify-center items-center">
-                      <ul className="grid grid-cols-6 gap-2 rounded-xl bg-gray-700 py-3 w-full ">
-                        <li className="flex flex-row gap-x-1 font-medium text-xs justify-center px-2 text-center">
+                    <div className="flex flex-col items-center justify-center">
+                      <ul className="grid w-full grid-cols-6 gap-2 py-3 bg-gray-700 rounded-xl ">
+                        <li className="flex flex-row justify-center px-2 text-xs font-medium text-center gap-x-1">
                           <MdOutlineSsidChart className="text-red-500" />
                           40.31
                         </li>
-                        <li className="flex flex-row gap-x-1 font-medium text-xs justify-center px-2 text-center">
+                        <li className="flex flex-row justify-center px-2 text-xs font-medium text-center gap-x-1">
                           <MdOutlineSsidChart className="text-red-500" />
                           40.31
                         </li>
-                        <li className="flex flex-row gap-x-1 font-medium text-xs justify-center px-2 text-center">
+                        <li className="flex flex-row justify-center px-2 text-xs font-medium text-center gap-x-1">
                           <MdOutlineSsidChart className="text-red-500" />
                           40.31
                         </li>
-                        <li className="flex flex-row gap-x-1 font-medium text-xs justify-center px-2 text-center">
+                        <li className="flex flex-row justify-center px-2 text-xs font-medium text-center gap-x-1">
                           <MdOutlineSsidChart className="text-red-500" />
                           40.31
                         </li>
-                        <li className="flex flex-row gap-x-1 font-medium text-xs justify-center px-2 text-center">
+                        <li className="flex flex-row justify-center px-2 text-xs font-medium text-center gap-x-1">
                           <MdOutlineSsidChart className="text-red-500" />
                           40.31
                         </li>
-                        <li className="flex flex-row gap-x-1 font-medium text-xs justify-center px-2 text-center">
+                        <li className="flex flex-row justify-center px-2 text-xs font-medium text-center gap-x-1">
                           <MdOutlineSsidChart className="text-red-500" />
                           40.31
                         </li>

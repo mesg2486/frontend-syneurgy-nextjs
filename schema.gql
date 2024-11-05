@@ -811,6 +811,11 @@ type Query {
     limit: Int
     nextToken: String
   ): ContactConnection
+  queryMeetingsByTeamId(
+    id: String
+    limit: Int
+    nextToken: String
+  ): MeetingConnection
 }
 
 type Subscription {

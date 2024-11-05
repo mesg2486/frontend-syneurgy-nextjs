@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import {
   Select,
   SelectContent,
@@ -31,19 +31,123 @@ import { HiHand } from "react-icons/hi";
 import { useSession } from "next-auth/react";
 import CircleProgress from "../fragments/CircleProgressWithIcon";
 import { FaFaceFrown, FaFaceMeh, FaFaceSmile } from "react-icons/fa6";
+import { useQuery } from "@tanstack/react-query";
+import { graphql } from "@/services/gql";
+import { gql } from "@/services/clients/graphql.client";
+import Dashmain from "../loaders/Dashmain.loader";
+import { Meeting, Team } from "@/services/gql/graphql";
+import TeamPerformance, { ITeamScores } from "../meeting/TeamPerformance";
 
-export default function DashMain() {
-  const { data: session } = useSession();
+const LIST_TEAM_MEETINGS = graphql(`
+  query queryMeetingsByTeamId($id: String) {
+    meetings: queryMeetingsByTeamId(id: $id) {
+      nextToken
+      items {
+        behaviorScore
+        bodyScore
+        brainScore
+        createdAt
+        totalScore
+        date
+      }
+    }
+  }
+`);
+
+interface IDashMainProps {
+  activeTeam: string;
+  setActiveTeam: React.Dispatch<React.SetStateAction<string>>;
+  defaultTeam?: string;
+  teamScores?: ITeamScores;
+  teams?: Team[] | null;
+  isTeamsLoading?: boolean;
+}
+
+export default function DashMain({
+  isTeamsLoading,
+  activeTeam,
+  teamScores,
+  setActiveTeam,
+  defaultTeam,
+  teams,
+}: IDashMainProps) {
+  const { data: session, status } = useSession();
+
+  const {
+    data: meetings,
+    isLoading,
+    refetch,
+  } = useQuery({
+    queryKey: ["meetings", activeTeam],
+    queryFn: async () => {
+      return await gql.request(LIST_TEAM_MEETINGS, {
+        id: activeTeam,
+      });
+    },
+    enabled: !!activeTeam && !!session?.user,
+    select: (data) => data?.meetings?.items as Meeting[],
+  });
+
+  const globalSynchrony =
+    Number(
+      Number(
+        meetings?.reduce((acc, curr) => acc + Number(curr.totalScore), 0)
+      ) / Number(meetings?.length)
+    ).toFixed(0) || 56;
+
+  const globalSynchronyOld =
+    Number(
+      Number(
+        meetings
+          ?.slice(1, meetings.length)
+          ?.reduce((acc, curr) => acc + Number(curr.totalScore), 0)
+      ) / Number(meetings?.length)
+    ).toFixed(0) || 56;
+
+  const globalSynchronyDifference =
+    globalSynchrony > globalSynchronyOld
+      ? Number(globalSynchrony) - Number(globalSynchronyOld)
+      : Number(globalSynchronyOld) - Number(globalSynchrony);
+
+  if (isTeamsLoading) {
+    return <Dashmain />;
+  }
+  console.log("meetings", meetings, teams);
+
   return (
-    <div className="bg-secondary">
+    <div className="bg-secondary c-container">
       <div className="flex justify-between pt-4">
-        <h2 className="text-xl font-light tracking-tight">
+        <div className="flex items-center gap-2 text-xl font-light tracking-tight">
           Welcome <HiHand className="inline-block text-yellow-500 rotate-12" />
-          <span className="font-semibold"> {session?.user.username}</span>
-        </h2>
+          {Number(teams?.length) === 0 ? (
+            <div className="font-semibold"> {session?.user.username}</div>
+          ) : (
+            <div>
+              <Select
+                onValueChange={(value) => setActiveTeam(value)}
+                value={activeTeam}
+                defaultValue={defaultTeam}
+              >
+                <SelectTrigger className="hidden gap-1 px-5 border-0 rounded-2xl md:flex bg-tertiary">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    {teams?.map((team: any) => (
+                      <SelectItem key={team.id} value={team.id}>
+                        {team.name}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+              {/* map teams here in a select box and the default value will be the first team */}
+            </div>
+          )}
+        </div>
         <div className="flex flex-row gap-x-3">
           <Select>
-            <SelectTrigger className="rounded-2xl hidden md:flex bg-tertiary px-5 gap-1 border-0">
+            <SelectTrigger className="hidden gap-1 px-5 border-0 rounded-2xl md:flex bg-tertiary">
               <SelectValue placeholder="All Dates" />
             </SelectTrigger>
             <SelectContent>
@@ -56,7 +160,7 @@ export default function DashMain() {
             </SelectContent>
           </Select>
           <Select>
-            <SelectTrigger className="rounded-2xl hidden md:flex bg-tertiary px-5 gap-1 border-0">
+            <SelectTrigger className="hidden gap-1 px-5 border-0 rounded-2xl md:flex bg-tertiary">
               <SelectValue placeholder="All Teams" />
             </SelectTrigger>
             <SelectContent>
@@ -76,8 +180,8 @@ export default function DashMain() {
       </div>
       <Separator className="my-2" />
       <div className="flex flex-col space-y-4">
-        <div className="flex justify-between bg-tertiary py-2 p-4 rounded-md">
-          <p className="leading-8 md:block hidden">
+        {/* <div className="flex justify-between p-4 py-2 rounded-md bg-tertiary">
+          <p className="hidden leading-8 md:block">
             You have 35 minutes of 240 available in your plan
           </p>
           <p className="leading-8 md:hidden">Your plan is expiring</p>
@@ -87,17 +191,21 @@ export default function DashMain() {
           >
             Upgrade
           </Button>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 md:justify-around p-8 rounded-md bg-tertiary md:divide-x-2 divide-white/10">
+        </div> */}
+        <div className="grid grid-cols-1 p-8 rounded-md md:grid-cols-2 lg:grid-cols-4 md:justify-around bg-tertiary md:divide-x-2 divide-white/10">
           <div className="">
             <h2 className="text-lg font-medium">Global Synchrony</h2>
             <div className="flex flex-row  items-center py-6 divide-x-[1px] divide-white/10">
-              <div className="mr-4 flex-1">
-                <h4 className="text-6xl font-semibold">56</h4>
-                <span className="text-primary text-xl"> &#8599;5%</span>
+              <div className="flex-1 mr-4">
+                <h4 className="text-6xl font-semibold">{globalSynchrony}</h4>
+                <span className="text-xl text-primary">
+                  {" "}
+                  &#8599;{globalSynchronyDifference}%
+                </span>
+                <span>{globalSynchronyOld}</span>
               </div>
               <div className="flex-1">
-                <ul className="flex flex-col space-y-2 ml-4">
+                <ul className="flex flex-col ml-4 space-y-2">
                   <li className="text-xs">
                     Engagement: <span className="text-red-500"> &#8599;5%</span>
                   </li>
@@ -142,51 +250,32 @@ export default function DashMain() {
               </ResponsiveContainer>
             </div>
           </div>
-          <div>
-            <h2 className="text-lg font-medium md:pl-10">Global Performance</h2>
-            <div className="w-full overflow-hidden flex flex-row justify-around  p-5 gap-4">
-              <div className="flex justify-center items-center flex-col gap-3">
-                <CircleProgress color="text-yellow-500">
-                  <span className="text-xs">43</span>
-                </CircleProgress>
-                <p>Brain</p>
-              </div>
-              <div className="flex justify-center items-center flex-col gap-3">
-                <CircleProgress color="text-emerald-500">
-                  <span className="text-xs">43</span>
-                </CircleProgress>
-                <p>Body</p>
-              </div>
-              <div className="flex justify-center items-center flex-col gap-3">
-                <CircleProgress color="text-blue-500">
-                  <span className="text-xs">43</span>
-                </CircleProgress>
-                <p>Behavior</p>
-              </div>
-            </div>
+          <div className="space-y-6">
+            <h2 className="font-medium md:pl-10">Global Performance</h2>
+            <TeamPerformance teamScores={teamScores as ITeamScores} />
           </div>
           <div>
             <h2 className="text-lg font-medium md:pl-10">Global Sentiment</h2>
-            <div className="w-full overflow-hidden flex flex-row justify-around  p-5 gap-4">
-              <div className="flex justify-center items-center flex-col gap-3">
+            <div className="flex flex-row justify-around w-full gap-4 p-5 overflow-hidden">
+              <div className="flex flex-col items-center justify-center gap-3">
                 <CircleProgress color="text-red-500">
-                  <span className="text-center text-xl">
+                  <span className="text-xl text-center">
                     <FaFaceFrown />
                   </span>
                 </CircleProgress>
                 <p>Negative</p>
               </div>
-              <div className="flex justify-center items-center flex-col gap-3">
+              <div className="flex flex-col items-center justify-center gap-3">
                 <CircleProgress color="text-gray-300">
-                  <span className="text-center text-xl">
+                  <span className="text-xl text-center">
                     <FaFaceMeh />
                   </span>
                 </CircleProgress>
                 <p>Neutral</p>
               </div>
-              <div className="flex justify-center items-center flex-col gap-3">
+              <div className="flex flex-col items-center justify-center gap-3">
                 <CircleProgress color="text-green-500">
-                  <span className="text-center text-xl">
+                  <span className="text-xl text-center">
                     <FaFaceSmile />
                   </span>
                 </CircleProgress>
@@ -197,8 +286,8 @@ export default function DashMain() {
         </div>
         {/* Line Chart  */}
         <div className="max-w-full ">
-          <div className="bg-tertiary p-6 rounded-md max-w-full mx-auto">
-            <h2 className="text-lg font-medium md:pl-10 mb-5">
+          <div className="max-w-full p-6 mx-auto rounded-md bg-tertiary">
+            <h2 className="mb-5 text-lg font-medium md:pl-10">
               Global Progress
             </h2>
             <div className="w-full h-60 md:h-80">
