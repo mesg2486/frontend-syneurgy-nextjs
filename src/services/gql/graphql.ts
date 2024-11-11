@@ -1426,6 +1426,27 @@ export type CreateContactMutation = {
   contact?: { __typename?: "Contact"; id: string } | null;
 };
 
+export type QueryMeetingsByTeamIdQueryVariables = Exact<{
+  id?: InputMaybe<Scalars["String"]["input"]>;
+}>;
+
+export type QueryMeetingsByTeamIdQuery = {
+  __typename?: "Query";
+  meetings?: {
+    __typename?: "MeetingConnection";
+    nextToken?: string | null;
+    items?: Array<{
+      __typename?: "Meeting";
+      behaviorScore?: number | null;
+      bodyScore?: number | null;
+      brainScore?: number | null;
+      createdAt: string;
+      totalScore?: number | null;
+      date: string;
+    } | null> | null;
+  } | null;
+};
+
 export type DeleteTeamMutationVariables = Exact<{
   id: Scalars["ID"]["input"];
 }>;
@@ -2370,6 +2391,82 @@ export const CreateContactDocument = {
 } as unknown as DocumentNode<
   CreateContactMutation,
   CreateContactMutationVariables
+>;
+export const QueryMeetingsByTeamIdDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "query",
+      name: { kind: "Name", value: "queryMeetingsByTeamId" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "id" } },
+          type: { kind: "NamedType", name: { kind: "Name", value: "String" } },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            alias: { kind: "Name", value: "meetings" },
+            name: { kind: "Name", value: "queryMeetingsByTeamId" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "id" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "id" },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "nextToken" } },
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "items" },
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "behaviorScore" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "bodyScore" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "brainScore" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "createdAt" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "totalScore" },
+                      },
+                      { kind: "Field", name: { kind: "Name", value: "date" } },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  QueryMeetingsByTeamIdQuery,
+  QueryMeetingsByTeamIdQueryVariables
 >;
 export const DeleteTeamDocument = {
   kind: "Document",

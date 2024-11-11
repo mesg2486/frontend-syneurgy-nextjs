@@ -21,6 +21,8 @@ const documents = {
     types.ListTeamsByUserIdDocument,
   "\n  mutation createContact(\n    $name: String!\n    $email: String!\n    $phone: String\n    $subject: String\n    $message: String!\n  ) {\n    contact: createContact(\n      input: {\n        name: $name\n        email: $email\n        phone: $phone\n        subject: $subject\n        message: $message\n      }\n    ) {\n      id\n    }\n  }\n":
     types.CreateContactDocument,
+  "\n  query queryMeetingsByTeamId($id: String) {\n    meetings: queryMeetingsByTeamId(id: $id) {\n      nextToken\n      items {\n        behaviorScore\n        bodyScore\n        brainScore\n        createdAt\n        totalScore\n        date\n      }\n    }\n  }\n":
+    types.QueryMeetingsByTeamIdDocument,
   "\n  mutation deleteTeam($id: ID!) {\n    team: deleteTeam(input: { id: $id }) {\n      id\n    }\n  }\n":
     types.DeleteTeamDocument,
   "\n  query listMeetingsByUserId($userId: ID!) {\n    meetings: listMeetingsByUserId(userId: $userId) {\n      items {\n        date\n        highlights\n        id\n        name\n        createdAt\n        updatedAt\n        sentiment\n        performance\n        synchrony\n        teamId\n        thumbnail\n        type\n        url\n        userId\n        totalScore\n      }\n    }\n  }\n":
@@ -83,6 +85,12 @@ export function graphql(
 export function graphql(
   source: "\n  mutation createContact(\n    $name: String!\n    $email: String!\n    $phone: String\n    $subject: String\n    $message: String!\n  ) {\n    contact: createContact(\n      input: {\n        name: $name\n        email: $email\n        phone: $phone\n        subject: $subject\n        message: $message\n      }\n    ) {\n      id\n    }\n  }\n",
 ): (typeof documents)["\n  mutation createContact(\n    $name: String!\n    $email: String!\n    $phone: String\n    $subject: String\n    $message: String!\n  ) {\n    contact: createContact(\n      input: {\n        name: $name\n        email: $email\n        phone: $phone\n        subject: $subject\n        message: $message\n      }\n    ) {\n      id\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: "\n  query queryMeetingsByTeamId($id: String) {\n    meetings: queryMeetingsByTeamId(id: $id) {\n      nextToken\n      items {\n        behaviorScore\n        bodyScore\n        brainScore\n        createdAt\n        totalScore\n        date\n      }\n    }\n  }\n",
+): (typeof documents)["\n  query queryMeetingsByTeamId($id: String) {\n    meetings: queryMeetingsByTeamId(id: $id) {\n      nextToken\n      items {\n        behaviorScore\n        bodyScore\n        brainScore\n        createdAt\n        totalScore\n        date\n      }\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

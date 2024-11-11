@@ -17,13 +17,6 @@ import {
   PolarGrid,
   PolarAngleAxis,
   ResponsiveContainer,
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
 } from "recharts";
 
 import { BsChatRightTextFill } from "react-icons/bs";
@@ -34,6 +27,7 @@ import { FaFaceFrown, FaFaceMeh, FaFaceSmile } from "react-icons/fa6";
 import Dashmain from "../loaders/Dashmain.loader";
 import { Team } from "@/services/gql/graphql";
 import TeamPerformance from "../meeting/TeamPerformance";
+import SynchronyGraph from "../meeting/SynchronyProgress";
 
 interface IDashMainProps {
   activeTeam: string;
@@ -238,21 +232,7 @@ export default function DashMain({
               Global Progress
             </h2>
             <div className="w-full h-60 md:h-80">
-              <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={data2}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="name" padding={{ left: 30, right: 30 }} />
-                  <YAxis />
-                  <Tooltip />
-                  <Legend />
-                  <Line
-                    type="monotone"
-                    dataKey="pv"
-                    stroke="#8884d8"
-                    activeDot={{ r: 8 }}
-                  />
-                </LineChart>
-              </ResponsiveContainer>
+              <SynchronyGraph data={data} />
             </div>
           </div>
         </div>
@@ -294,47 +274,12 @@ const data1 = [
   },
 ];
 
-const data2 = [
-  {
-    name: "Page A",
-    uv: 4000,
-    pv: 2400,
-    amt: 2400,
-  },
-  {
-    name: "Page B",
-    uv: 3000,
-    pv: 1398,
-    amt: 2210,
-  },
-  {
-    name: "Page C",
-    uv: 2000,
-    pv: 4800,
-    amt: 2290,
-  },
-  {
-    name: "Page D",
-    uv: 2780,
-    pv: 3908,
-    amt: 2000,
-  },
-  {
-    name: "Page E",
-    uv: 1890,
-    pv: 4800,
-    amt: 2181,
-  },
-  {
-    name: "Page F",
-    uv: 2390,
-    pv: 3800,
-    amt: 2500,
-  },
-  {
-    name: "Page G",
-    uv: 3490,
-    pv: 4300,
-    amt: 2100,
-  },
+const data = [
+  { date: "2023-10-28", value: 5 },
+  { date: "2023-10-29", value: 6 },
+  { date: "2023-10-30", value: 5 },
+  { date: "2023-10-31", value: 7 },
+  { date: "2023-11-01", value: 10 },
+  { date: "2023-11-02", value: 4 },
+  { date: "2023-11-03", value: 9 },
 ];
