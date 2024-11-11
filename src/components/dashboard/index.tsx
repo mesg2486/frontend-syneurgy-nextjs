@@ -25,6 +25,10 @@ const LIST_TEAMS = graphql(`
         engagementLevel
         brainScore
         bodyScore
+        diffBehaviorScore
+        diffBodyScore
+        diffBrainScore
+        diffTotalScore
         behaviorScore
       }
     }
@@ -56,20 +60,9 @@ export default function Dashboard() {
   return (
     <div>
       <DashMain
-        teamScores={{
-          brainScore:
-            data?.teams?.items?.filter((team: any) => team.id === activeTeam)[0]
-              ?.brainScore || 0,
-          bodyScore:
-            data?.teams?.items?.filter((team: any) => team.id === activeTeam)[0]
-              ?.bodyScore || 0,
-          behaviorScore:
-            data?.teams?.items?.filter((team: any) => team.id === activeTeam)[0]
-              ?.behaviorScore || 0,
-          totalScore:
-            data?.teams?.items?.filter((team: any) => team.id === activeTeam)[0]
-              ?.totalScore || 0,
-        }}
+        activeTeamData={
+          data?.teams?.items?.filter((i) => i?.id === activeTeam)?.[0]
+        }
         isTeamsLoading={status === "loading" || isLoading}
         teams={data?.teams?.items as Team[]}
         activeTeam={activeTeam}

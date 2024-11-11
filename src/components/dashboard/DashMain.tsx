@@ -31,88 +31,32 @@ import { HiHand } from "react-icons/hi";
 import { useSession } from "next-auth/react";
 import CircleProgress from "../fragments/CircleProgressWithIcon";
 import { FaFaceFrown, FaFaceMeh, FaFaceSmile } from "react-icons/fa6";
-import { useQuery } from "@tanstack/react-query";
-import { graphql } from "@/services/gql";
-import { gql } from "@/services/clients/graphql.client";
 import Dashmain from "../loaders/Dashmain.loader";
-import { Meeting, Team } from "@/services/gql/graphql";
+import { Team } from "@/services/gql/graphql";
 import TeamPerformance, { ITeamScores } from "../meeting/TeamPerformance";
-
-const LIST_TEAM_MEETINGS = graphql(`
-  query queryMeetingsByTeamId($id: String) {
-    meetings: queryMeetingsByTeamId(id: $id) {
-      nextToken
-      items {
-        behaviorScore
-        bodyScore
-        brainScore
-        createdAt
-        totalScore
-        date
-      }
-    }
-  }
-`);
 
 interface IDashMainProps {
   activeTeam: string;
   setActiveTeam: React.Dispatch<React.SetStateAction<string>>;
   defaultTeam?: string;
-  teamScores?: ITeamScores;
   teams?: Team[] | null;
   isTeamsLoading?: boolean;
+  activeTeamData: Team | null | undefined;
 }
 
 export default function DashMain({
   isTeamsLoading,
   activeTeam,
-  teamScores,
   setActiveTeam,
+  activeTeamData,
   defaultTeam,
   teams,
 }: IDashMainProps) {
   const { data: session, status } = useSession();
 
-  const {
-    data: meetings,
-    isLoading,
-    refetch,
-  } = useQuery({
-    queryKey: ["meetings", activeTeam],
-    queryFn: async () => {
-      return await gql.request(LIST_TEAM_MEETINGS, {
-        id: activeTeam,
-      });
-    },
-    enabled: !!activeTeam && !!session?.user,
-    select: (data) => data?.meetings?.items as Meeting[],
-  });
-
-  const globalSynchrony =
-    Number(
-      Number(
-        meetings?.reduce((acc, curr) => acc + Number(curr.totalScore), 0),
-      ) / Number(meetings?.length),
-    ).toFixed(0) || 56;
-
-  const globalSynchronyOld =
-    Number(
-      Number(
-        meetings
-          ?.slice(1, meetings.length)
-          ?.reduce((acc, curr) => acc + Number(curr.totalScore), 0),
-      ) / Number(meetings?.length),
-    ).toFixed(0) || 56;
-
-  const globalSynchronyDifference =
-    globalSynchrony > globalSynchronyOld
-      ? Number(globalSynchrony) - Number(globalSynchronyOld)
-      : Number(globalSynchronyOld) - Number(globalSynchrony);
-
   if (isTeamsLoading) {
     return <Dashmain />;
   }
-  console.log("meetings", meetings, teams);
 
   return (
     <div className="bg-secondary c-container">
@@ -197,12 +141,15 @@ export default function DashMain({
             <h2 className="text-lg font-medium">Global Synchrony</h2>
             <div className="flex flex-row  items-center py-6 divide-x-[1px] divide-white/10">
               <div className="flex-1 mr-4">
-                <h4 className="text-6xl font-semibold">{globalSynchrony}</h4>
+                <h4 className="text-6xl font-semibold">
+                  {activeTeamData?.totalScore}
+                </h4>
                 <span className="text-xl text-primary">
                   {" "}
-                  &#8599;{globalSynchronyDifference}%
+                  &#8599;
+                  {activeTeamData?.diffTotalScore}%
                 </span>
-                <span>{globalSynchronyOld}</span>
+                <span>{activeTeamData?.prevTotalScore}</span>
               </div>
               <div className="flex-1">
                 <ul className="flex flex-col ml-4 space-y-2">
@@ -252,7 +199,7 @@ export default function DashMain({
           </div>
           <div className="space-y-6">
             <h2 className="font-medium md:pl-10">Global Performance</h2>
-            <TeamPerformance teamScores={teamScores as ITeamScores} />
+            <TeamPerformance activeTeamData={activeTeamData} />
           </div>
           <div>
             <h2 className="text-lg font-medium md:pl-10">Global Sentiment</h2>

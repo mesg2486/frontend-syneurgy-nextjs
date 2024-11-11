@@ -1,35 +1,32 @@
 import React from "react";
 import CircleProgressWithIcon from "../fragments/CircleProgressWithIcon";
-
-export interface ITeamScores {
-  bodyScore: number;
-  brainScore: number;
-  totalScore: number;
-  behaviorScore: number;
-}
+import { Team } from "@/services/gql/graphql";
 
 export default function TeamPerformance({
-  teamScores,
+  activeTeamData,
 }: {
-  teamScores: ITeamScores;
+  activeTeamData?: Team | null;
 }) {
   return (
     <div className="flex items-center justify-center gap-x-4">
       <div className="flex flex-col items-center justify-center gap-2">
         <CircleProgressWithIcon
           fill="number"
-          progress={teamScores.brainScore}
+          progress={Number(activeTeamData?.brainScore)}
         />
         <p className="text-sm">Brain</p>
       </div>
       <div className="flex flex-col items-center justify-center gap-2">
-        <CircleProgressWithIcon fill="number" progress={teamScores.bodyScore} />
+        <CircleProgressWithIcon
+          fill="number"
+          progress={Number(activeTeamData?.bodyScore)}
+        />
         <p className="text-sm">Body</p>
       </div>
       <div className="flex flex-col items-center justify-center gap-2">
         <CircleProgressWithIcon
           fill="number"
-          progress={teamScores.behaviorScore}
+          progress={Number(activeTeamData?.behaviorScore)}
         />
         <p className="text-sm">Behavior</p>
       </div>

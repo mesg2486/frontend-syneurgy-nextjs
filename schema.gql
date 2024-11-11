@@ -537,6 +537,14 @@ type Team {
   brainScore: Float
   bodyScore: Float
   behaviorScore: Float
+  prevBrainScore: Float
+  prevBodyScore: Float
+  prevBehaviorScore: Float
+  prevTotalScore: Float
+  diffBrainScore: Float
+  diffBodyScore: Float
+  diffBehaviorScore: Float
+  diffTotalScore: Float
   goals: String
   invitations: [Invitations]
   engagementLevel: String

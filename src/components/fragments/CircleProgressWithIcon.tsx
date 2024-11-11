@@ -6,7 +6,7 @@ interface ICircleProgressProps {
   className?: string;
   color?: string;
   children?: React.ReactNode;
-  progress?: number;
+  progress?: number | undefined;
   fill?: "number" | "icon";
 }
 
@@ -59,7 +59,7 @@ export default function CircleProgressWithIcon({
             </span>
           )
         ) : (
-          <span className="text-sm text-center">{progress.toFixed(0)}</span>
+          <span className="text-sm text-center">{progress?.toFixed(0)}</span>
         )}
       </div>
     </div>
