@@ -1,6 +1,5 @@
 import React from "react";
 import { FaInfoCircle } from "react-icons/fa";
-import CircleProgressWithIcon from "../fragments/CircleProgressWithIcon";
 import CircularDashboard, { ICircularDashboardScores } from "./MeetingScore";
 import { Dimensions } from "@/services/gql/graphql";
 import DimensionsRadar from "@/components/meeting/Dimensions";
@@ -71,7 +70,7 @@ export default function Data({
         <h2 className="flex items-center mb-4 font-medium text-md gap-x-1">
           Team Performance <FaInfoCircle />
         </h2>
-        <TeamPerformance teamScores={teamScores} />
+        <TeamPerformance activeTeamData={teamScores as any} />
       </div>
     </div>
   );

@@ -1,11 +1,17 @@
 import React from "react";
 import CircleProgressWithIcon from "../fragments/CircleProgressWithIcon";
-import { Team } from "@/services/gql/graphql";
+
+export interface ITeamScores {
+  brainScore: number;
+  bodyScore: number;
+  behaviorScore: number;
+  totalScore: number;
+}
 
 export default function TeamPerformance({
   activeTeamData,
 }: {
-  activeTeamData?: Team | null;
+  activeTeamData?: any;
 }) {
   return (
     <div className="flex items-center justify-center gap-x-4">

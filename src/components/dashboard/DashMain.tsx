@@ -33,7 +33,7 @@ import CircleProgress from "../fragments/CircleProgressWithIcon";
 import { FaFaceFrown, FaFaceMeh, FaFaceSmile } from "react-icons/fa6";
 import Dashmain from "../loaders/Dashmain.loader";
 import { Team } from "@/services/gql/graphql";
-import TeamPerformance, { ITeamScores } from "../meeting/TeamPerformance";
+import TeamPerformance from "../meeting/TeamPerformance";
 
 interface IDashMainProps {
   activeTeam: string;
