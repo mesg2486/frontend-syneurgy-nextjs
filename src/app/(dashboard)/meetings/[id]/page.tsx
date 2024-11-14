@@ -7,7 +7,7 @@ import {
   BreadcrumbList,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import MainTab from "@/components/meeting/MainTab";
 import Highlights from "@/components/meeting/Highlights";
@@ -19,10 +19,11 @@ import Link from "next/link";
 import { graphql } from "@/services/gql";
 import { useQuery } from "@tanstack/react-query";
 import { gql } from "@/services/clients/graphql.client";
-import AskSyneurgy from "@/components/meeting/AskSyneurgy";
 import Summary from "@/components/meeting/Summary";
 import TeamDetails from "@/components/meeting/TeamDetails";
 import { PosNegRate } from "@/services/gql/graphql";
+import { useSession } from "next-auth/react";
+import { toast } from "@/components/ui/use-toast";
 
 export const GET_MEETING = graphql(`
   query getMeeting($id: ID!) {
@@ -64,6 +65,8 @@ export const GET_MEETING = graphql(`
         end
         description
       }
+      report
+      reportStatus
       user_highlights {
         start
         end
@@ -119,7 +122,7 @@ export const GET_MEETING = graphql(`
 
 export default function MeetingPage({ params }: { params: { id: string } }) {
   const [toggleTabs, setToggleTabs] = useState("data");
-  const [toggleSyneurgy, setToggleSyneurgy] = useState(false);
+  const { data: session } = useSession();
 
   const { data, isLoading, refetch } = useQuery({
     queryKey: ["meeting", params.id],
@@ -130,12 +133,47 @@ export default function MeetingPage({ params }: { params: { id: string } }) {
     },
   });
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      refetch();
+    }, 2000); // 2000ms = 2 seconds
+
+    // Clear the interval when the component unmounts
+    return () => clearInterval(interval);
+  }, [refetch]);
+
+  const handleGenerateReport = async () => {
+    try {
+      const response = await fetch("/api/generate", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId: session?.user.sub,
+          meetingId: params.id,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log("Report generated:", data);
+      toast({
+        title: "Initiated",
+        description:
+          "Your report is being generated. It will be available shortly.",
+      });
+    } catch (error) {
+      console.error("Failed to generate report:", error);
+    }
+  };
+
   const averageRate =
     Number(
-      data?.meeting?.speaker_rates?.reduce(
-        (sum, i) => sum + Number(i?.rate),
-        0,
-      ),
+      data?.meeting?.speaker_rates?.reduce((sum, i) => sum + Number(i?.rate), 0)
     ) / Number(data?.meeting?.speaker_rates?.length);
 
   return (
@@ -170,9 +208,12 @@ export default function MeetingPage({ params }: { params: { id: string } }) {
             </Link>
             <h2 className="text-xl font-medium">{data?.meeting?.name}</h2>
           </div>
-          <Button onClick={() => setToggleSyneurgy(true)} className="md:hidden">
-            <BsChatRightTextFill /> Ask Syneurgy
+          <Button onClick={handleGenerateReport} className="md:hidden">
+            <BsChatRightTextFill /> Generate Report
           </Button>
+          {/* <Button onClick={() => setToggleSyneurgy(true)} className="md:hidden">
+            <BsChatRightTextFill /> Ask Syneurgy
+          </Button> */}
         </div>
         <div className="flex-row hidden space-x-6 md:flex">
           <ul className="flex flex-row text-xs font-medium gap-x-3">
@@ -195,12 +236,35 @@ export default function MeetingPage({ params }: { params: { id: string } }) {
               ACTION
             </li> */}
           </ul>
-          <Button onClick={() => setToggleSyneurgy(true)}>
-            <BsChatRightTextFill /> Ask Syneurgy
-          </Button>
-          {toggleSyneurgy && (
-            <AskSyneurgy setToggleSyneurgy={setToggleSyneurgy} />
+          {!data?.meeting?.report ? (
+            <Button onClick={handleGenerateReport} className="">
+              <BsChatRightTextFill />{" "}
+              {data?.meeting?.reportStatus === "pending" ||
+              data?.meeting?.reportStatus === "uploading"
+                ? data?.meeting?.reportStatus
+                : "Generate Report"}
+            </Button>
+          ) : (
+            <>
+              <a
+                href={`${process.env.NEXT_PUBLIC_CDN_ENDPOINT}/${data.meeting.report}`}
+                download="report.pdf"
+              >
+                <Button className="">
+                  <BsChatRightTextFill /> Download Report
+                </Button>
+              </a>
+              <Button onClick={handleGenerateReport} className="">
+                <BsChatRightTextFill /> Regenerate
+              </Button>
+            </>
           )}
+          {/* <Button onClick={() => setToggleSyneurgy(true)}>
+            <BsChatRightTextFill /> Ask Syneurgy
+          </Button> */}
+          {/* {toggleSyneurgy && (
+            <AskSyneurgy setToggleSyneurgy={setToggleSyneurgy} />
+          )} */}
         </div>
       </div>
       <div className="grid grid-cols-10 md:gap-x-5">
@@ -239,7 +303,7 @@ export default function MeetingPage({ params }: { params: { id: string } }) {
                     rate: i?.time,
                     speaker: i?.speakerId,
                     wpm: data.meeting?.speaker_rates?.[index]?.rate,
-                  }),
+                  })
                 )}
                 teamAvgWpm={averageRate}
                 meetingId={data?.meeting?.id as string}

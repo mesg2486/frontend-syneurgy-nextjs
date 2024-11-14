@@ -253,6 +253,8 @@ type Meeting {
   userId: String!
   teamId: String!
   team: Team
+  report: String
+  reportStatus: String
   date: String!
   createdAt: String!
   updatedAt: String!
