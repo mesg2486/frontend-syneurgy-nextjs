@@ -61,7 +61,7 @@ export default function LoginForm({ className, ...props }: LoginFormProps) {
     setIsPending(true);
     await signIn("credentials", {
       ...data,
-      callbackUrl: location.origin + "/",
+      callbackUrl: location.origin + "/dashboard",
       redirect: true,
     });
     setIsPending(false);
@@ -118,19 +118,19 @@ export default function LoginForm({ className, ...props }: LoginFormProps) {
               </FormItem>
             )}
           />
-          <div className="flex pt-4 justify-between items-center">
+          <div className="flex items-center justify-between pt-4">
             <Link
               href="/auth/forgot-password"
-              className="whitespace-nowrap text-sm text-primary"
+              className="text-sm whitespace-nowrap text-primary"
             >
               Forgot Password
             </Link>
             <Button
               type="submit"
-              className="rounded-full bg-white hover:bg-white/90"
+              className="bg-white rounded-full hover:bg-white/90"
             >
               {isPending ? (
-                <span className="flex gap-2 items-center">
+                <span className="flex items-center gap-2">
                   <span>Pending</span>
                   <AiOutlineReload className="animate-spin" />
                 </span>

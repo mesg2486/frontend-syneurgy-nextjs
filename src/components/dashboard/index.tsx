@@ -30,6 +30,34 @@ const LIST_TEAMS = graphql(`
         diffBrainScore
         diffTotalScore
         behaviorScore
+        kpis {
+          engagement
+          alignment
+          agency
+          stress
+          burnout
+          prevEngagement
+          prevAlignment
+          prevAgency
+          prevStress
+          prevBurnout
+          diffEngagement
+          diffAlignment
+          diffAgency
+          diffStress
+          diffBurnout
+        }
+        emotions {
+          positive
+          negative
+          neutral
+          prevPositive
+          prevNegative
+          prevNeutral
+          diffPositive
+          diffNegative
+          diffNeutral
+        }
       }
     }
   }

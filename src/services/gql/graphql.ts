@@ -212,6 +212,13 @@ export type Dimensions = {
   trustAndPsychologicalSafety?: Maybe<Scalars["Float"]["output"]>;
 };
 
+export type Emotion = {
+  __typename?: "Emotion";
+  negative?: Maybe<Scalars["Float"]["output"]>;
+  neutral?: Maybe<Scalars["Float"]["output"]>;
+  positive?: Maybe<Scalars["Float"]["output"]>;
+};
+
 export type EmotionSegment = {
   __typename?: "EmotionSegment";
   end_time: Scalars["Float"]["output"];
@@ -240,6 +247,15 @@ export type Invitations = {
   message?: Maybe<Scalars["String"]["output"]>;
 };
 
+export type KpIs = {
+  __typename?: "KPIs";
+  agency?: Maybe<Scalars["Float"]["output"]>;
+  alignment?: Maybe<Scalars["Float"]["output"]>;
+  burnout?: Maybe<Scalars["Float"]["output"]>;
+  engagement?: Maybe<Scalars["Float"]["output"]>;
+  stress?: Maybe<Scalars["Float"]["output"]>;
+};
+
 export type Meeting = {
   __typename?: "Meeting";
   a_result?: Maybe<Array<Maybe<AResultSegment>>>;
@@ -254,8 +270,10 @@ export type Meeting = {
   dimensions?: Maybe<Dimensions>;
   emotion?: Maybe<Array<Maybe<EmotionSegment>>>;
   emotionText?: Maybe<Array<Maybe<EmotionTextSegment>>>;
+  emotions?: Maybe<Emotion>;
   highlights?: Maybe<Scalars["String"]["output"]>;
   id: Scalars["ID"]["output"];
+  kpis?: Maybe<KpIs>;
   name: Scalars["String"]["output"];
   participation?: Maybe<Array<Maybe<Participation>>>;
   performance?: Maybe<Scalars["String"]["output"]>;
@@ -267,6 +285,7 @@ export type Meeting = {
   speaker_rate_chunks?: Maybe<Array<Maybe<SpeakerRateChunks>>>;
   speaker_rates?: Maybe<Array<Maybe<SpeakerRate>>>;
   speaker_times?: Maybe<Array<Maybe<SpeakerTime>>>;
+  status?: Maybe<Scalars["String"]["output"]>;
   summary?: Maybe<Array<Maybe<MeetingSummary>>>;
   synchrony?: Maybe<Scalars["String"]["output"]>;
   team?: Maybe<Team>;
@@ -844,6 +863,38 @@ export type SubscriptionOnUpdateUserArgs = {
   username?: InputMaybe<Scalars["String"]["input"]>;
 };
 
+export type TEmotions = {
+  __typename?: "TEmotions";
+  diffNegative?: Maybe<Scalars["Float"]["output"]>;
+  diffNeutral?: Maybe<Scalars["Float"]["output"]>;
+  diffPositive?: Maybe<Scalars["Float"]["output"]>;
+  negative?: Maybe<Scalars["Float"]["output"]>;
+  neutral?: Maybe<Scalars["Float"]["output"]>;
+  positive?: Maybe<Scalars["Float"]["output"]>;
+  prevNegative?: Maybe<Scalars["Float"]["output"]>;
+  prevNeutral?: Maybe<Scalars["Float"]["output"]>;
+  prevPositive?: Maybe<Scalars["Float"]["output"]>;
+};
+
+export type TkpIs = {
+  __typename?: "TKPIs";
+  agency?: Maybe<Scalars["Float"]["output"]>;
+  alignment?: Maybe<Scalars["Float"]["output"]>;
+  burnout?: Maybe<Scalars["Float"]["output"]>;
+  diffAgency?: Maybe<Scalars["Float"]["output"]>;
+  diffAlignment?: Maybe<Scalars["Float"]["output"]>;
+  diffBurnout?: Maybe<Scalars["Float"]["output"]>;
+  diffEngagement?: Maybe<Scalars["Float"]["output"]>;
+  diffStress?: Maybe<Scalars["Float"]["output"]>;
+  engagement?: Maybe<Scalars["Float"]["output"]>;
+  prevAgency?: Maybe<Scalars["Float"]["output"]>;
+  prevAlignment?: Maybe<Scalars["Float"]["output"]>;
+  prevBurnout?: Maybe<Scalars["Float"]["output"]>;
+  prevEngagement?: Maybe<Scalars["Float"]["output"]>;
+  prevStress?: Maybe<Scalars["Float"]["output"]>;
+  stress?: Maybe<Scalars["Float"]["output"]>;
+};
+
 export type TableBooleanFilterInput = {
   attributeExists?: InputMaybe<Scalars["Boolean"]["input"]>;
   eq?: InputMaybe<Scalars["Boolean"]["input"]>;
@@ -1017,10 +1068,12 @@ export type Team = {
   diffBodyScore?: Maybe<Scalars["Float"]["output"]>;
   diffBrainScore?: Maybe<Scalars["Float"]["output"]>;
   diffTotalScore?: Maybe<Scalars["Float"]["output"]>;
+  emotions?: Maybe<TEmotions>;
   engagementLevel?: Maybe<Scalars["String"]["output"]>;
   goals?: Maybe<Scalars["String"]["output"]>;
   id: Scalars["ID"]["output"];
   invitations?: Maybe<Array<Maybe<Invitations>>>;
+  kpis?: Maybe<TkpIs>;
   members?: Maybe<MembersConnection>;
   name: Scalars["String"]["output"];
   performance?: Maybe<Scalars["String"]["output"]>;
@@ -1252,6 +1305,20 @@ export type GetMeetingQuery = {
     bodyScore?: number | null;
     behaviorScore?: number | null;
     brainScore?: number | null;
+    emotions?: {
+      __typename?: "Emotion";
+      positive?: number | null;
+      negative?: number | null;
+      neutral?: number | null;
+    } | null;
+    kpis?: {
+      __typename?: "KPIs";
+      stress?: number | null;
+      burnout?: number | null;
+      engagement?: number | null;
+      alignment?: number | null;
+      agency?: number | null;
+    } | null;
     summary?: Array<{
       __typename?: "MeetingSummary";
       bullets?: Array<string | null> | null;
@@ -1426,27 +1493,6 @@ export type CreateContactMutation = {
   contact?: { __typename?: "Contact"; id: string } | null;
 };
 
-export type QueryMeetingsByTeamIdQueryVariables = Exact<{
-  id?: InputMaybe<Scalars["String"]["input"]>;
-}>;
-
-export type QueryMeetingsByTeamIdQuery = {
-  __typename?: "Query";
-  meetings?: {
-    __typename?: "MeetingConnection";
-    nextToken?: string | null;
-    items?: Array<{
-      __typename?: "Meeting";
-      behaviorScore?: number | null;
-      bodyScore?: number | null;
-      brainScore?: number | null;
-      createdAt: string;
-      totalScore?: number | null;
-      date: string;
-    } | null> | null;
-  } | null;
-};
-
 export type DeleteTeamMutationVariables = Exact<{
   id: Scalars["ID"]["input"];
 }>;
@@ -1511,6 +1557,36 @@ export type ListTeamsForDashboardQuery = {
       diffBrainScore?: number | null;
       diffTotalScore?: number | null;
       behaviorScore?: number | null;
+      kpis?: {
+        __typename?: "TKPIs";
+        engagement?: number | null;
+        alignment?: number | null;
+        agency?: number | null;
+        stress?: number | null;
+        burnout?: number | null;
+        prevEngagement?: number | null;
+        prevAlignment?: number | null;
+        prevAgency?: number | null;
+        prevStress?: number | null;
+        prevBurnout?: number | null;
+        diffEngagement?: number | null;
+        diffAlignment?: number | null;
+        diffAgency?: number | null;
+        diffStress?: number | null;
+        diffBurnout?: number | null;
+      } | null;
+      emotions?: {
+        __typename?: "TEmotions";
+        positive?: number | null;
+        negative?: number | null;
+        neutral?: number | null;
+        prevPositive?: number | null;
+        prevNegative?: number | null;
+        prevNeutral?: number | null;
+        diffPositive?: number | null;
+        diffNegative?: number | null;
+        diffNeutral?: number | null;
+      } | null;
     } | null> | null;
   } | null;
 };
@@ -1717,6 +1793,56 @@ export const GetMeetingDocument = {
                 { kind: "Field", name: { kind: "Name", value: "updatedAt" } },
                 { kind: "Field", name: { kind: "Name", value: "url" } },
                 { kind: "Field", name: { kind: "Name", value: "userId" } },
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "emotions" },
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "positive" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "negative" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "neutral" },
+                      },
+                    ],
+                  },
+                },
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "kpis" },
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "stress" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "burnout" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "engagement" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "alignment" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "agency" },
+                      },
+                    ],
+                  },
+                },
                 {
                   kind: "Field",
                   name: { kind: "Name", value: "summary" },
@@ -2392,82 +2518,6 @@ export const CreateContactDocument = {
   CreateContactMutation,
   CreateContactMutationVariables
 >;
-export const QueryMeetingsByTeamIdDocument = {
-  kind: "Document",
-  definitions: [
-    {
-      kind: "OperationDefinition",
-      operation: "query",
-      name: { kind: "Name", value: "queryMeetingsByTeamId" },
-      variableDefinitions: [
-        {
-          kind: "VariableDefinition",
-          variable: { kind: "Variable", name: { kind: "Name", value: "id" } },
-          type: { kind: "NamedType", name: { kind: "Name", value: "String" } },
-        },
-      ],
-      selectionSet: {
-        kind: "SelectionSet",
-        selections: [
-          {
-            kind: "Field",
-            alias: { kind: "Name", value: "meetings" },
-            name: { kind: "Name", value: "queryMeetingsByTeamId" },
-            arguments: [
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "id" },
-                value: {
-                  kind: "Variable",
-                  name: { kind: "Name", value: "id" },
-                },
-              },
-            ],
-            selectionSet: {
-              kind: "SelectionSet",
-              selections: [
-                { kind: "Field", name: { kind: "Name", value: "nextToken" } },
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "items" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "behaviorScore" },
-                      },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "bodyScore" },
-                      },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "brainScore" },
-                      },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "createdAt" },
-                      },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "totalScore" },
-                      },
-                      { kind: "Field", name: { kind: "Name", value: "date" } },
-                    ],
-                  },
-                },
-              ],
-            },
-          },
-        ],
-      },
-    },
-  ],
-} as unknown as DocumentNode<
-  QueryMeetingsByTeamIdQuery,
-  QueryMeetingsByTeamIdQueryVariables
->;
 export const DeleteTeamDocument = {
   kind: "Document",
   definitions: [
@@ -2731,6 +2781,120 @@ export const ListTeamsForDashboardDocument = {
                       {
                         kind: "Field",
                         name: { kind: "Name", value: "behaviorScore" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "kpis" },
+                        selectionSet: {
+                          kind: "SelectionSet",
+                          selections: [
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "engagement" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "alignment" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "agency" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "stress" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "burnout" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "prevEngagement" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "prevAlignment" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "prevAgency" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "prevStress" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "prevBurnout" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "diffEngagement" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "diffAlignment" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "diffAgency" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "diffStress" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "diffBurnout" },
+                            },
+                          ],
+                        },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "emotions" },
+                        selectionSet: {
+                          kind: "SelectionSet",
+                          selections: [
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "positive" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "negative" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "neutral" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "prevPositive" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "prevNegative" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "prevNeutral" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "diffPositive" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "diffNegative" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "diffNeutral" },
+                            },
+                          ],
+                        },
                       },
                     ],
                   },

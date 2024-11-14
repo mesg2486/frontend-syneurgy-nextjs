@@ -174,6 +174,12 @@ type Dimensions {
   trustAndPsychologicalSafety: Float
 }
 
+type Emotion {
+  positive: Float
+  negative: Float
+  neutral: Float
+}
+
 type EmotionSegment {
   end_time: Float!
   keyword: String!
@@ -197,6 +203,14 @@ type Invitations {
   email: String!
   message: String
   invited: Boolean!
+}
+
+type KPIs {
+  engagement: Float
+  alignment: Float
+  agency: Float
+  stress: Float
+  burnout: Float
 }
 
 type Meeting {
@@ -230,6 +244,9 @@ type Meeting {
   posNegRates: [PosNegRate]
   dimensions: Dimensions
   highlights: String
+  emotions: Emotion
+  status: String
+  kpis: KPIs
   url: String!
   thumbnail: String
   type: String!
@@ -365,6 +382,36 @@ type SpeakerSegment {
 type SpeakerTime {
   speakerId: String
   time: Float
+}
+
+type TEmotions {
+  positive: Float
+  negative: Float
+  neutral: Float
+  prevPositive: Float
+  prevNegative: Float
+  prevNeutral: Float
+  diffPositive: Float
+  diffNegative: Float
+  diffNeutral: Float
+}
+
+type TKPIs {
+  engagement: Float
+  alignment: Float
+  agency: Float
+  stress: Float
+  burnout: Float
+  prevEngagement: Float
+  prevAlignment: Float
+  prevAgency: Float
+  prevStress: Float
+  prevBurnout: Float
+  diffEngagement: Float
+  diffAlignment: Float
+  diffAgency: Float
+  diffStress: Float
+  diffBurnout: Float
 }
 
 input TableBooleanFilterInput {
@@ -533,6 +580,8 @@ type Team {
   id: ID!
   name: String!
   createdBy: ID!
+  kpis: TKPIs
+  emotions: TEmotions
   totalScore: Float
   brainScore: Float
   bodyScore: Float

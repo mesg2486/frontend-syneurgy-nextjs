@@ -41,6 +41,18 @@ export const GET_MEETING = graphql(`
       updatedAt
       url
       userId
+      emotions {
+        positive
+        negative
+        neutral
+      }
+      kpis {
+        stress
+        burnout
+        engagement
+        alignment
+        agency
+      }
       summary {
         bullets
         start

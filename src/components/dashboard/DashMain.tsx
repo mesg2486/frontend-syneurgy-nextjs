@@ -22,12 +22,12 @@ import {
 import { BsChatRightTextFill } from "react-icons/bs";
 import { HiHand } from "react-icons/hi";
 import { useSession } from "next-auth/react";
-import CircleProgress from "../fragments/CircleProgressWithIcon";
-import { FaFaceFrown, FaFaceMeh, FaFaceSmile } from "react-icons/fa6";
 import Dashmain from "../loaders/Dashmain.loader";
 import { Team } from "@/services/gql/graphql";
 import TeamPerformance from "../meeting/TeamPerformance";
 import SynchronyGraph from "../meeting/SynchronyProgress";
+import KPIEmotionsDisplay from "./KPIEmotion";
+import TeamSentimentDisplay from "./TeamSentiment";
 
 interface IDashMainProps {
   activeTeam: string;
@@ -135,34 +135,17 @@ export default function DashMain({
             <h2 className="text-lg font-medium">Global Synchrony</h2>
             <div className="flex flex-row  items-center py-6 divide-x-[1px] divide-white/10">
               <div className="flex-1 mr-4">
-                <h4 className="text-6xl font-semibold">
-                  {activeTeamData?.totalScore}
+                <h4 className="text-5xl font-semibold">
+                  {activeTeamData?.totalScore?.toFixed(0)}
                 </h4>
                 <span className="text-xl text-primary">
-                  {" "}
                   &#8599;
                   {activeTeamData?.diffTotalScore}%
                 </span>
                 <span>{activeTeamData?.prevTotalScore}</span>
               </div>
               <div className="flex-1">
-                <ul className="flex flex-col ml-4 space-y-2">
-                  <li className="text-xs">
-                    Engagement: <span className="text-red-500"> &#8599;5%</span>
-                  </li>
-                  <li className="text-xs">
-                    Alignment:<span className="text-red-500"> &#8599;5%</span>
-                  </li>
-                  <li className="text-xs">
-                    Agency: <span className="text-red-500"> &#8599;5%</span>
-                  </li>
-                  <li className="text-xs">
-                    Stress:<span className="text-red-500"> &#8599;5%</span>
-                  </li>
-                  <li className="text-xs">
-                    Burnout:<span className="text-red-500"> &#8599;5%</span>
-                  </li>
-                </ul>
+                <KPIEmotionsDisplay activeTeamData={activeTeamData} />
               </div>
             </div>
           </div>
@@ -197,32 +180,7 @@ export default function DashMain({
           </div>
           <div>
             <h2 className="text-lg font-medium md:pl-10">Global Sentiment</h2>
-            <div className="flex flex-row justify-around w-full gap-4 p-5 overflow-hidden">
-              <div className="flex flex-col items-center justify-center gap-3">
-                <CircleProgress color="text-red-500">
-                  <span className="text-xl text-center">
-                    <FaFaceFrown />
-                  </span>
-                </CircleProgress>
-                <p>Negative</p>
-              </div>
-              <div className="flex flex-col items-center justify-center gap-3">
-                <CircleProgress color="text-gray-300">
-                  <span className="text-xl text-center">
-                    <FaFaceMeh />
-                  </span>
-                </CircleProgress>
-                <p>Neutral</p>
-              </div>
-              <div className="flex flex-col items-center justify-center gap-3">
-                <CircleProgress color="text-green-500">
-                  <span className="text-xl text-center">
-                    <FaFaceSmile />
-                  </span>
-                </CircleProgress>
-                <p>Positive</p>
-              </div>
-            </div>
+            <TeamSentimentDisplay activeTeamData={activeTeamData} />
           </div>
         </div>
         {/* Line Chart  */}
