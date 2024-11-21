@@ -26,7 +26,7 @@ export async function POST(request: Request) {
     if (!userId || !meetingId || !key) {
       return NextResponse.json(
         { error: "Missing userId, meetingId, or key" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -50,13 +50,13 @@ export async function POST(request: Request) {
 
     return NextResponse.json(
       { message: "Report generation initiated", MessageId: result.MessageId },
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error) {
     console.error("Failed to send message to SQS:", error);
     return NextResponse.json(
       { error: "Failed to initiate report generation" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

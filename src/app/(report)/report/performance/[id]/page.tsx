@@ -27,8 +27,8 @@ export default async function Report({ params }: { params: { id: string } }) {
   return (
     <div className="bg-secondary text-secondary-foreground">
       <div className="max-w-[600px] w-full mx-auto flex justify-center items-center min-h-screen">
-        <div className="py-5 scale-150">
-          <div className="overflow-hidden rounded-lg bg-white/10">
+        <div className="w-full py-5 scale-150">
+          <div className="flex items-center justify-center overflow-hidden rounded-lg bg-white/10">
             <CircularDashboard
               scores={{
                 score: meeting?.totalScore,

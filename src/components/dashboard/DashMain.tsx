@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import {
   Select,
   SelectContent,
@@ -11,42 +11,36 @@ import {
 } from "../ui/select";
 import { Button } from "../ui/button";
 import { Separator } from "../ui/separator";
-import {
-  Radar,
-  RadarChart,
-  PolarGrid,
-  PolarAngleAxis,
-  ResponsiveContainer,
-} from "recharts";
-
 import { BsChatRightTextFill } from "react-icons/bs";
 import { HiHand } from "react-icons/hi";
 import { useSession } from "next-auth/react";
 import Dashmain from "../loaders/Dashmain.loader";
-import { Team } from "@/services/gql/graphql";
 import TeamPerformance from "../meeting/TeamPerformance";
 import SynchronyGraph from "../meeting/SynchronyProgress";
 import KPIEmotionsDisplay from "./KPIEmotion";
 import TeamSentimentDisplay from "./TeamSentiment";
+import {
+  LIST_MEETINGS_BY_TEAMID,
+  useMeetingContext,
+} from "../providers/MeetingProvider";
+import { gql } from "@/services/clients/graphql.client";
+import { useQuery } from "@tanstack/react-query";
+import DimensionsRadar from "../meeting/Dimensions";
 
-interface IDashMainProps {
-  activeTeam: string;
-  setActiveTeam: React.Dispatch<React.SetStateAction<string>>;
-  defaultTeam?: string;
-  teams?: Team[] | null;
-  isTeamsLoading?: boolean;
-  activeTeamData: Team | null | undefined;
-}
-
-export default function DashMain({
-  isTeamsLoading,
-  activeTeam,
-  setActiveTeam,
-  activeTeamData,
-  defaultTeam,
-  teams,
-}: IDashMainProps) {
+export default function DashMain() {
   const { data: session, status } = useSession();
+  const { activeTeamId, setActiveTeamId, teams, activeTeam, isTeamsLoading } =
+    useMeetingContext();
+
+  const { data, isLoading, refetch } = useQuery({
+    queryKey: ["meetings", session?.user.sub],
+    queryFn: async () => {
+      return await gql.request(LIST_MEETINGS_BY_TEAMID, {
+        teamId: activeTeamId || "",
+      });
+    },
+    enabled: !!session?.user,
+  });
 
   if (isTeamsLoading) {
     return <Dashmain />;
@@ -62,9 +56,9 @@ export default function DashMain({
           ) : (
             <div>
               <Select
-                onValueChange={(value) => setActiveTeam(value)}
-                value={activeTeam}
-                defaultValue={defaultTeam}
+                onValueChange={(value) => setActiveTeamId(value)}
+                value={activeTeamId || ""}
+                defaultValue={activeTeamId || ""}
               >
                 <SelectTrigger className="hidden gap-1 px-5 border-0 rounded-2xl md:flex bg-tertiary">
                   <SelectValue />
@@ -118,69 +112,38 @@ export default function DashMain({
       </div>
       <Separator className="my-2" />
       <div className="flex flex-col space-y-4">
-        {/* <div className="flex justify-between p-4 py-2 rounded-md bg-tertiary">
-          <p className="hidden leading-8 md:block">
-            You have 35 minutes of 240 available in your plan
-          </p>
-          <p className="leading-8 md:hidden">Your plan is expiring</p>
-          <Button
-            className="border-primary text-primary hover:bg-primary hover:text-primary-foreground"
-            variant="outline"
-          >
-            Upgrade
-          </Button>
-        </div> */}
         <div className="grid grid-cols-1 p-8 rounded-md md:grid-cols-2 lg:grid-cols-4 md:justify-around bg-tertiary md:divide-x-2 divide-white/10">
           <div className="">
             <h2 className="text-lg font-medium">Global Synchrony</h2>
             <div className="flex flex-row  items-center py-6 divide-x-[1px] divide-white/10">
               <div className="flex-1 mr-4">
                 <h4 className="text-5xl font-semibold">
-                  {activeTeamData?.totalScore?.toFixed(0)}
+                  {activeTeam?.totalScore?.toFixed(0)}
                 </h4>
                 <span className="text-xl text-primary">
                   &#8599;
-                  {activeTeamData?.diffTotalScore}%
+                  {activeTeam?.diffTotalScore}%
                 </span>
-                <span>{activeTeamData?.prevTotalScore}</span>
+                <span>{activeTeam?.prevTotalScore}</span>
               </div>
               <div className="flex-1">
-                <KPIEmotionsDisplay activeTeamData={activeTeamData} />
+                <KPIEmotionsDisplay activeTeamData={activeTeam} />
               </div>
             </div>
           </div>
           <div>
             <h2 className="text-lg font-medium md:pl-10">Dimensions</h2>
-            <div className="w-full h-48 p-5 text-xs">
-              <ResponsiveContainer width="100%" height="100%">
-                <RadarChart cx="50%" cy="50%" outerRadius="80%" data={data1}>
-                  <PolarGrid />
-                  <PolarAngleAxis dataKey="subject" />
-                  <Radar
-                    name="Mike"
-                    dataKey="A"
-                    stroke="#8884d8"
-                    fill="#8884d8"
-                    fillOpacity={0.6}
-                  />
-                  <Radar
-                    name="Lily"
-                    dataKey="B"
-                    stroke="#82ca9d"
-                    fill="#82ca9d"
-                    fillOpacity={0.6}
-                  />
-                </RadarChart>
-              </ResponsiveContainer>
+            <div className="w-full px-4 h-60">
+              <DimensionsRadar dimensions={(activeTeam as any)?.dimensions} />
             </div>
           </div>
           <div className="space-y-6">
             <h2 className="font-medium md:pl-10">Global Performance</h2>
-            <TeamPerformance activeTeamData={activeTeamData} />
+            <TeamPerformance activeTeamData={activeTeam} />
           </div>
           <div>
             <h2 className="text-lg font-medium md:pl-10">Global Sentiment</h2>
-            <TeamSentimentDisplay activeTeamData={activeTeamData} />
+            <TeamSentimentDisplay activeTeamData={activeTeam} />
           </div>
         </div>
         {/* Line Chart  */}
@@ -190,7 +153,12 @@ export default function DashMain({
               Global Progress
             </h2>
             <div className="w-full h-60 md:h-80">
-              <SynchronyGraph data={data} />
+              <SynchronyGraph
+                data={data?.meetings?.items?.map((i: any) => ({
+                  date: i.createdAt,
+                  value: i.totalScore,
+                }))}
+              />
             </div>
           </div>
         </div>
@@ -198,46 +166,3 @@ export default function DashMain({
     </div>
   );
 }
-
-const data1 = [
-  {
-    subject: "Trust",
-    A: 120,
-    B: 110,
-    fullMark: 150,
-  },
-  {
-    subject: "Participation",
-    A: 98,
-    B: 130,
-    fullMark: 150,
-  },
-  {
-    subject: "Enjoyment",
-    A: 86,
-    B: 130,
-    fullMark: 150,
-  },
-  {
-    subject: "Shared goal",
-    A: 99,
-    B: 100,
-    fullMark: 150,
-  },
-  {
-    subject: "Engagement",
-    A: 85,
-    B: 90,
-    fullMark: 150,
-  },
-];
-
-const data = [
-  { date: "2023-10-28", value: 5 },
-  { date: "2023-10-29", value: 6 },
-  { date: "2023-10-30", value: 5 },
-  { date: "2023-10-31", value: 7 },
-  { date: "2023-11-01", value: 10 },
-  { date: "2023-11-02", value: 4 },
-  { date: "2023-11-03", value: 9 },
-];

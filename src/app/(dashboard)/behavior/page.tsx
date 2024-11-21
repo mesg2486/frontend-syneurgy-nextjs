@@ -35,23 +35,23 @@ export default function Behavior() {
     <div className="pt-6 space-y-5">
       <h2 className="text-2xl">Behavior Engine</h2>
       <Separator className="my-4" />
-      <div className="flex gap-2 items-center">
-        <Avatar className="h-8 w-8">
+      <div className="flex items-center gap-2">
+        <Avatar className="w-8 h-8">
           <AvatarImage src={session?.user.avatar || "/user.png"} />
         </Avatar>
         My Progress
       </div>
-      <div className="grid md:grid-cols-3 gap-5">
-        <div className="bg-popover col-span-3 md:col-span-2 rounded-xl p-5">
+      <div className="grid gap-5 md:grid-cols-3">
+        <div className="col-span-3 p-5 bg-popover md:col-span-2 rounded-xl">
           <div>
             <h3 className="flex items-center gap-2">
-              <span className="p-2 bg-background text-foreground rounded-full">
+              <span className="p-2 rounded-full bg-background text-foreground">
                 <TfiTarget />
               </span>
               Challenges Bank
             </h3>
             <div className="pt-4 text-sm divide-y divide-white/5">
-              <div className="flex opacity-60 py-3">
+              <div className="flex py-3 opacity-60">
                 <h3 className="flex-1">Challenge</h3>
                 <p className="flex-1">Count</p>
               </div>
@@ -74,24 +74,24 @@ export default function Behavior() {
             </div>
           </div>
         </div>
-        <div className="bg-popover col-span-3 md:col-span-1 rounded-xl p-5">
+        <div className="col-span-3 p-5 bg-popover md:col-span-1 rounded-xl">
           <h3 className="flex items-center gap-2">
-            <span className="p-2 bg-background text-foreground rounded-full">
+            <span className="p-2 rounded-full bg-background text-foreground">
               <BiCalendar />
             </span>
             Next Meetings
           </h3>
-          <div className="divide-y py-2 divide-white/10">
+          <div className="py-2 divide-y divide-white/10">
             <div className="py-4 space-y-1">
-              <p className="opacity-60 text-sm">5/25/2024 10:00 AM</p>
+              <p className="text-sm opacity-60">5/25/2024 10:00 AM</p>
               <p>Attentiveness</p>
             </div>
             <div className="py-4 space-y-1">
-              <p className="opacity-60 text-sm">5/26/2024 10:00 AM</p>
+              <p className="text-sm opacity-60">5/26/2024 10:00 AM</p>
               <p>Clear Mind</p>
             </div>
             <div className="py-4 space-y-1">
-              <p className="opacity-60 text-sm">5/26/2024 10:00 AM</p>
+              <p className="text-sm opacity-60">5/26/2024 10:00 AM</p>
               <p>Empathy</p>
             </div>
           </div>
@@ -99,8 +99,8 @@ export default function Behavior() {
       </div>
       <Separator className="my-4" />
       <div className="grid grid-cols-4 gap-5">
-        <div className="bg-popover col-span-2 md:col-span-1 space-y-4 rounded-xl sm:p-5 p-3">
-          <div className="flex justify-between items-center">
+        <div className="col-span-2 p-3 space-y-4 bg-popover md:col-span-1 rounded-xl sm:p-5">
+          <div className="flex items-center justify-between">
             <h3 className="flex items-center gap-2">
               <span className="p-1 bg-[#BDB0FF] text-black rounded-full">
                 <MdSupervisedUserCircle className="text-xl" />
@@ -109,7 +109,7 @@ export default function Behavior() {
             </h3>
             <CustomTooltip>Suggest a suitable hint</CustomTooltip>
           </div>
-          <div className="flex items-center gap-2 justify-between">
+          <div className="flex items-center justify-between gap-2">
             <div className="">
               <span className="text-5xl font-bold">76</span>
               <span>%</span>
@@ -117,8 +117,8 @@ export default function Behavior() {
             <img src="/assets/graph-up.png" alt="up" />
           </div>
         </div>
-        <div className="bg-popover col-span-2 md:col-span-1 space-y-4 rounded-xl sm:p-5 p-3">
-          <div className="flex justify-between items-center">
+        <div className="col-span-2 p-3 space-y-4 bg-popover md:col-span-1 rounded-xl sm:p-5">
+          <div className="flex items-center justify-between">
             <h3 className="flex items-center gap-2">
               <span className="p-1 bg-[#76FD3F] text-black rounded-full">
                 <PiFire className="text-xl" />
@@ -134,8 +134,8 @@ export default function Behavior() {
             {/* <img src="/assets/graph-up.png" alt="up" /> */}
           </div>
         </div>
-        <div className="bg-popover col-span-4 md:col-span-2 space-y-4 rounded-xl sm:p-5 p-3">
-          <div className="flex justify-between items-center">
+        <div className="col-span-4 p-3 space-y-4 bg-popover md:col-span-2 rounded-xl sm:p-5">
+          <div className="flex items-center justify-between">
             <h3 className="flex items-center gap-2">
               <span className="p-1 bg-[#FFA043] text-black rounded-full">
                 <PiTarget className="text-xl" />
@@ -154,30 +154,30 @@ export default function Behavior() {
           </div>
         </div>
       </div>
-      <div className="grid pb-6 grid-cols-2 py-2 gap-5">
-        <div className="space-y-4 col-span-2 md:col-span-1">
+      <div className="grid grid-cols-2 gap-5 py-2 pb-6">
+        <div className="col-span-2 space-y-4 md:col-span-1">
           <h3 className="text-lg font-medium">Superpowers</h3>
           <div className="space-y-2">
-            <div className="bg-popover p-4 py-5 flex justify-between items-center rounded-md">
+            <div className="flex items-center justify-between p-4 py-5 rounded-md bg-popover">
               <p>Make smart questions</p>
-              <span className="p-1 bg-white/10 rounded-full text-sm">💪</span>
+              <span className="p-1 text-sm rounded-full bg-white/10">💪</span>
             </div>
-            <div className="bg-popover p-4 py-5 flex justify-between items-center rounded-md">
+            <div className="flex items-center justify-between p-4 py-5 rounded-md bg-popover">
               <p>Think out of the box</p>
-              <span className="p-1 bg-white/10 rounded-full text-sm">💪</span>
+              <span className="p-1 text-sm rounded-full bg-white/10">💪</span>
             </div>
-            <div className="bg-popover p-4 py-5 flex justify-between items-center rounded-md">
+            <div className="flex items-center justify-between p-4 py-5 rounded-md bg-popover">
               <p>Wise Listener</p>
-              <span className="p-1 bg-white/10 rounded-full text-sm">💪</span>
+              <span className="p-1 text-sm rounded-full bg-white/10">💪</span>
             </div>
           </div>
         </div>
-        <div className="space-y-4 col-span-2 md:col-span-1">
+        <div className="col-span-2 space-y-4 md:col-span-1">
           <h3 className="text-lg font-medium">Challenges</h3>
           <div className="space-y-2">
             <Link
               href={`/behavior/wizard`}
-              className="bg-popover p-4 py-5 flex justify-between items-center rounded-md"
+              className="flex items-center justify-between p-4 py-5 rounded-md bg-popover"
             >
               <span>Communication</span>
               <span className="p-1 bg-[#FFA043] text-black rounded-full">
@@ -186,7 +186,7 @@ export default function Behavior() {
             </Link>
             <Link
               href={`/behavior/wizard`}
-              className="bg-popover p-4 py-5 flex justify-between items-center rounded-md"
+              className="flex items-center justify-between p-4 py-5 rounded-md bg-popover"
             >
               <span>Wise listener</span>
               <span className="p-1 bg-[#FFA043] text-black rounded-full">
@@ -195,7 +195,7 @@ export default function Behavior() {
             </Link>
             <Link
               href={`/behavior/wizard`}
-              className="bg-popover p-4 py-5 flex justify-between items-center rounded-md"
+              className="flex items-center justify-between p-4 py-5 rounded-md bg-popover"
             >
               <span>Non verbal Communication</span>
               <span className="p-1 bg-[#FFA043] text-black rounded-full">
@@ -204,7 +204,7 @@ export default function Behavior() {
             </Link>
             <Link
               href={`/behavior/wizard`}
-              className="bg-popover p-4 py-5 flex justify-between items-center rounded-md"
+              className="flex items-center justify-between p-4 py-5 rounded-md bg-popover"
             >
               <span>Open Ended Questions</span>
               <span className="p-1 bg-[#FFA043] text-black rounded-full">
@@ -215,9 +215,9 @@ export default function Behavior() {
         </div>
       </div>
       <Separator className="my-4" />
-      <div className="space-y-5 pb-32">
+      <div className="pb-32 space-y-5">
         <h3 className="text-lg font-medium">Challenges</h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
           {(isLoading || status === "loading") &&
             Array.from(Array(10)).map((i) => <TeamCardSkeleton key={i} />)}
           {Number(data?.meetings?.items?.length) > 0 &&
@@ -228,7 +228,7 @@ export default function Behavior() {
               ))}
           {!(isLoading || status === "loading") &&
             Number(data?.meetings?.items?.length) === 0 && (
-              <div className="col-span-5 py-40 flex justify-center items-center">
+              <div className="flex items-center justify-center col-span-5 py-40">
                 No segments found!
               </div>
             )}

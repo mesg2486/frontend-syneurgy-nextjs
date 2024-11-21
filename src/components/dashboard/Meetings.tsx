@@ -26,12 +26,11 @@ import { HiOutlineSearch } from "react-icons/hi";
 import { AiOutlinePlus } from "react-icons/ai";
 import MeetingCard from "../cards/MeetingCard";
 import { useSession } from "next-auth/react";
-import { useQuery } from "@tanstack/react-query";
-import { gql } from "@/services/clients/graphql.client";
-import { graphql } from "@/services/gql";
 import TeamCardSkeleton from "../placeholders/TeamCard.skeleton";
 import { Meeting } from "@/services/gql/graphql";
 import Dashmain from "../loaders/Dashmain.loader";
+import { useMeetingContext } from "../providers/MeetingProvider";
+import { graphql } from "@/services/gql";
 
 export const LIST_MEETINGS_BY_USERID = graphql(`
   query listMeetingsByUserId($userId: ID!) {
@@ -59,16 +58,9 @@ export const LIST_MEETINGS_BY_USERID = graphql(`
 
 export default function Meetings() {
   const { data: session, status } = useSession();
+  const { meetings, isMeetingsLoading: isLoading } = useMeetingContext();
 
-  const { data, isLoading, refetch } = useQuery({
-    queryKey: ["meetings", session?.user.sub],
-    queryFn: async () => {
-      return await gql.request(LIST_MEETINGS_BY_USERID, {
-        userId: String(session?.user.sub),
-      });
-    },
-    enabled: !!session?.user,
-  });
+  console.log({ meetings });
 
   if (isLoading || status === "loading") {
     return <Dashmain />;
@@ -85,7 +77,7 @@ export default function Meetings() {
         <TabsContent value="meetings" className="py-5">
           <div className="flex justify-between">
             <h2 className="text-xl font-light">
-              Meetings ({data?.meetings?.items?.length})
+              Meetings ({meetings?.length})
             </h2>
             <div className="flex flex-row gap-x-3">
               <div className="relative">
@@ -132,8 +124,8 @@ export default function Meetings() {
                 Array.from(Array(10)).map((_, index) => (
                   <TeamCardSkeleton key={index} />
                 ))}
-              {Number(data?.meetings?.items?.length) > 0
-                ? data?.meetings?.items?.map((meeting) => (
+              {Number(meetings?.length) > 0
+                ? meetings?.map((meeting) => (
                     <MeetingCard
                       meeting={meeting as Meeting}
                       key={meeting?.id}

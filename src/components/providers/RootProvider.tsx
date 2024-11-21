@@ -11,6 +11,7 @@ import NextTopLoader from "nextjs-toploader";
 import Dashnav from "../layout/Dashnav";
 import Uploader from "../modals/Uploader";
 import { AxiosUploadProvider } from "@/contexts/event.context";
+import { MeetingProvider } from "./MeetingProvider";
 
 export default function RootProvider({
   children,
@@ -30,15 +31,17 @@ export default function RootProvider({
             showSpinner={false}
           />
           <AxiosUploadProvider>
-            <Uploader />
-            <div className="flex bg-secondary text-secondary-foreground max-w-full">
-              <Sidebar />
-              <main className="flex-1 bg-secondary text-secondary-foreground">
-                <Dashnav />
-                <div className="px-4 md:px-8">{children}</div>
-              </main>
-              <Toaster />
-            </div>
+            <MeetingProvider>
+              <Uploader />
+              <div className="flex max-w-full bg-secondary text-secondary-foreground">
+                <Sidebar />
+                <main className="flex-1 bg-secondary text-secondary-foreground">
+                  <Dashnav />
+                  <div className="px-4 md:px-8">{children}</div>
+                </main>
+                <Toaster />
+              </div>
+            </MeetingProvider>
           </AxiosUploadProvider>
           {/* <Footer /> */}
         </SessionProvider>

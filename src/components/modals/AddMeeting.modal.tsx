@@ -48,6 +48,7 @@ import { cn } from "@/lib/utils";
 import { generateThumbnail } from "@/utils/generate-thumbnail";
 import { convertBlobToFile } from "@/utils/blob-to-file";
 import { v4 as uuidv4 } from "uuid";
+import { useMeetingContext } from "../providers/MeetingProvider";
 
 interface IAddMeetingProps {
   open: boolean;
@@ -62,6 +63,7 @@ export default function AddMeeting({ open, setIsOpen }: IAddMeetingProps) {
   const { data: session } = useSession();
   const user = session?.user;
   const queryClient = useQueryClient();
+  const { activeTeamId } = useMeetingContext();
 
   const { mutate: upload } = usePublicUpload({
     setUrl,
@@ -89,7 +91,7 @@ export default function AddMeeting({ open, setIsOpen }: IAddMeetingProps) {
         title: "Meeting Created",
       });
       queryClient.invalidateQueries({
-        queryKey: ["meetings", session?.user.sub],
+        queryKey: ["meetings"],
       });
       setIsOpen(false);
     },
@@ -113,7 +115,7 @@ export default function AddMeeting({ open, setIsOpen }: IAddMeetingProps) {
       sub: user?.sub,
       url,
       userId: user?.sub,
-      teamId: "1f593325-a0e2-43d3-a50f-da6bef7c39e2",
+      teamId: activeTeamId,
       thumbnail,
       id,
       date: data.date.toISOString(),

@@ -35,7 +35,7 @@ export default function SynchronyGraph({ data }: { data: any }) {
       .attr("transform", `translate(${margin.left},${margin.top})`);
 
     // Use JavaScript's built-in Date parsing
-    data.forEach((d: any) => {
+    data?.forEach((d: any) => {
       d.date = new Date(d.date);
     });
 
@@ -57,12 +57,30 @@ export default function SynchronyGraph({ data }: { data: any }) {
       .selectAll("text")
       .style("fill", "#FFFFFF");
 
-    // Draw y-axis
+    // Draw y-axis without labels and make it dotted
     svg
       .append("g")
-      .call(d3.axisLeft(y))
-      .selectAll("text")
-      .style("fill", "#FFFFFF");
+      .call(d3.axisLeft(y).tickFormat("")) // Remove y-axis labels
+      .selectAll("line") // Select y-axis line and make it dotted
+      .style("stroke-dasharray", "2, 2")
+      .style("stroke", "#FFFFFF")
+      .style("stroke-opacity", 0.5);
+
+    // Draw vertical gridlines manually (every other line, starting with an offset)
+    svg
+      .selectAll(".vertical-line")
+      .data(data.filter((_, index) => index % 2 !== 0)) // Select every other element, starting from the second
+      .enter()
+      .append("line")
+      .attr("class", "vertical-line")
+      .attr("x1", (d) => x(d.date))
+      .attr("x2", (d) => x(d.date))
+      .attr("y1", 0)
+      .attr("y2", height)
+      .style("stroke", "#FFFFFF")
+      .style("stroke-opacity", 0.8)
+      .style("stroke-width", 1)
+      .style("stroke-dasharray", "2, 2"); // Makes the line dotted
 
     // Draw line
     svg
@@ -101,7 +119,7 @@ export default function SynchronyGraph({ data }: { data: any }) {
       .attr("y", y(70))
       .attr("width", width)
       .attr("height", y(40) - y(70))
-      .style("fill", "#2E3B4E")
+      .style("fill", "rgba(0, 128, 0, 0.3)") // Light green with 30% opacity
       .style("opacity", 0.3);
 
     // Adding labels for High, Medium, Low Synchrony aligned with the corresponding areas
@@ -121,7 +139,8 @@ export default function SynchronyGraph({ data }: { data: any }) {
       .attr("x", 15)
       .attr("y", -85)
       .text("High Synchrony")
-      .style("fill", "#FFFFFF");
+      .style("fill", "#FFFFFF")
+      .style("font-size", "10px"); // Make text smaller
 
     legend
       .append("circle")
@@ -134,7 +153,8 @@ export default function SynchronyGraph({ data }: { data: any }) {
       .attr("x", 15)
       .attr("y", 0)
       .text("Medium Synchrony")
-      .style("fill", "#FFFFFF");
+      .style("fill", "#FFFFFF")
+      .style("font-size", "10px"); // Make text smaller
 
     legend
       .append("circle")
@@ -147,7 +167,8 @@ export default function SynchronyGraph({ data }: { data: any }) {
       .attr("x", 15)
       .attr("y", 85)
       .text("Low Synchrony")
-      .style("fill", "#FFFFFF");
+      .style("fill", "#FFFFFF")
+      .style("font-size", "10px"); // Make text smaller
   }, [data]);
 
   return (

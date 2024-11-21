@@ -44,7 +44,7 @@ export default function Data({
           Dimensions <FaInfoCircle />
         </h2>
         <div className="w-full h-48 text-xs">
-          <DimensionsRadar dimensions={dimensions} />
+          <DimensionsRadar dimensions={dimensions as any} />
         </div>
       </div>
       {/* <div className="w-full p-3 bg-slate-800 rounded-xl">

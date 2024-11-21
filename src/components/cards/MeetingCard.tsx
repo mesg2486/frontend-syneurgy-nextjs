@@ -10,7 +10,7 @@ export default function MeetingCard({ meeting }: { meeting: Meeting }) {
   return (
     <Link
       href={`meetings/${meeting.id}`}
-      className="rounded-lg bg-tertiary hover:opacity-90"
+      className="flex flex-col rounded-lg bg-tertiary hover:opacity-90"
     >
       <div className="h-32 overflow-hidden rounded-t-lg">
         <img
@@ -21,11 +21,11 @@ export default function MeetingCard({ meeting }: { meeting: Meeting }) {
           }
         />
       </div>
-      <div className="p-4 space-y-2">
+      <div className="flex flex-col flex-1 gap-2 p-4">
         <p className="text-xs font-light opacity-70">
-          {format(new Date(meeting.createdAt), "do MMM, yyyy")}
+          {format(new Date(meeting.createdAt), "do MMM, yyyy, h:mm a")}
         </p>
-        <h2 className="pb-3 font-medium text-md">{meeting.name}</h2>
+        <h2 className="flex-1 pb-3 text-sm font-normal">{meeting.name}</h2>
         <Separator className="my-3 bg-white/5" />
         <div className="flex flex-row gap-x-3">
           <div className="flex items-center gap-2">

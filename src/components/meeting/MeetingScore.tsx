@@ -306,7 +306,7 @@ const CircularDashboard = ({
     d3.select(".team-synchrony-value").text(Math.round(scores.score));
   };
 
-  return <div className="introTeamChart" ref={d3Container}></div>;
+  return <div className="scale-75" ref={d3Container}></div>;
 };
 
 export default CircularDashboard;
