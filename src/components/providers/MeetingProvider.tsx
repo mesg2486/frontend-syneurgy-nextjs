@@ -82,11 +82,32 @@ export const LIST_MEETINGS_BY_TEAMID = graphql(`
         updatedAt
         sentiment
         performance
+        duration
+        queued
+        checkpoint
+        errors {
+          emotion
+          participation
+          extracting
+          downloading
+          resampling
+          rppg
+          scores
+          heatmap
+          audio
+          transcript
+          nlp
+          speaker
+        }
         synchrony
         teamId
         thumbnail
         type
         url
+        start
+        finish
+        started
+        finished
         userId
         totalScore
       }
@@ -118,7 +139,7 @@ export const MeetingProvider: React.FC<{ children: React.ReactNode }> = ({
     isLoading: isMeetingsLoading,
     refetch,
   } = useQuery({
-    queryKey: ["meetings", session?.user.sub],
+    queryKey: ["meetings", activeTeamId],
     queryFn: async () => {
       return await gql.request(LIST_MEETINGS_BY_TEAMID, {
         teamId: activeTeamId || "",
@@ -126,6 +147,14 @@ export const MeetingProvider: React.FC<{ children: React.ReactNode }> = ({
     },
     enabled: !!session?.user && !!activeTeamId,
   });
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      refetch();
+    }, 10000);
+
+    return () => clearInterval(interval);
+  }, [refetch]);
 
   useEffect(() => {
     refetch();

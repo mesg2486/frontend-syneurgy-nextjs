@@ -253,6 +253,15 @@ type Meeting {
   userId: String!
   teamId: String!
   team: Team
+  duration: Float
+  checkpoint: String
+  queued: Boolean
+  started: Boolean
+  finished: Boolean
+  start: Float
+  finish: Float
+  timeTaken: Boolean
+  errors: MeetingError
   report: String
   reportStatus: String
   date: String!
@@ -263,6 +272,21 @@ type Meeting {
 type MeetingConnection {
   items: [Meeting]
   nextToken: String
+}
+
+type MeetingError {
+  emotion: Boolean
+  participation: Boolean
+  extracting: Boolean
+  downloading: Boolean
+  resampling: Boolean
+  rppg: Boolean
+  scores: Boolean
+  heatmap: Boolean
+  audio: Boolean
+  transcript: Boolean
+  nlp: Boolean
+  speaker: Boolean
 }
 
 type MeetingSummary {

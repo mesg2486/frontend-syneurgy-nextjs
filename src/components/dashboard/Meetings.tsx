@@ -45,7 +45,28 @@ export const LIST_MEETINGS_BY_USERID = graphql(`
         sentiment
         performance
         synchrony
+        checkpoint
+        errors {
+          emotion
+          participation
+          extracting
+          downloading
+          resampling
+          rppg
+          scores
+          heatmap
+          audio
+          transcript
+          nlp
+          speaker
+        }
         teamId
+        start
+        finish
+        duration
+        started
+        queued
+        finished
         thumbnail
         type
         url

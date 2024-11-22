@@ -86,12 +86,12 @@ export default function AddMeeting({ open, setIsOpen }: IAddMeetingProps) {
   >({
     mutationFn: async (variables: any) =>
       gql.request(CREATE_MEETING, variables),
-    onSuccess: (response) => {
+    onSuccess: async (response) => {
+      queryClient.invalidateQueries({
+        queryKey: ["meetings", activeTeamId],
+      });
       toast({
         title: "Meeting Created",
-      });
-      queryClient.invalidateQueries({
-        queryKey: ["meetings"],
       });
       setIsOpen(false);
     },

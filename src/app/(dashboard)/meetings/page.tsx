@@ -32,13 +32,14 @@ export default function Meetings() {
     setActiveTeamId,
   } = useMeetingContext();
 
-  console.log({ meetings });
-
   return (
     <div className="py-6 pb-32 space-y-5">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <h2 className="md:text-xl">Meetings ({meetings?.length})</h2>
+          <h2 className="md:text-xl">
+            Meetings{" "}
+            {Number(meetings?.length) > 0 ? `(${meetings?.length})` : ""}
+          </h2>
           {Number(teams?.length) === 0 ? (
             <div className="font-semibold"> {session?.user.username}</div>
           ) : (

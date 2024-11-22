@@ -112,6 +112,10 @@ export const GET_MEETING = graphql(`
         speakerId
         time
       }
+      started
+      finished
+      start
+      finish
       totalScore
       bodyScore
       behaviorScore

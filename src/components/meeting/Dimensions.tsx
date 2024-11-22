@@ -17,6 +17,8 @@ interface DimensionsRadarProps {
 export default function DimensionsRadar({ dimensions }: DimensionsRadarProps) {
   const d3Container = useRef(null);
 
+  console.log({ dimensions });
+
   useEffect(() => {
     // Remove any existing SVG before re-rendering
     d3.select(d3Container.current).select("svg").remove();
